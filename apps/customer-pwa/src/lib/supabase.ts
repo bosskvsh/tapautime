@@ -18,6 +18,18 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     autoRefreshToken: true,
     detectSessionInUrl: true,
     flowType: 'pkce',
+    storage: {
+      getItem: (key) => {
+        const match = document.cookie.match(new RegExp(`(^| )${key}=([^;]+)`));
+        return match ? match[2] : null;
+      },
+      setItem: (key, value) => {
+        document.cookie = `${key}=${value}; path=/; domain=.tapautime.my; max-age=31536000; secure; samesite=Lax`;
+      },
+      removeItem: (key) => {
+        document.cookie = `${key}=; path=/; domain=.tapautime.my; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+      },
+    },
   },
   realtime: {
     params: {
