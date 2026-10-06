@@ -1,0 +1,116 @@
+# ==============================================================================
+# Tapau Time - Hostinger Subdomain & Route Handler (.htaccess)
+# ==============================================================================
+
+RewriteEngine On
+RewriteBase /
+
+# ------------------------------------------------------------------------------
+# 1. Force HTTPS
+# ------------------------------------------------------------------------------
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+
+# ------------------------------------------------------------------------------
+# 2. Subdomain: dinein.tapautime.my (Dine-In Contactless Ordering)
+# Routes dinein.tapautime.my requests directly into the /dinein/ folder
+# ------------------------------------------------------------------------------
+RewriteCond %{HTTP_HOST} ^dinein\.tapautime\.my$ [NC]
+RewriteCond %{REQUEST_URI} !^/dinein/
+RewriteCond %{DOCUMENT_ROOT}/dinein%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}/dinein%{REQUEST_URI} -d
+RewriteRule ^(.*)$ dinein/$1 [L]
+
+RewriteCond %{HTTP_HOST} ^dinein\.tapautime\.my$ [NC]
+RewriteCond %{REQUEST_URI} !^/dinein/
+RewriteRule ^(.*)$ dinein/index.html [L]
+
+# ------------------------------------------------------------------------------
+# 3. Subdomain: app.tapautime.my (Customer PWA)
+# Routes app.tapautime.my requests directly into the /app/ folder
+# ------------------------------------------------------------------------------
+RewriteCond %{HTTP_HOST} ^app\.tapautime\.my$ [NC]
+RewriteCond %{REQUEST_URI} !^/app/
+RewriteCond %{DOCUMENT_ROOT}/app%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}/app%{REQUEST_URI} -d
+RewriteRule ^(.*)$ app/$1 [L]
+
+RewriteCond %{HTTP_HOST} ^app\.tapautime\.my$ [NC]
+RewriteCond %{REQUEST_URI} !^/app/
+RewriteRule ^(.*)$ app/index.html [L]
+
+# ------------------------------------------------------------------------------
+# 4. Subdomain: kds.tapautime.my / merchant.tapautime.my (Merchant KDS)
+# Routes kds.tapautime.my requests directly into the /kds/ folder
+# ------------------------------------------------------------------------------
+RewriteCond %{HTTP_HOST} ^(kds|merchant)\.tapautime\.my$ [NC]
+RewriteCond %{REQUEST_URI} !^/kds/
+RewriteCond %{DOCUMENT_ROOT}/kds%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}/kds%{REQUEST_URI} -d
+RewriteRule ^(.*)$ kds/$1 [L]
+
+RewriteCond %{HTTP_HOST} ^(kds|merchant)\.tapautime\.my$ [NC]
+RewriteCond %{REQUEST_URI} !^/kds/
+RewriteRule ^(.*)$ kds/index.html [L]
+
+# ------------------------------------------------------------------------------
+# 5. Subdomain: admin.tapautime.my (Super Admin Console)
+# Routes admin.tapautime.my requests directly into the /admin/ folder
+# ------------------------------------------------------------------------------
+RewriteCond %{HTTP_HOST} ^admin\.tapautime\.my$ [NC]
+RewriteCond %{REQUEST_URI} !^/admin/
+RewriteCond %{DOCUMENT_ROOT}/admin%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}/admin%{REQUEST_URI} -d
+RewriteRule ^(.*)$ admin/$1 [L]
+
+RewriteCond %{HTTP_HOST} ^admin\.tapautime\.my$ [NC]
+RewriteCond %{REQUEST_URI} !^/admin/
+RewriteRule ^(.*)$ admin/index.html [L]
+
+# ------------------------------------------------------------------------------
+# 6. Main Domain: tapautime.my / www.tapautime.my (Landing Page & Assets)
+# ------------------------------------------------------------------------------
+# Serve existing physical files directly for the main domain
+RewriteCond %{HTTP_HOST} ^(www\.)?tapautime\.my$ [NC]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Fallback for tapau-logo.png
+RewriteCond %{HTTP_HOST} ^(www\.)?tapautime\.my$ [NC]
+RewriteCond %{REQUEST_URI} ^/tapau-logo\.png$ [NC]
+RewriteRule ^.*$ icons/tapau-logo.png [L]
+
+# Default entrypoint for main domain
+RewriteCond %{HTTP_HOST} ^(www\.)?tapautime\.my$ [NC]
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^$ index.html [L]
+
+# Redirect merchant slugs to customer PWA
+RewriteCond %{HTTP_HOST} ^(www\.)?tapautime\.my$ [NC]
+RewriteCond %{REQUEST_URI} !^/$
+RewriteRule ^(.*)$ https://app.tapautime.my/$1 [L,R=301]
+
+# ------------------------------------------------------------------------------
+# 5. Caching, Compression & Security Headers (Hostinger Production Optimized)
+# ------------------------------------------------------------------------------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json application/xml image/svg+xml
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+    ExpiresByType text/html "access plus 0 seconds"
+    ExpiresByType application/json "access plus 0 seconds"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType application/manifest+json "access plus 1 week"
+</IfModule>
+
+# Prevent directory listings
+Options -Indexes

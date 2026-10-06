@@ -1,0 +1,365 @@
+/* Tapau Time - Takeaway (Orange Brand) Theme */
+:root, body.mode-tapau {
+  --color-primary: #ff6600;
+  --color-primary-container: #cc5200;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #ffe0cc;
+  --color-secondary: #885200;
+  --color-secondary-container: #fe9d00;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #653c00;
+  --color-tertiary: #01544f;
+  --color-tertiary-container: #286d67;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #a9ece4;
+  --hero-gradient: linear-gradient(135deg, #ff8533 0%, #ff6600 100%);
+  --hero-tag-bg: rgba(255, 255, 255, 0.2);
+  --btn-radius: 9999px;
+  --color-surface: #f8f9fa;
+  --color-surface-dim: #d9dadb;
+  --color-surface-bright: #f8f9fa;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f3f4f5;
+  --color-surface-container: #edeeef;
+  --color-surface-container-high: #e7e8e9;
+  --color-surface-container-highest: #e1e3e4;
+  --color-on-surface: #191c1d;
+  --color-on-surface-variant: #3e494a;
+  --color-outline: #6f797a;
+  --color-outline-variant: #bec8ca;
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error: #ffffff;
+  --color-on-error-container: #93000a;
+}
+
+/* Smooth color transitions */
+body, header, nav, button, .hero-card, .bg-primary, .bg-primary-container, .text-primary {
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Dark mode / Merchant KDS theme overrides */
+.dark, [data-theme="dark"] {
+  --color-surface: #121212;
+  --color-surface-dim: #0a0a0a;
+  --color-surface-bright: #1e1e1e;
+  --color-surface-container-lowest: #181818;
+  --color-surface-container-low: #1e1e1e;
+  --color-surface-container: #242424;
+  --color-surface-container-high: #2a2a2a;
+  --color-surface-container-highest: #333333;
+  --color-on-surface: #f0f1f2;
+  --color-on-surface-variant: #bec8ca;
+  --color-outline: #889395;
+  --color-outline-variant: #3e494a;
+  --color-primary: #82d3de;
+  --color-on-primary: #00363c;
+  --color-primary-container: #004f56;
+  --color-on-primary-container: #9becf7;
+}
+
+/* Base resets & smooth scrolling */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  overscroll-behavior-y: contain;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Mobile-first touch action & tap optimizations */
+button, a, input, select, textarea, [role="button"], [onclick] {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+input, textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Safe area padding utilities for mobile notches & home bars */
+.pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom, 16px), 16px);
+}
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Smooth mobile touch momentum */
+.overflow-x-auto, .overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Animations */
+@keyframes flyCart {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4) translate(-20px, -40px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(0.2) translate(var(--dx), var(--dy));
+    opacity: 0;
+  }
+}
+
+.animate-fly {
+  animation: flyCart 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.2;
+  }
+}
+
+.animate-glow {
+  animation: pulseGlow 2.4s ease-in-out infinite;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* Material symbols fine tuning */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.material-symbols-outlined.fill {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Custom interactive ripple / click animation */
+.touch-press {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.15s ease;
+}
+.touch-press:active {
+  transform: scale(0.96);
+  opacity: 0.9;
+}
+
+/* Barcode simulation pattern */
+.barcode-stripes {
+  background: repeating-linear-gradient(
+    90deg,
+    #191c1d,
+    #191c1d 3px,
+    transparent 3px,
+    transparent 6px,
+    #191c1d 6px,
+    #191c1d 10px,
+    transparent 10px,
+    transparent 12px,
+    #191c1d 12px,
+    #191c1d 14px
+  );
+}
+
+/* Floating cart bar blur */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.dark .glass-panel {
+  background: rgba(24, 24, 24, 0.88);
+}
+
+/* Strict hero illustration sizing bounds */
+#hero-illustration {
+  max-width: 96px !important;
+  max-height: 96px !important;
+  width: 90px !important;
+  height: 90px !important;
+  object-fit: contain !important;
+}
+
+/* Ensure active nav buttons stay orange on hover */
+.nav-tab-btn.text-primary:hover {
+  color: var(--color-primary) !important;
+}
+.nav-tab-btn.text-primary .material-symbols-outlined {
+  color: inherit;
+}
+
+/* ========================================================================= */
+/* BEEHIIV-INSPIRED PRODUCT DEMO SHOWCASE STYLING */
+/* ========================================================================= */
+.beehiiv-hero-glow {
+  background: radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.28) 0%, rgba(249, 115, 22, 0.05) 55%, transparent 75%);
+}
+
+.device-frame-phone {
+  background: #000000;
+  border: 8px solid #1c1917;
+  border-radius: 42px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 0 30px rgba(249, 115, 22, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.device-frame-phone:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.4), 0 0 40px rgba(249, 115, 22, 0.3);
+}
+
+.device-notch {
+  width: 90px;
+  height: 20px;
+  background: #1c1917;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+}
+
+.device-frame-tablet {
+  background: #1c1917;
+  border: 4px solid #292524;
+  border-radius: 18px;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+
+.floating-badge-beehiiv {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid #1c1917;
+  box-shadow: 4px 4px 0px #1c1917;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-badge-beehiiv:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 6px 6px 0px #1c1917;
+}
+
+.showcase-tab-btn {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.showcase-tab-btn.active {
+  background-color: #1c1917;
+  color: #ffffff;
+  border-color: #1c1917;
+  box-shadow: 4px 4px 0px #f97316;
+}
+
+.showcase-img-fade {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+/* 3-CARD FLOATING DARK UI SHOWCASE (EXACT BEEHIIV HERO MATCH) */
+.beehiiv-3card-canvas {
+  background: radial-gradient(circle at 50% 40%, rgba(249, 115, 22, 0.18) 0%, rgba(15, 13, 26, 0.95) 60%, rgba(11, 10, 20, 1) 100%);
+  border-radius: 32px;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.beehiiv-dark-card {
+  background: rgba(19, 17, 28, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.4s ease;
+}
+
+.beehiiv-dark-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(249, 115, 22, 0.4);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 25px rgba(249, 115, 22, 0.15);
+}
+
+.beehiiv-active-focus {
+  border: 2px solid #f97316 !important;
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.35) !important;
+}
+
+.beehiiv-cursor-pill {
+  background: #ffffff;
+  color: #191c1d;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Pull-down to refresh styling & overscroll damping */
+#tapau-pull-refresh-indicator {
+  will-change: transform, opacity;
+}
+
+#tapau-pull-refresh-indicator .material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 20;
+}
+
+body {
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+

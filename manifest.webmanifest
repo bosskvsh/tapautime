@@ -1,0 +1,48 @@
+{
+  "name": "Tapau Time - Food Pickup & Table Ordering",
+  "short_name": "Tapau Time",
+  "description": "Skip the queue, order ahead, and pick up when it's hot. Fast takeaway and dine-in table ordering for hawkers and food courts.",
+  "start_url": "./order.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8f9fa",
+  "theme_color": "#ff8533",
+  "categories": ["food", "lifestyle", "shopping"],
+  "icons": [
+    {
+      "src": "./icons/icon-192-v3.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512-v3.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-maskable-512-v3.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Scan Table QR",
+      "short_name": "Scan Table",
+      "description": "Quickly order for your dine-in table",
+      "url": "./order.html?action=scan",
+      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Active Orders",
+      "short_name": "My Orders",
+      "description": "Check your live pickup status",
+      "url": "./order.html?view=orders",
+      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}

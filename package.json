@@ -1,0 +1,44 @@
+{
+  "name": "tapau-time",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "start": "node server.js",
+    "dev:customer": "npm run dev --workspace=@tapautime/customer-pwa",
+    "dev:merchant": "npm run dev --workspace=@tapautime/merchant-web",
+    "dev:dining": "npm run dev --workspace=@tapautime/dining-web",
+    "dev:admin": "npm run dev --workspace=@tapautime/admin-web",
+    "build:customer": "npm run build --workspace=@tapautime/customer-pwa",
+    "build:merchant": "npm run build --workspace=@tapautime/merchant-web",
+    "build:dining": "npm run build --workspace=@tapautime/dining-web",
+    "build:admin": "npm run build --workspace=@tapautime/admin-web",
+    "build": "npm run build:customer && npm run build:merchant && npm run build:dining && npm run build:admin"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.4.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "typescript": "^7.0.2",
+    "vite-plugin-pwa": "^1.3.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.4",
+    "gsap": "^3.15.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "zustand": "^5.0.15"
+  }
+}

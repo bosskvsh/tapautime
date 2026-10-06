@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 570" width="100%" height="100%">
+  <g stroke="#000000" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Left Ear Loop -->
+    <path d="M 60 120 C 60 65, 80 50, 115 50 L 130 50 L 130 120 Z" fill="#ff6600" stroke-width="16" />
+    <path d="M 82 105 C 80 75, 90 68, 110 68 L 120 68 L 120 105 Z" fill="#ffffff" stroke-width="12" />
+
+    <!-- Right Ear Loop -->
+    <path d="M 440 120 C 440 65, 420 50, 385 50 L 370 50 L 370 120 Z" fill="#ff6600" stroke-width="16" />
+    <path d="M 418 105 C 420 75, 410 68, 390 68 L 380 68 L 380 105 Z" fill="#ffffff" stroke-width="12" />
+
+    <!-- Center Top Handle -->
+    <path d="M 125 110 C 125 32, 160 15, 250 15 C 340 15, 375 32, 375 110 Z" fill="#ff6600" stroke-width="18" />
+    <!-- Handle Inner Cutout Slot -->
+    <rect x="175" y="48" width="150" height="52" rx="26" fill="#ffffff" stroke-width="16" />
+
+    <!-- Main Outer Body & Slanted Lid Shell -->
+    <path d="M 30 200 L 125 100 L 375 100 L 470 200 L 485 200 C 495 200 500 210 500 220 L 500 520 C 500 550 475 565 440 565 L 60 565 C 25 565 0 550 0 520 L 0 220 C 0 210 5 200 15 200 Z" fill="#ff6600" stroke-width="18" />
+
+    <!-- Horizontal Lid Divider Line -->
+    <line x1="30" y1="200" x2="470" y2="200" stroke-width="16" />
+
+    <!-- Main Inner White Window -->
+    <rect x="35" y="225" width="430" height="315" rx="24" fill="#ffffff" stroke-width="18" />
+  </g>
+</svg>

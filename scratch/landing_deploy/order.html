@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Tapau Time - Skip the Queue, Tapau Hot Food</title>
+  
+  <!-- PWA & Mobile Web App Meta -->
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <meta name="theme-color" content="#ff8533" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Tapau Time" />
+  <link rel="apple-touch-icon" href="./icons/tapau-logo.png" />
+  <link rel="icon" type="image/png" href="./icons/tapau-logo.png" />
+
+  <!-- Fonts & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- Supabase Realtime JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Tailwind CSS CDN & Dynamic Design System Config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "var(--color-primary, #ff6600)",
+            "primary-container": "var(--color-primary-container, #cc5200)",
+            "on-primary": "var(--color-on-primary, #ffffff)",
+            "on-primary-container": "var(--color-on-primary-container, #ffe0cc)",
+            "secondary": "var(--color-secondary, #885200)",
+            "secondary-container": "var(--color-secondary-container, #fe9d00)",
+            "on-secondary": "var(--color-on-secondary, #ffffff)",
+            "on-secondary-container": "var(--color-on-secondary-container, #653c00)",
+            "tertiary": "var(--color-tertiary, #01544f)",
+            "tertiary-container": "var(--color-tertiary-container, #286d67)",
+            "on-tertiary": "var(--color-on-tertiary, #ffffff)",
+            "on-tertiary-container": "var(--color-on-tertiary-container, #a9ece4)",
+            "surface": "var(--color-surface, #f8f9fa)",
+            "surface-dim": "var(--color-surface-dim, #d9dadb)",
+            "surface-bright": "var(--color-surface-bright, #f8f9fa)",
+            "surface-container-lowest": "var(--color-surface-container-lowest, #ffffff)",
+            "surface-container-low": "var(--color-surface-container-low, #f3f4f5)",
+            "surface-container": "var(--color-surface-container, #edeeef)",
+            "surface-container-high": "var(--color-surface-container-high, #e7e8e9)",
+            "surface-container-highest": "var(--color-surface-container-highest, #e1e3e4)",
+            "on-surface": "var(--color-on-surface, #191c1d)",
+            "on-surface-variant": "var(--color-on-surface-variant, #3e494a)",
+            "outline": "var(--color-outline, #6f797a)",
+            "outline-variant": "var(--color-outline-variant, #bec8ca)",
+            "error": "var(--color-error, #ba1a1a)",
+            "error-container": "var(--color-error-container, #ffdad6)"
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="stylesheet" href="./style.css?v=123.0" />
+</head>
+<body class="bg-surface text-on-surface font-sans select-none antialiased min-h-screen flex flex-col">
+
+  <!-- OFFLINE STATUS BANNER -->
+  <div id="offline-indicator-banner" class="hidden fixed top-0 left-0 right-0 z-[70] bg-amber-600 text-white text-xs font-bold text-center py-2 shadow-md flex items-center justify-center gap-2">
+    <span class="material-symbols-outlined text-[16px]">wifi_off</span>
+    <span>You are offline. Showing cached menus and offline orders.</span>
+  </div>
+
+  <!-- PWA INSTALL PROMPT BANNER -->
+  <div id="pwa-install-banner" class="hidden fixed top-16 left-3 right-3 z-[60] bg-primary text-white p-3.5 rounded-2xl shadow-xl border border-primary-container flex items-center justify-between animate-slide-up">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-white p-1 shadow-sm shrink-0">
+        <img src="./icons/tapau-logo.png" alt="Tapau Time" class="w-full h-full object-contain" />
+      </div>
+      <div>
+        <h4 class="font-bold text-xs">Install Tapau Time App</h4>
+        <p class="text-[11px] text-teal-100">Add to home screen for instant tapau ordering!</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="pwa-install-btn" class="px-3 py-1.5 bg-secondary-container text-on-secondary-container rounded-lg font-bold text-xs shadow active:scale-95">
+        Install
+      </button>
+      <button id="pwa-dismiss-btn" class="w-7 h-7 flex items-center justify-center text-teal-200 hover:text-white">
+        <span class="material-symbols-outlined text-[18px]">close</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- TOP APP HEADER -->
+  <!-- ========================================================================= -->
+  <header id="global-app-header" class="fixed top-0 w-full z-50 pt-safe transition-all duration-300 transform translate-y-0 opacity-100">
+    <div class="h-16 px-4 flex items-center justify-between max-w-lg mx-auto w-full">
+      <!-- Brand Logo -->
+      <div class="flex items-center cursor-pointer active:scale-95 transition-transform shrink-0" onclick="UI.renderView('discover')">
+        <img src="./icons/tapau-logo.png" alt="Tapau Time" class="h-8 sm:h-9 w-auto object-contain max-w-[130px]" />
+      </div>
+
+      <!-- Top Right Floating Cart Button (Icon Only) -->
+      <button id="header-cart-btn" onclick="UI.openCartDrawer()" aria-label="View Shopping Cart" class="relative w-10 h-10 rounded-full bg-white/95 backdrop-blur-md text-stone-900 border border-stone-200/80 shadow-md flex items-center justify-center hover:bg-stone-50 active:scale-95 transition-all group">
+        <span class="material-symbols-outlined text-[20px] text-amber-600 group-hover:scale-110 transition-transform">shopping_bag</span>
+        <span id="global-cart-count-badge" class="hidden absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-amber-500 text-stone-950 font-black text-[10px] items-center justify-center border-2 border-white shadow-xs">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN APPLICATION VIEWS CONTAINER -->
+  <!-- ========================================================================= -->
+  <main id="main-content-area" class="flex-1 w-full max-w-lg mx-auto pt-16 pb-32">
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 1: HOME PAGE OVERVIEW (DISCOVER) -->
+    <!-- ===================================================================== -->
+    <!-- ===================================================================== -->
+    <!-- VIEW 1: HOME PAGE (INTERACTIVE SWIPEABLE PRODUCT SHOWCASE) -->
+    <!-- ===================================================================== -->
+    <section id="discover-view" class="min-h-[calc(100vh-5rem)] flex flex-col justify-between relative overflow-hidden bg-gradient-to-b from-[#ff8533] via-[#ff6600] to-[#cc5200] text-white -mt-16 -mb-32 pt-16 pb-28 px-4 rounded-b-[36px] select-none transition-colors duration-700">
+      
+      <!-- Ambient Background Glow Effects -->
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-white/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Top Header Brand Badge -->
+
+
+      <!-- Center Floating 3D Showcase Carousel -->
+      <div id="hero-showcase-carousel" class="relative w-full my-auto py-6 flex items-center justify-center touch-pan-x cursor-grab active:cursor-grabbing select-none overflow-hidden">
+        
+        <!-- Left Arrow (Screen Edge Navigation) -->
+        <button id="hero-arrow-prev" onclick="UI.prevHero()" aria-label="Previous Slide" class="absolute left-1 sm:left-3 bottom-6 w-11 h-11 rounded-full bg-black/50 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-2xl transition-all hover:bg-black/75 active:scale-90 z-30 pointer-events-auto">
+          <span class="material-symbols-outlined text-2xl">chevron_left</span>
+        </button>
+
+        <!-- Right Arrow (Screen Edge Navigation) -->
+        <button id="hero-arrow-next" onclick="UI.nextHero()" aria-label="Next Slide" class="absolute right-1 sm:right-3 bottom-6 w-11 h-11 rounded-full bg-black/50 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-2xl transition-all hover:bg-black/75 active:scale-90 z-30 pointer-events-auto">
+          <span class="material-symbols-outlined text-2xl">chevron_right</span>
+        </button>
+
+        <!-- Previous (Left Peek) Item Image -->
+        <div onclick="UI.prevHero()" class="absolute left-0 z-10 cursor-pointer pointer-events-auto flex items-center justify-center" style="transform: translateX(-15%) rotate(-8deg) scale(0.8); opacity: 0.7; filter: blur(1px);">
+          <img id="home-showcase-prev-img" src="./icons/tapau-rewards.png" alt="Previous Slide" draggable="false" class="w-48 h-48 sm:w-52 sm:h-52 object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.3)] hover:opacity-100 transition-all select-none" onerror="this.onerror=null; this.src='./icons/tapau-logo.png';" />
+        </div>
+
+        <!-- Next (Right Peek) Item Image -->
+        <div onclick="UI.nextHero()" class="absolute right-0 z-10 cursor-pointer pointer-events-auto flex items-center justify-center" style="transform: translateX(15%) rotate(8deg) scale(0.8); opacity: 0.7; filter: blur(1px);">
+          <img id="home-showcase-next-img" src="./icons/tapau-rewards.png" alt="Next Slide" draggable="false" class="w-48 h-48 sm:w-52 sm:h-52 object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.3)] hover:opacity-100 transition-all select-none" onerror="this.onerror=null; this.src='./icons/tapau-logo.png';" />
+        </div>
+
+        <!-- Main Center Item Image -->
+        <div id="home-showcase-wrapper" onclick="UI.handleHeroAction()" class="relative z-20 cursor-pointer active:cursor-grabbing transform transition-all duration-300 group flex items-center justify-center" style="transform: translateY(12px) scale(1.08); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); touch-action: none;">
+          <img id="home-showcase-img" src="./icons/tapau-terus.png" alt="Featured Item" draggable="false" class="w-64 h-60 sm:w-72 sm:h-64 object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-hover:scale-105 transition-all duration-300 select-none pointer-events-none" onerror="this.onerror=null; this.src='./icons/tapau-logo.png';" />
+        </div>
+      </div>
+
+      <!-- Pagination Indicators & Shared Showcase Slot -->
+      <div class="flex flex-col items-center justify-center gap-3 my-2 relative z-30 w-full max-w-sm mx-auto">
+        <!-- Pagination Dots -->
+        <div class="flex items-center justify-center gap-2">
+          <button onclick="UI.goToHero(0)" aria-label="Slide 1" class="hero-dot h-2 rounded-full transition-all duration-300 bg-white w-6"></button>
+          <button onclick="UI.goToHero(1)" aria-label="Slide 2" class="hero-dot h-2 rounded-full transition-all duration-300 bg-white/40 w-2"></button>
+        </div>
+
+        <!-- Shared Bottom Container: Closed Badge + WebP vs Open Featured Tenants Card -->
+        <div id="home-showcase-bottom-slot" class="w-full relative">
+          
+          <!-- Closed State: Swipe Up Hint Badge & Timeline 1.webp Showcase -->
+          <div id="home-showcase-tap-hint" onclick="UI.toggleHeroCard(true)" class="w-full flex flex-col items-center gap-2 transition-all duration-300 cursor-pointer pointer-events-auto">
+            <div class="px-4 py-2 bg-black/75 backdrop-blur-md border border-white/30 rounded-full text-xs font-extrabold text-white tracking-wide shadow-2xl flex items-center gap-2 animate-bounce hover:bg-black/90 active:scale-95 transition-all">
+              <span class="material-symbols-outlined text-[16px]">keyboard_double_arrow_up</span>
+              <span>swipe up for more</span>
+            </div>
+          </div>
+
+          <!-- Open State: Bottom Floating Featured Tenants Container -->
+          <div id="home-showcase-card" class="bg-white/95 backdrop-blur-xl text-stone-900 rounded-[32px] p-5 shadow-2xl space-y-3.5 border border-white/50 w-full text-center opacity-0 pointer-events-none scale-90 translate-y-8 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between pb-2 border-b border-stone-200/60">
+              <div class="text-left">
+                <h3 class="font-extrabold text-sm text-stone-900 flex items-center gap-1.5">
+                  <span>Featured Tenants</span>
+                  <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[10px] font-black uppercase">Top Rated</span>
+                </h3>
+                <p class="text-[11px] text-stone-500 font-medium">Select a hawker stall to view menu & order</p>
+              </div>
+              <button onclick="UI.toggleHeroCard(false)" class="w-7 h-7 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 hover:bg-stone-200 active:scale-90 transition-all">
+                <span class="material-symbols-outlined text-[16px]">close</span>
+              </button>
+            </div>
+
+            <!-- Featured Tenants List -->
+            <div id="featured-tenants-list" class="space-y-2.5 max-h-[230px] overflow-y-auto no-scrollbar">
+              <!-- Populated dynamically via JS from Supabase -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 1B: TAPAU TIME FOOD ORDERING PAGE (TAPAU BUTTON PAGE) -->
+    <!-- ===================================================================== -->
+    <section id="tapau-view" class="hidden p-4 space-y-4">
+      <!-- Welcome Hero Card with Integrated Mode Switcher -->
+      <div id="hero-container" class="text-white p-5 rounded-3xl shadow-lg relative overflow-hidden transition-all duration-500 space-y-4" style="background: var(--hero-gradient);">
+        <div class="absolute -right-8 -bottom-8 w-36 h-36 bg-secondary-container/20 rounded-full blur-xl pointer-events-none"></div>
+        
+        <!-- Top Half: Text & Image -->
+        <div class="flex items-center justify-between gap-3 relative z-10">
+          <div class="flex-1 min-w-0 pr-1 space-y-1">
+            <span id="hero-tag-text" class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-wider uppercase transition-all duration-300" style="background: var(--hero-tag-bg);">Fast & Fresh</span>
+            <h1 id="hero-heading-text" class="text-xl sm:text-2xl font-black tracking-tight transition-all duration-300 leading-tight">Ready to Tapau?</h1>
+            <p id="hero-sub-text" class="text-xs text-white/90 leading-relaxed transition-all duration-300">Skip long hawker queues. Order on your phone, pick up piping hot!</p>
+          </div>
+
+          <div class="shrink-0 w-20 h-20 sm:w-24 sm:h-24 relative flex items-center justify-center">
+            <img id="hero-illustration" src="./icons/tapau-hero.png" alt="Hero illustration" class="w-20 h-20 sm:w-24 sm:h-24 max-w-[80px] max-h-[80px] object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] transform hover:scale-105 transition-all duration-500 animate-fade-in" onerror="this.onerror=null; this.src='./icons/tapau-logo.png';" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="space-y-2.5">
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">search</span>
+          <input type="text" placeholder="Search dishes, laksa, satay, kopi..." class="w-full pl-10 pr-4 py-3 bg-surface-container-lowest rounded-2xl text-xs text-on-surface border border-outline-variant/30 focus:outline-none focus:border-primary shadow-sm font-medium" />
+        </div>
+
+        <!-- Filter Pills with smooth horizontal scroll -->
+        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 -mx-4 px-4 scroll-smooth">
+          <button class="px-4 py-2 rounded-full bg-primary text-white font-bold text-xs shrink-0 shadow-sm active:scale-95 transition-transform whitespace-nowrap">All Stalls</button>
+          <button class="px-4 py-2 rounded-full bg-surface-container text-on-surface-variant font-bold text-xs shrink-0 hover:bg-surface-container-high active:scale-95 transition-transform whitespace-nowrap">⚡ Fast Pickup (&lt;10m)</button>
+          <button class="px-4 py-2 rounded-full bg-surface-container text-on-surface-variant font-bold text-xs shrink-0 hover:bg-surface-container-high active:scale-95 transition-transform whitespace-nowrap">Halal Friendly</button>
+          <button class="px-4 py-2 rounded-full bg-surface-container text-on-surface-variant font-bold text-xs shrink-0 hover:bg-surface-container-high active:scale-95 transition-transform whitespace-nowrap">Promos Available</button>
+        </div>
+      </div>
+
+      <!-- Merchant Stalls List -->
+      <div class="space-y-3 pt-1">
+        <div class="flex items-center justify-between">
+          <h2 class="font-extrabold text-base text-on-surface">Popular Hawkers & Stalls</h2>
+          <span class="text-xs font-semibold text-primary">Near You</span>
+        </div>
+        <div id="tapau-merchants-list" class="space-y-3.5">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 2: MERCHANT MENU (STOREFRONT STUDIO MATCH) -->
+    <!-- ===================================================================== -->
+    <section id="menu-view" class="hidden flex flex-col pb-24 transition-colors duration-300">
+      <!-- Promotional Banner Strip (Matching Merchant preview-promo-strip) -->
+      <div id="menu-promo-banner-section" class="hidden transition-all duration-300"></div>
+
+      <!-- Full Bleed Cover Banner Image -->
+      <div id="menu-cover-banner" class="relative h-48 sm:h-60 w-full bg-cover bg-center overflow-hidden shrink-0 shadow-sm" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200');">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        
+        <!-- Back Navigation Button -->
+        <button onclick="UI.renderView('tapau')" aria-label="Back to Merchant List" class="absolute top-4 left-4 z-20 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md shadow flex items-center justify-center text-gray-800 active:scale-90 transition-transform">
+          <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+        </button>
+      </div>
+
+      <!-- Menu Content Area: atmosphere background applied here -->
+      <div id="menu-bg-overlay" class="flex-1 flex flex-col transition-all duration-500">
+
+      <!-- Merchant Profile Section with Overlapping Logo -->
+      <div class="px-4 -mt-10 relative z-10 space-y-3">
+        <!-- Floating Logo Avatar -->
+        <div class="w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center border-2 border-white overflow-hidden shrink-0">
+          <img id="menu-merchant-avatar" src="./icons/tapau-logo.png" alt="Merchant" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='./icons/tapau-logo.png';" />
+        </div>
+
+        <!-- Store Name & Tagline -->
+        <div>
+          <h1 id="menu-merchant-title" class="font-black text-2xl leading-tight tracking-tight">Loading Store...</h1>
+          <p id="menu-merchant-desc" class="text-xs opacity-75 mt-0.5 leading-relaxed font-medium">Authentic local street food, delivered fresh & hot.</p>
+        </div>
+
+        <!-- Owner's Shoutout Card (populated by applyCustomization) -->
+        <div id="menu-shoutout-section" class="hidden transition-all duration-300"></div>
+
+        <!-- Takeaway Action Button -->
+        <div class="pt-1">
+          <button id="menu-action-btn-tapau" onclick="UI.setOrderTypeFromMenu('tapau')" class="w-full py-2.5 px-4 font-black text-xs flex items-center justify-center gap-2 shadow transition-all active:scale-95 bg-primary text-white" style="border-radius: var(--btn-radius, 9999px);">
+            <span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+            <span>Takeaway (Tapau)</span>
+          </button>
+        </div>
+
+        <!-- Live Tracker Experience Widget (populated by applyCustomization) -->
+        <div id="menu-tracker-experience-section" class="transition-all duration-300"></div>
+
+        <!-- In-Menu Dish Search Input Bar -->
+        <div class="pt-2">
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant text-[18px]">search</span>
+            <input id="menu-dish-search-input" type="text" oninput="UI.filterMenuDishes(this.value)" placeholder="Search dishes in this stall..." class="w-full pl-10 pr-4 py-2.5 bg-surface-container-lowest rounded-2xl text-xs text-on-surface border border-outline-variant/30 focus:outline-none focus:border-primary shadow-xs font-medium" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticky Category Chips Bar -->
+      <div id="menu-category-chips" class="sticky top-0 z-30 py-2.5 px-4 bg-surface/95 backdrop-blur-md border-b border-outline-variant/10 flex items-center gap-2 overflow-x-auto no-scrollbar">
+        <!-- Populated via JS -->
+      </div>
+
+      <!-- Menu Items Container (Grid or List Layout) -->
+      <div class="px-4 mt-3">
+        <div id="menu-items-container" class="space-y-4">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+      </div><!-- /#menu-bg-overlay -->
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 3: LIVE ORDERS & TRACKING -->
+    <!-- ===================================================================== -->
+    <section id="orders-view" class="hidden p-4 space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-xl font-extrabold text-on-surface">Order Tracking</h1>
+          <p class="text-xs text-on-surface-variant">Live kitchen status & digital pickup slip</p>
+        </div>
+        <button onclick="UI.renderView('discover')" class="text-xs font-bold text-primary flex items-center gap-0.5">
+          <span>Add More Items</span>
+          <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+        </button>
+      </div>
+
+      <!-- Orders Container -->
+      <div id="orders-list-container" class="space-y-4">
+        <!-- Populated via JS -->
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 4: PROFILE & SETTINGS -->
+    <!-- ===================================================================== -->
+    <section id="profile-view" class="hidden p-4 space-y-4">
+      <div class="bg-surface-container-lowest p-5 rounded-3xl shadow-sm border border-outline-variant/15 flex items-center gap-4">
+        <div id="profile-avatar" class="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center text-xl font-bold shadow-md">
+          TT
+        </div>
+        <div class="flex-1 min-w-0">
+          <h2 id="profile-name" class="font-bold text-base text-on-surface">Guest Foodie</h2>
+          <p id="profile-email" class="text-xs text-on-surface-variant">tapau.foodie@local</p>
+          <span id="profile-badge" class="inline-block mt-1 px-2.5 py-0.5 bg-amber-100 text-amber-800 text-[10px] font-bold rounded-md">Guest Explorer</span>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-surface-container-lowest p-3.5 rounded-2xl border border-outline-variant/15 text-center">
+          <span class="text-2xl font-black text-primary" id="profile-orders-count">0</span>
+          <span class="block text-[11px] font-semibold text-on-surface-variant mt-0.5">Total Orders</span>
+        </div>
+        <div class="bg-surface-container-lowest p-3.5 rounded-2xl border border-outline-variant/15 text-center">
+          <span class="text-2xl font-black text-secondary" id="profile-favs-count">0</span>
+          <span class="block text-[11px] font-semibold text-on-surface-variant mt-0.5">Favorite Dishes</span>
+        </div>
+      </div>
+
+      <!-- Settings & Auth Actions -->
+      <div class="bg-surface-container-lowest rounded-3xl border border-outline-variant/15 divide-y divide-outline-variant/10 overflow-hidden shadow-sm">
+        <div id="profile-auth-action-container" class="p-4">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <div class="p-4 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
+              <span class="material-symbols-outlined text-[18px]">verified</span>
+            </div>
+            <div>
+              <span class="text-xs font-bold text-on-surface block">Halal Certified Only</span>
+              <span class="text-[10px] text-on-surface-variant">Filter stalls & menus automatically</span>
+            </div>
+          </div>
+          <input type="checkbox" checked class="w-4 h-4 text-primary accent-primary rounded" />
+        </div>
+
+        <div class="p-4 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center">
+              <span class="material-symbols-outlined text-[18px]">notifications</span>
+            </div>
+            <div>
+              <span class="text-xs font-bold text-on-surface block">Pickup Chime & Vibrations</span>
+              <span class="text-[10px] text-on-surface-variant">Alert when order is hot & ready</span>
+            </div>
+          </div>
+          <input type="checkbox" checked class="w-4 h-4 text-primary accent-primary rounded" />
+        </div>
+      </div>
+
+      <!-- Version info -->
+      <div class="text-center text-[11px] text-outline pt-2">
+        <span>Tapau Time PWA v1.0.0 • Offline Ready</span>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 6: REWARDS PROGRAM PAGE -->
+    <!-- ===================================================================== -->
+    <section id="rewards-view" class="hidden p-4 space-y-4">
+      
+      <!-- Top Member Status Card -->
+      <div class="bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 text-white rounded-3xl p-6 shadow-xl relative overflow-hidden space-y-4">
+        <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+        
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 text-white">
+              <span class="material-symbols-outlined text-2xl">workspace_premium</span>
+            </div>
+            <div>
+              <span class="text-xs font-extrabold text-amber-100 uppercase tracking-widest block">Tapau VIP</span>
+              <h2 class="text-xl font-black">Gold Member</h2>
+            </div>
+          </div>
+          <span class="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-xs font-black">350 Pts</span>
+        </div>
+
+        <!-- Progress to Next Tier -->
+        <div class="space-y-1.5 pt-2">
+          <div class="flex items-center justify-between text-xs font-bold text-amber-100">
+            <span>Progress to Platinum</span>
+            <span>150 Pts needed</span>
+          </div>
+          <div class="w-full h-2.5 rounded-full bg-black/20 overflow-hidden p-0.5 border border-white/20">
+            <div class="h-full rounded-full bg-white transition-all duration-500" style="width: 70%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stamp Card: Buy 5 Tapau Meals, Get 1 Free Drink -->
+      <div class="bg-surface-container-lowest rounded-3xl p-5 border border-outline-variant/20 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-extrabold text-sm text-on-surface">Tapau Stamp Card</h3>
+            <p class="text-[11px] text-on-surface-variant font-medium">Buy 5 takeaway meals, earn 1 Free Teh Tarik!</p>
+          </div>
+          <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 text-[10px] font-black uppercase">3 / 5 Collected</span>
+        </div>
+
+        <!-- 5 Stamp Badges -->
+        <div class="grid grid-cols-5 gap-2 pt-1">
+          <div class="h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center shadow-sm">
+            <span class="material-symbols-outlined text-xl">verified</span>
+          </div>
+          <div class="h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center shadow-sm">
+            <span class="material-symbols-outlined text-xl">verified</span>
+          </div>
+          <div class="h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center shadow-sm">
+            <span class="material-symbols-outlined text-xl">verified</span>
+          </div>
+          <div class="h-12 rounded-2xl bg-stone-100 text-stone-300 border-2 border-dashed border-stone-200 flex items-center justify-center">
+            <span class="text-xs font-black">4</span>
+          </div>
+          <div class="h-12 rounded-2xl bg-amber-50 text-amber-600 border-2 border-amber-300 flex items-center justify-center">
+            <span class="material-symbols-outlined text-xl">local_cafe</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Redeemable Vouchers Section -->
+      <div class="space-y-3">
+        <h3 class="font-extrabold text-sm text-on-surface px-1">Exclusive Rewards & Vouchers</h3>
+
+        <div class="space-y-2.5">
+          <!-- Voucher 1 -->
+          <div class="bg-surface-container-lowest rounded-2xl p-4 border border-outline-variant/20 shadow-xs flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
+                <span class="material-symbols-outlined text-xl">confirmation_number</span>
+              </div>
+              <div>
+                <h4 class="font-extrabold text-xs text-on-surface">RM5 OFF Hawker Order</h4>
+                <p class="text-[10px] text-on-surface-variant">Min spend RM20 • 200 Points</p>
+              </div>
+            </div>
+            <button onclick="UI.showToast('Reward RM5 OFF claimed!')" class="px-3 py-1.5 bg-primary text-white font-extrabold text-xs rounded-xl shadow-xs active:scale-95">Redeem</button>
+          </div>
+
+          <!-- Voucher 2 -->
+          <div class="bg-surface-container-lowest rounded-2xl p-4 border border-outline-variant/20 shadow-xs flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center font-bold">
+                <span class="material-symbols-outlined text-xl">local_drink</span>
+              </div>
+              <div>
+                <h4 class="font-extrabold text-xs text-on-surface">Free Teh Tarik Upgrade</h4>
+                <p class="text-[10px] text-on-surface-variant">Valid with any meal • 100 Points</p>
+              </div>
+            </div>
+            <button onclick="UI.showToast('Reward Free Drink claimed!')" class="px-3 py-1.5 bg-primary text-white font-extrabold text-xs rounded-xl shadow-xs active:scale-95">Redeem</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- PINNED EXPRESS CART DOCK (OPTIMIZED MOBILE THUMB ZONE) -->
+  <!-- ========================================================================= -->
+  <div id="floating-cart-bar" class="fixed bottom-[96px] left-3 right-3 max-w-lg mx-auto z-40 translate-y-32 opacity-0 pointer-events-none transition-all duration-300">
+    <div onclick="UI.openCartDrawer()" class="bg-stone-900/95 backdrop-blur-xl rounded-2xl shadow-[0_16px_36px_rgba(0,0,0,0.35)] border border-white/20 p-2.5 flex items-center justify-between cursor-pointer active:scale-[0.99] transition-transform">
+      <!-- Left: Item Count + Live Total -->
+      <div class="flex items-center gap-2.5 pl-1.5">
+        <div class="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-amber-500 text-white flex items-center justify-center shadow-md shrink-0">
+          <span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+          <span id="floating-cart-count-badge" class="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-white text-stone-950 font-black text-[10px] flex items-center justify-center shadow-xs">0</span>
+        </div>
+        <div>
+          <div class="flex items-baseline gap-1.5">
+            <span id="floating-cart-total" class="text-base font-black text-white tracking-tight">RM 0.00</span>
+          </div>
+          <span id="floating-cart-count" class="text-[11px] text-stone-300 font-semibold block leading-tight">0 Items • View Order</span>
+        </div>
+      </div>
+
+      <!-- Right: Ergonomic High-Speed Action CTA -->
+      <button class="h-11 px-4 sm:px-5 rounded-xl bg-gradient-to-r from-primary to-amber-500 text-white font-black text-xs shadow-lg flex items-center gap-1.5 active:scale-95 transition-transform shrink-0">
+        <span>Checkout & Pay</span>
+        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- BOTTOM NAVIGATION BAR (STOREFRONT MOBILE COMPLIANT) -->
+  <!-- ========================================================================= -->
+  <!-- BOTTOM NAVIGATION BAR (FLOATING CENTER ARCH FAB DESIGN - WHITE EDITION) -->
+  <!-- ========================================================================= -->
+  <nav id="bottom-navbar" class="fixed bottom-0 left-0 right-0 z-50 pointer-events-none">
+    
+    <!-- Navbar Main Card Shell (White Background) - Full Width -->
+    <div class="w-full bg-white/95 backdrop-blur-xl text-stone-900 rounded-t-[28px] shadow-[0_-10px_35px_rgba(0,0,0,0.12)] border-t border-stone-200/80 border-x border-stone-200/80 h-16 flex items-center justify-between px-4 pointer-events-auto relative">
+        
+        <!-- Left Section: Home & Orders -->
+        <div class="flex items-center justify-around flex-1 pr-2">
+          <!-- Home / Discover -->
+          <button data-nav="discover" onclick="UI.renderView('discover')" class="nav-tab-btn flex flex-col items-center justify-center gap-0.5 text-primary transition-all active:scale-90 px-2 py-1">
+            <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">home</span>
+            <span class="text-[10px] font-bold">Home</span>
+          </button>
+
+          <!-- Orders -->
+          <button data-nav="orders" onclick="UI.renderView('orders')" class="nav-tab-btn flex flex-col items-center justify-center gap-0.5 text-stone-400 hover:text-stone-900 transition-all active:scale-90 px-2 py-1 relative">
+            <span class="material-symbols-outlined text-[22px]">receipt_long</span>
+            <span class="text-[10px] font-bold">Orders</span>
+            <span id="nav-orders-badge" class="hidden absolute -top-0.5 right-1 w-4 h-4 rounded-full bg-error text-white font-black text-[8px] flex items-center justify-center">1</span>
+          </button>
+        </div>
+
+        <!-- Center Raised Circular Tapau Time Button with Curved Notch -->
+        <div class="relative -top-5 shrink-0 z-50 pointer-events-auto cursor-pointer" style="touch-action: manipulation;">
+          <!-- Outer Arched Notch Halo Circle -->
+          <div onclick="UI.openFullTenantsList()" class="w-[68px] h-[68px] rounded-full bg-white p-1 shadow-lg border border-stone-200 flex items-center justify-center pointer-events-auto cursor-pointer">
+            <!-- Center White Circular FAB -->
+            <button data-nav="tapau" onclick="UI.openFullTenantsList()" aria-label="Full Tenants Discovery" class="nav-tab-btn w-14 h-14 rounded-full bg-white text-stone-900 shadow-[0_4px_15px_rgba(0,0,0,0.15)] flex items-center justify-center transition-all duration-300 active:scale-90 hover:scale-105 hover:shadow-[0_6px_20px_rgba(249,115,22,0.4)] group overflow-hidden border-2 border-stone-100 p-2 pointer-events-auto cursor-pointer">
+              <svg class="w-full h-full object-contain transition-transform group-hover:scale-110 pointer-events-none" viewBox="0 0 500 570" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="#000000" stroke-linejoin="round" stroke-linecap="round">
+                  <!-- Left Ear Loop -->
+                  <path d="M 60 120 C 60 65, 80 50, 115 50 L 130 50 L 130 120 Z" fill="#ff6600" stroke-width="16" />
+                  <path d="M 82 105 C 80 75, 90 68, 110 68 L 120 68 L 120 105 Z" fill="#ffffff" stroke-width="12" />
+
+                  <!-- Right Ear Loop -->
+                  <path d="M 440 120 C 440 65, 420 50, 385 50 L 370 50 L 370 120 Z" fill="#ff6600" stroke-width="16" />
+                  <path d="M 418 105 C 420 75, 410 68, 390 68 L 380 68 L 380 105 Z" fill="#ffffff" stroke-width="12" />
+
+                  <!-- Center Top Handle -->
+                  <path d="M 125 110 C 125 32, 160 15, 250 15 C 340 15, 375 32, 375 110 Z" fill="#ff6600" stroke-width="18" />
+                  <!-- Handle Inner Cutout Slot -->
+                  <rect x="175" y="48" width="150" height="52" rx="26" fill="#ffffff" stroke-width="16" />
+
+                  <!-- Main Outer Body & Slanted Lid Shell -->
+                  <path d="M 30 200 L 125 100 L 375 100 L 470 200 L 485 200 C 495 200 500 210 500 220 L 500 520 C 500 550 475 565 440 565 L 60 565 C 25 565 0 550 0 520 L 0 220 C 0 210 5 200 15 200 Z" fill="#ff6600" stroke-width="18" />
+
+                  <!-- Horizontal Lid Divider Line -->
+                  <line x1="30" y1="200" x2="470" y2="200" stroke-width="16" />
+
+                  <!-- Main Inner White Window -->
+                  <rect x="35" y="225" width="430" height="315" rx="24" fill="#ffffff" stroke-width="18" />
+                </g>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Section: Rewards & Profile -->
+        <div class="flex items-center justify-around flex-1 pl-2">
+          <!-- Rewards Program Tab (Replaced Cart Button) -->
+          <button data-nav="rewards" onclick="UI.renderView('rewards')" class="nav-tab-btn flex flex-col items-center justify-center gap-0.5 text-stone-400 hover:text-stone-900 transition-all active:scale-90 px-2 py-1">
+            <span class="material-symbols-outlined text-[22px]">workspace_premium</span>
+            <span class="text-[10px] font-bold">Rewards</span>
+          </button>
+
+          <!-- Profile -->
+          <button data-nav="profile" onclick="UI.renderView('profile')" class="nav-tab-btn flex flex-col items-center justify-center gap-0.5 text-stone-400 hover:text-stone-900 transition-all active:scale-90 px-2 py-1">
+            <span class="material-symbols-outlined text-[22px]">person</span>
+            <span class="text-[10px] font-bold">Profile</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: ITEM CUSTOMIZER BOTTOM SHEET -->
+  <!-- ========================================================================= -->
+  <div id="customizer-modal" class="hidden fixed inset-0 z-[60] flex flex-col justify-end">
+    <!-- Backdrop -->
+    <div id="customizer-modal-backdrop" class="fixed inset-0 bg-black/60 backdrop-blur-sm animate-fade-in"></div>
+
+    <!-- Sheet Content -->
+    <div class="relative bg-surface rounded-t-3xl max-h-[85vh] flex flex-col overflow-hidden shadow-2xl max-w-lg mx-auto w-full z-10 animate-slide-up pb-safe">
+      <!-- Drag handle & close -->
+      <div class="p-3 pb-0 flex items-center justify-between">
+        <div class="w-10 h-1 bg-outline-variant/40 rounded-full mx-auto"></div>
+        <button id="close-customizer-btn" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline-variant absolute right-3 top-3">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+
+      <!-- Scrollable Customizer Body -->
+      <div class="overflow-y-auto p-5 space-y-4 max-h-[60vh]">
+        <div class="flex gap-4 items-start">
+          <img id="customizer-img" src="./icons/tapau-logo.png" alt="Dish Image" class="w-20 h-20 rounded-2xl object-cover shrink-0 bg-surface-container" onerror="this.onerror=null; this.src='./icons/tapau-logo.png';" />
+          <div class="flex-1 min-w-0">
+            <h3 id="customizer-title" class="font-extrabold text-base text-on-surface">Dish Title</h3>
+            <p id="customizer-desc" class="text-xs text-on-surface-variant mt-1 leading-relaxed">Description goes here</p>
+          </div>
+        </div>
+
+        <!-- Variants section -->
+        <div id="customizer-variants-section" class="space-y-2 pt-2">
+          <span class="text-xs font-bold text-on-surface block uppercase tracking-wider">Choice of Meat / Portion</span>
+          <div id="customizer-variants-list" class="space-y-2"></div>
+        </div>
+
+        <!-- Spice level section -->
+        <div id="customizer-spice-section" class="space-y-2 pt-2">
+          <span class="text-xs font-bold text-on-surface block uppercase tracking-wider">Spice Level</span>
+          <div id="customizer-spice-list" class="grid grid-cols-2 gap-2"></div>
+        </div>
+
+        <!-- Add-ons section -->
+        <div id="customizer-addons-section" class="space-y-2 pt-2">
+          <span class="text-xs font-bold text-on-surface block uppercase tracking-wider">Special Add-Ons</span>
+          <div id="customizer-addons-list" class="space-y-2"></div>
+        </div>
+
+        <!-- Special instructions notes -->
+        <div class="space-y-1.5 pt-2">
+          <span class="text-xs font-bold text-on-surface block uppercase tracking-wider">Special Note for Kitchen</span>
+          <input id="customizer-notes" type="text" placeholder="e.g., Less oil, sambal asing, extra crispy..." class="w-full p-3 bg-surface-container-low rounded-xl text-xs border border-outline-variant/30 focus:outline-none focus:border-primary" />
+        </div>
+      </div>
+
+      <!-- Footer Bar: Qty + Add to Cart Button -->
+      <div class="p-4 border-t border-outline-variant/15 bg-surface-container-lowest flex items-center justify-between gap-3">
+        <!-- Qty Controls -->
+        <div class="flex items-center gap-2 bg-surface-container rounded-2xl px-3 py-2 border border-outline-variant/20">
+          <button id="customizer-minus-btn" class="w-7 h-7 flex items-center justify-center font-bold text-primary active:scale-75 text-lg">-</button>
+          <span id="customizer-qty-display" class="font-extrabold text-sm min-w-[20px] text-center">1</span>
+          <button id="customizer-plus-btn" class="w-7 h-7 flex items-center justify-center font-bold text-primary active:scale-75 text-lg">+</button>
+        </div>
+
+        <!-- Add to cart CTA -->
+        <button id="customizer-add-btn" class="flex-1 h-12 rounded-2xl bg-primary text-white font-extrabold text-xs shadow-md flex items-center justify-between px-5 active:scale-95 transition-transform">
+          <span>Add to Basket</span>
+          <span id="customizer-total-price-text" class="text-sm font-black text-teal-200">RM 0.00</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: CART & BASKET DRAWER -->
+  <!-- ========================================================================= -->
+  <!-- ========================================================================= -->
+  <!-- UNIFIED HIGH-SPEED CHECKOUT SHEET (MOBILE THUMB ZONE FIRST) -->
+  <!-- ========================================================================= -->
+  <div id="cart-drawer" class="hidden fixed inset-0 z-[60] flex flex-col justify-end">
+    <!-- Backdrop -->
+    <div id="cart-drawer-backdrop" onclick="UI.closeCartDrawer()" class="fixed inset-0 bg-black/65 backdrop-blur-sm animate-fade-in"></div>
+
+    <!-- Sheet Content -->
+    <div class="relative bg-surface rounded-t-[32px] max-h-[92vh] flex flex-col overflow-hidden shadow-2xl max-w-lg mx-auto w-full z-10 animate-slide-up pb-safe border-t border-white/20">
+      
+      <!-- Top Drag Handle & Dismiss Zone -->
+      <div class="pt-2 pb-1 flex justify-center cursor-pointer" onclick="UI.closeCartDrawer()">
+        <div class="w-12 h-1.5 bg-stone-300/80 rounded-full"></div>
+      </div>
+
+      <!-- Header -->
+      <div class="px-5 py-3 border-b border-outline-variant/15 flex items-center justify-between bg-surface-container-lowest">
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 id="cart-drawer-title" class="font-black text-base text-on-surface">Your Basket & Checkout</h3>
+            <span id="checkout-badge-mode" class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-wider">Tapau</span>
+          </div>
+          <p id="cart-drawer-subtitle" class="text-[11px] text-on-surface-variant font-medium">Review items & 1-tap fast payment</p>
+          <p id="customer-profile-indicator" class="text-[11px] text-primary font-bold hidden"></p>
+        </div>
+        <button id="close-cart-btn" onclick="UI.closeCartDrawer()" aria-label="Close basket" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high active:scale-90 transition-all">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+
+      <!-- Scrollable Middle Section: Items, Vouchers, Payment, Breakdown -->
+      <div class="overflow-y-auto p-4 space-y-4 max-h-[62vh] no-scrollbar">
+        
+        <!-- Basket Items List -->
+        <div id="cart-items-list" class="space-y-2.5">
+          <!-- Populated dynamically via UI.renderCartItems() -->
+        </div>
+
+        <!-- 1-Tap Quick Voucher Pills & Promo Box -->
+        <div class="bg-surface-container-lowest rounded-2xl p-3.5 space-y-2.5 border border-outline-variant/15 shadow-xs">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-black text-on-surface flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[16px] text-amber-500">local_activity</span>
+              <span>Vouchers & Promos</span>
+            </span>
+            <span class="text-[10px] text-emerald-600 font-bold">1-Tap Apply</span>
+          </div>
+
+          <!-- Quick 1-Tap Voucher Chips -->
+          <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5" style="touch-action: pan-x;">
+            <button type="button" onclick="UI.applyPromoCode('TAPAU5')" class="px-3 py-1.5 bg-amber-50 text-amber-900 rounded-xl text-[11px] font-black border border-amber-300 hover:bg-amber-100 active:scale-95 transition-all shrink-0 flex items-center gap-1 shadow-xs cursor-pointer" style="touch-action: manipulation;">
+              <span>🎁 TAPAU5</span>
+              <span class="text-amber-700">(-RM5)</span>
+            </button>
+            <button type="button" onclick="UI.applyPromoCode('TAPAU20')" class="px-3 py-1.5 bg-teal-50 text-teal-900 rounded-xl text-[11px] font-black border border-teal-300 hover:bg-teal-100 active:scale-95 transition-all shrink-0 flex items-center gap-1 shadow-xs cursor-pointer" style="touch-action: manipulation;">
+              <span>⚡ TAPAU20</span>
+              <span class="text-teal-700">(20% OFF)</span>
+            </button>
+            <button type="button" id="toggle-custom-promo-btn" onclick="UI.togglePromoInput()" class="px-2.5 py-1.5 bg-surface-container text-on-surface-variant rounded-xl text-[11px] font-bold border border-outline-variant/30 hover:bg-surface-container-high active:scale-95 transition-all shrink-0 flex items-center gap-1 cursor-pointer" style="touch-action: manipulation;">
+              <span class="material-symbols-outlined text-[14px]">edit</span>
+              <span>Custom Code</span>
+            </button>
+          </div>
+
+          <!-- Collapsible Custom Code Input -->
+          <div id="promo-input-wrapper" class="hidden pt-1 flex gap-2 animate-fade-in">
+            <input id="promo-input" type="text" placeholder="Enter promo code" onkeydown="if(event.key==='Enter') UI.handleApplyPromo()" class="flex-1 px-3.5 py-2 bg-surface-container-low rounded-xl text-xs uppercase font-bold border border-outline-variant/30 focus:outline-none focus:border-primary" />
+            <button type="button" id="apply-promo-btn" onclick="UI.handleApplyPromo()" class="px-4 py-2 bg-primary text-white font-bold text-xs rounded-xl shadow-xs active:scale-95 cursor-pointer">Apply</button>
+          </div>
+        </div>
+
+        <!-- Ergonomic Horizontal Payment Method Selector -->
+        <div class="bg-surface-container-lowest rounded-2xl p-3.5 space-y-2.5 border border-outline-variant/15 shadow-xs">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-black text-on-surface flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[16px] text-primary">account_balance_wallet</span>
+              <span>Select Payment Method</span>
+            </span>
+            <span class="text-[10px] text-on-surface-variant font-semibold">Fast eWallet</span>
+          </div>
+
+          <div id="checkout-payment-options-container" class="grid grid-cols-2 gap-2">
+            <!-- Populated via UI.renderPaymentOptions() -->
+          </div>
+        </div>
+
+        <!-- Transparent Price Summary Breakdown -->
+        <div class="bg-surface-container-lowest rounded-2xl p-3.5 space-y-2 border border-outline-variant/15 text-xs shadow-xs">
+          <div class="flex justify-between text-on-surface-variant">
+            <span>Subtotal</span>
+            <span id="cart-subtotal-val" class="font-bold text-on-surface">RM 0.00</span>
+          </div>
+          <div class="flex justify-between text-on-surface-variant">
+            <span>SST (6%)</span>
+            <span id="cart-tax-val" class="font-bold text-on-surface">RM 0.00</span>
+          </div>
+          <div class="flex justify-between text-on-surface-variant">
+            <span id="cart-pack-label">Takeaway Packaging</span>
+            <span id="cart-pack-val" class="font-bold text-on-surface">RM 0.60</span>
+          </div>
+          <div id="cart-discount-row" class="hidden flex justify-between text-emerald-600 font-bold">
+            <span>Voucher Savings</span>
+            <span id="cart-discount-val">- RM 0.00</span>
+          </div>
+          <div class="border-t border-outline-variant/20 pt-2 flex justify-between items-baseline">
+            <span class="font-black text-sm text-on-surface">Total Amount</span>
+            <span id="cart-total-val" class="font-black text-xl text-primary tracking-tight">RM 0.00</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Prime Thumb-Zone Action Dock (Always Visible at Bottom) -->
+      <div class="p-4 bg-surface-container-lowest border-t border-outline-variant/15 flex flex-col gap-2">
+        <button type="button" id="confirm-pay-btn" onclick="UI.submitOrder()" disabled aria-disabled="true" class="w-full h-14 rounded-2xl bg-gradient-to-r from-primary via-amber-500 to-primary text-white font-black text-sm shadow-xl flex items-center justify-between px-5 active:scale-[0.98] transition-all group opacity-50 cursor-not-allowed pointer-events-none">
+          <div class="text-left flex items-center gap-2">
+            <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-white">
+              <span class="material-symbols-outlined text-[18px]">lock</span>
+            </div>
+            <div>
+              <span class="text-[10px] uppercase font-bold text-white/80 block leading-tight">Instant Confirmation</span>
+              <span class="text-xs font-black text-white">Pay & Place Order</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span id="checkout-total-banner" class="text-base font-black tracking-tight text-white">RM 0.00</span>
+            <span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </div>
+        </button>
+
+        <p class="text-[10px] text-center text-on-surface-variant font-medium flex items-center justify-center gap-1 opacity-75">
+          <span class="material-symbols-outlined text-[12px] text-emerald-500">verified_user</span>
+          <span>100% Encrypted & Direct Hawker Kitchen Transmission</span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js?v=125.0"></script>
+</body>
+</html>

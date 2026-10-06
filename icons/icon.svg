@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#006d77" />
+      <stop offset="100%" stop-color="#00535b" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fe9d00" />
+      <stop offset="100%" stop-color="#e07a00" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Background rounded rect -->
+  <rect width="512" height="512" rx="112" fill="url(#primaryGrad)" />
+  
+  <!-- Subtle inner background accent -->
+  <circle cx="256" cy="256" r="180" fill="#ffffff" fill-opacity="0.06" />
+
+  <!-- Takeaway Bag / Box & Steam Icon -->
+  <g filter="url(#shadow)" transform="translate(106, 106)">
+    <!-- Steam / Aroma Swirls -->
+    <path d="M90 60 C80 40, 100 20, 90 0" stroke="#fe9d00" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.9" />
+    <path d="M150 50 C140 25, 160 10, 150 -10" stroke="#9becf7" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.8" />
+    <path d="M210 60 C200 40, 220 20, 210 0" stroke="#fe9d00" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.9" />
+
+    <!-- Takeaway Container / Bag Body -->
+    <path d="M40 90 L260 90 L240 250 C238 266 224 278 208 278 L92 278 C76 278 62 266 60 250 Z" fill="#ffffff" />
+    
+    <!-- Top Fold / Rim -->
+    <rect x="25" y="76" width="250" height="24" rx="12" fill="url(#accentGrad)" />
+
+    <!-- Chopsticks / Fork Accent -->
+    <path d="M100 135 L200 235" stroke="#00535b" stroke-width="10" stroke-linecap="round" />
+    <path d="M120 120 L215 215" stroke="#00535b" stroke-width="10" stroke-linecap="round" />
+
+    <!-- Clock / Timer Badge (Tapau Time concept) -->
+    <circle cx="230" cy="230" r="46" fill="url(#accentGrad)" stroke="#ffffff" stroke-width="6" />
+    <!-- Clock hands -->
+    <path d="M230 206 L230 230 L248 230" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>

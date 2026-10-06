@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "types": ["node", "vite-plugin-pwa/client", "vite-plugin-pwa/react"],
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "paths": {
+      "@tapautime/shared-ui": ["./packages/shared-ui/src/index.ts"],
+      "@tapautime/shared-ui/*": ["./packages/shared-ui/src/*"]
+    }
+  },
+  "include": ["src", "apps", "packages"],
+  "exclude": ["node_modules", "supabase", "dist", "build"]
+}

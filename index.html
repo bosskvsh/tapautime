@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>Tapau Time - Skip the queue. Keep the profit.</title>
+    <meta name="theme-color" content="#ff6600">
+    <meta name="description" content="The frictionless order-ahead and dine-in web system built for local Malaysian F&B. Customers scan, order, and track live in their browser. Zero 30% commission fees.">
+    
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+
+    <!-- Load Optimized Google Fonts (Nunito + Material Symbols Outlined) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configure Tailwind theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                        },
+                        tealTheme: {
+                            DEFAULT: '#00535b',
+                            dark: '#00363b',
+                            light: '#9becf7'
+                        }
+                    },
+                    boxShadow: {
+                        'hard': '4px 4px 0px 0px rgba(28,25,23,1)',
+                        'hard-sm': '2px 2px 0px 0px rgba(28,25,23,1)',
+                        'hard-lg': '6px 6px 0px 0px rgba(28,25,23,1)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --sat: env(safe-area-inset-top, 0px);
+            --sab: env(safe-area-inset-bottom, 0px);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        /* Tactile touch physics for mobile & desktop */
+        .tap-tactile {
+            transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease, background-color 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .tap-tactile:active {
+            transform: scale(0.97) translateY(2px);
+        }
+
+        /* Range slider styling with safe touch ergonomics */
+        input[type="range"] {
+            touch-action: pan-y;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 26px;
+            width: 26px;
+            border-radius: 9999px;
+            background: #f97316;
+            border: 3px solid #1c1917;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #1c1917;
+            transition: transform 0.15s ease;
+        }
+        input[type="range"]:active::-webkit-slider-thumb {
+            transform: scale(1.15);
+        }
+        input[type="range"]::-moz-range-thumb {
+            height: 26px;
+            width: 26px;
+            border-radius: 9999px;
+            background: #f97316;
+            border: 3px solid #1c1917;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #1c1917;
+            transition: transform 0.15s ease;
+        }
+
+        /* Ambient Hero Glow */
+        .hero-ambient-glow {
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.16) 0%, rgba(249, 115, 22, 0) 70%);
+        }
+
+        /* Hide scrollbars in horizontal pill containers */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Bottom safe area spacing */
+        .pb-safe {
+            padding-bottom: max(1.25rem, calc(var(--sab) + 0.75rem));
+        }
+    </style>
+    
+    <!-- Embedded Base64 Assets for Offline / Fallback Rendering -->
+    <script src="./showcase_assets.js"></script>
+    <script>
+        function handleImgError(imgEl, key) {
+            imgEl.onerror = null;
+            if (typeof TAPAU_SCREENSHOTS !== 'undefined' && TAPAU_SCREENSHOTS && TAPAU_SCREENSHOTS[key]) {
+                imgEl.src = TAPAU_SCREENSHOTS[key];
+            } else {
+                const fallbacks = {
+                    'tt_01': './tt_01.jpg',
+                    'tt_02': './tt_02.jpg',
+                    'tt_03': './tt_03.jpg',
+                    'tt_04': './tt_04.jpg',
+                    'growth_1': './growth_feature_1.png',
+                    'growth_2': './growth_feature_2.png'
+                };
+                imgEl.src = fallbacks[key] || './tt_01.jpg';
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-50 text-stone-900 antialiased selection:bg-orange-500 selection:text-white flex flex-col min-h-screen pb-20 md:pb-0">
+
+    <!-- ========================================================================= -->
+    <!-- TOP NAVIGATION BAR -->
+    <!-- ========================================================================= -->
+    <nav class="flex items-center justify-between px-3.5 sm:px-6 py-2.5 sm:py-3.5 bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-stone-200">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-2 group tap-tactile">
+            <div class="h-8 w-8 sm:h-9 sm:w-9 bg-white rounded-xl flex items-center justify-center p-0.5 border-2 border-stone-900 shadow-hard-sm group-hover:scale-105 transition-transform">
+                <img src="./icons/tapau-logo.png" alt="Tapau Time Logo" class="h-full w-full object-contain" width="36" height="36">
+            </div>
+            <span class="text-lg sm:text-xl font-black tracking-tight text-stone-900 uppercase">Tapau Time</span>
+        </a>
+
+        <!-- Desktop Links -->
+        <div class="hidden md:flex items-center gap-8 font-bold text-stone-600">
+            <a href="#features" class="hover:text-orange-500 transition-colors">How it Works</a>
+            <a href="#calculator" class="hover:text-orange-500 transition-colors">Savings Calculator</a>
+            <a href="#pricing" class="hover:text-orange-500 transition-colors">Pricing</a>
+            <a href="#faq" class="hover:text-orange-500 transition-colors">FAQ</a>
+            <a href="https://app.tapautime.my" data-link="shop" target="_blank" class="text-orange-600 hover:text-orange-700 font-extrabold flex items-center gap-1">
+                <span>Customer App</span>
+                <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+            </a>
+            <a href="https://kds.tapautime.my" data-link="admin" class="bg-stone-900 text-white px-5 py-2 rounded-full hover:bg-orange-500 transition-all shadow-hard-sm hover:translate-y-0.5 hover:shadow-none flex items-center gap-2 tap-tactile text-sm">
+                <span class="material-symbols-outlined text-[18px]">storefront</span>
+                <span>Merchant Login</span>
+            </a>
+        </div>
+
+        <!-- Mobile Menu Toggle Button & Quick Demo Pill -->
+        <div class="md:hidden flex items-center gap-2">
+            <a href="https://app.tapautime.my" data-link="shop" target="_blank" class="px-2.5 py-1 rounded-lg bg-orange-100 text-orange-700 text-xs font-black border border-orange-200 tap-tactile flex items-center gap-1">
+                <span>Demo</span>
+                <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+            </a>
+            <button onclick="toggleMobileMenu()" aria-label="Toggle Navigation Menu" class="p-1.5 text-stone-900 rounded-lg hover:bg-stone-100 tap-tactile flex items-center justify-center">
+                <span id="menu-icon" class="material-symbols-outlined text-2xl">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Dropdown Glass Sheet -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white/98 backdrop-blur-xl border-b-2 border-stone-200 px-5 py-4 space-y-3 z-40 sticky top-14 shadow-2xl transition-all">
+        <div class="flex flex-col space-y-2 font-extrabold text-stone-700 text-sm">
+            <a href="#features" onclick="toggleMobileMenu()" class="block py-2 hover:text-orange-500 border-b border-stone-100 flex items-center justify-between">
+                <span>How it Works</span>
+                <span class="material-symbols-outlined text-stone-400 text-sm">chevron_right</span>
+            </a>
+            <a href="#calculator" onclick="toggleMobileMenu()" class="block py-2 hover:text-orange-500 border-b border-stone-100 flex items-center justify-between">
+                <span>Savings Calculator</span>
+                <span class="material-symbols-outlined text-stone-400 text-sm">chevron_right</span>
+            </a>
+            <a href="#pricing" onclick="toggleMobileMenu()" class="block py-2 hover:text-orange-500 border-b border-stone-100 flex items-center justify-between">
+                <span>Pricing Plans</span>
+                <span class="material-symbols-outlined text-stone-400 text-sm">chevron_right</span>
+            </a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="block py-2 hover:text-orange-500 border-b border-stone-100 flex items-center justify-between">
+                <span>Merchant FAQ</span>
+                <span class="material-symbols-outlined text-stone-400 text-sm">chevron_right</span>
+            </a>
+            <a href="https://app.tapautime.my" data-link="shop" target="_blank" class="py-2 text-orange-600 flex items-center justify-between font-black">
+                <span class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-orange-500 text-lg">smartphone</span>
+                    <span>Live Customer App Demo</span>
+                </span>
+                <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+            </a>
+        </div>
+        <div class="pt-2 border-t border-stone-100 flex flex-col gap-2">
+            <a href="https://kds.tapautime.my" data-link="admin" class="w-full text-center bg-stone-900 text-white py-3 rounded-xl font-black text-sm shadow-hard-sm tap-tactile flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">storefront</span>
+                <span>Merchant Sign In</span>
+            </a>
+            <button onclick="toggleMobileMenu(); openBookingModal('General')" class="w-full text-center bg-orange-500 text-white py-3 rounded-xl font-black text-sm shadow-hard-sm tap-tactile border-2 border-stone-900 flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">rocket_launch</span>
+                <span>Book Free Setup (24h)</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- HERO SECTION -->
+    <!-- ========================================================================= -->
+    <section class="px-4 sm:px-6 pt-5 pb-10 sm:py-16 md:py-24 max-w-7xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center flex-1">
+        <div class="space-y-4 sm:space-y-6">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.12] text-stone-900 tracking-tight">
+                Skip the queue. <br/>
+                <span class="text-orange-500 underline decoration-stone-900 decoration-wavy decoration-2 sm:decoration-4">Keep the profit.</span>
+            </h1>
+            
+            <p class="text-base sm:text-lg md:text-xl text-stone-600 font-semibold leading-relaxed max-w-lg">
+                The <span class="font-black italic text-stone-900">zero-friction</span> dine-in and order-ahead web platform.
+            </p>
+
+            <!-- Hero Feature List (Compact & Clean) -->
+            <div class="flex flex-col gap-2 sm:gap-2.5 text-stone-800 font-extrabold text-sm sm:text-base md:text-lg">
+                <div class="flex items-center gap-2.5">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 fill-current shrink-0" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 60 L32 100 L100 0 C 62 42 42 65 27 77 Z"/>
+                    </svg>
+                    <span>app-<span class="italic font-black text-stone-900">less</span> <span class="text-xs text-stone-500 font-semibold">(no download required)</span></span>
+                </div>
+                <div class="flex items-center gap-2.5">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 fill-current shrink-0" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 60 L32 100 L100 0 C 62 42 42 65 27 77 Z"/>
+                    </svg>
+                    <span>hassle-<span class="italic font-black text-stone-900">less</span> <span class="text-xs text-stone-500 font-semibold">(direct kitchen sync)</span></span>
+                </div>
+                <div class="flex items-center gap-2.5">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 fill-current shrink-0" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 60 L32 100 L100 0 C 62 42 42 65 27 77 Z"/>
+                    </svg>
+                    <span>friction-<span class="italic font-black text-stone-900">less</span> <span class="text-xs text-stone-500 font-semibold">(DuitNow & eWallets)</span></span>
+                </div>
+            </div>
+            
+            <!-- Action CTAs & Profit Test Funnel Entry -->
+            <div class="flex flex-col gap-2.5 pt-1">
+                <p class="text-stone-700 text-xs sm:text-sm font-extrabold">Get a <span class="font-black italic text-stone-900 underline">free audit</span> to see how much profit you're leaving on the table</p>
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <button onclick="openProfitTestModal()" class="flex-1 bg-orange-500 text-white text-sm sm:text-base font-black px-4 sm:px-6 py-3.5 rounded-xl sm:rounded-2xl shadow-hard hover:translate-y-1 hover:shadow-hard-sm transition-all flex items-center justify-center gap-2 border-2 border-stone-900 tap-tactile">
+                        <span class="material-symbols-outlined text-[20px] sm:text-[22px]">insights</span>
+                        <span>CLAIM FREE AUDIT</span>
+                    </button>
+                    <a href="#calculator" aria-label="Savings Calculator" class="shrink-0 bg-white text-stone-900 text-xs sm:text-sm font-black p-3.5 sm:px-5 py-3.5 rounded-xl sm:rounded-2xl shadow-hard-sm border-2 border-stone-900 hover:bg-stone-100 transition-all flex items-center justify-center gap-1.5 tap-tactile">
+                        <span class="material-symbols-outlined text-[20px] sm:text-[18px]">calculate</span>
+                        <span class="hidden sm:inline">Calculator</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Trust Badges (3-Column Equal Grid on Mobile, Flex on Desktop) -->
+            <div class="grid grid-cols-3 gap-1.5 sm:flex sm:flex-wrap sm:items-center sm:gap-6 pt-2 text-[10px] sm:text-xs font-extrabold text-stone-500 border-t border-stone-200 text-center sm:text-left">
+                <div class="flex items-center justify-center sm:justify-start gap-1">
+                    <span class="material-symbols-outlined text-emerald-600 text-[15px] sm:text-[16px]">check_circle</span>
+                    <span>No App Download</span>
+                </div>
+                <div class="flex items-center justify-center sm:justify-start gap-1">
+                    <span class="material-symbols-outlined text-emerald-600 text-[15px] sm:text-[16px]">check_circle</span>
+                    <span>0% Delivery Cut</span>
+                </div>
+                <div class="flex items-center justify-center sm:justify-start gap-1">
+                    <span class="material-symbols-outlined text-emerald-600 text-[15px] sm:text-[16px]">check_circle</span>
+                    <span>Live Order Tracker</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hero Interactive Showcase (Mobile 2x2 Segmented Grid / Desktop 3D Stack) -->
+        <div class="relative mx-auto w-full max-w-xl lg:max-w-2xl select-none flex flex-col items-center justify-center mt-2 sm:mt-0">
+            
+            <!-- Ambient Radial Glow Backdrop -->
+            <div class="absolute -inset-4 sm:-inset-6 hero-ambient-glow rounded-[3.5rem] pointer-events-none"></div>
+
+            <!-- 4-Phone Stacked Deck Canvas Container -->
+            <div class="relative w-full min-h-[400px] sm:min-h-[480px] md:min-h-[540px] flex items-center justify-center p-2 sm:p-4">
+                
+                <!-- CARD 4 (Backmost Center Layer - tt_04.jpg - VIP Rewards) -->
+                <div id="stack-card-4" onclick="bringCardToFront('tt_04', '4. VIP Rewards')" class="hidden sm:block absolute top-2 w-[180px] sm:w-[235px] h-[360px] sm:h-[470px] rounded-[2.2rem] sm:rounded-[2.5rem] border-4 border-stone-800 bg-stone-950 overflow-hidden shadow-xl z-10 transform scale-90 -translate-y-6 opacity-70 transition-all duration-500 cursor-pointer hover:opacity-100">
+                    <img id="stack-img-4" src="./tt_04.jpg" onerror="handleImgError(this, 'tt_04')" alt="VIP Rewards View" class="w-full h-full object-cover" width="235" height="470">
+                </div>
+
+                <!-- CARD 3 (Left Fanned Layer - tt_03.jpg - Order App) -->
+                <div id="stack-card-3" onclick="bringCardToFront('tt_03', '3. Order Ahead App')" class="hidden sm:block absolute left-2 sm:left-8 top-6 w-[190px] sm:w-[245px] h-[380px] sm:h-[490px] rounded-[2.2rem] sm:rounded-[2.5rem] border-4 border-stone-800 bg-stone-950 overflow-hidden shadow-2xl z-20 transform -rotate-6 -translate-x-4 hover:-rotate-3 transition-all duration-500 opacity-85 cursor-pointer hover:opacity-100">
+                    <img id="stack-img-3" src="./tt_03.jpg" onerror="handleImgError(this, 'tt_03')" alt="Order App View" class="w-full h-full object-cover" width="245" height="490">
+                </div>
+
+                <!-- CARD 2 (Right Fanned Layer - tt_02.jpg - Dine-In QR) -->
+                <div id="stack-card-2" onclick="bringCardToFront('tt_02', '2. Table QR Flow')" class="hidden sm:block absolute right-2 sm:right-8 top-6 w-[190px] sm:w-[245px] h-[380px] sm:h-[490px] rounded-[2.2rem] sm:rounded-[2.5rem] border-4 border-stone-800 bg-stone-950 overflow-hidden shadow-2xl z-30 transform rotate-6 translate-x-4 hover:rotate-3 transition-all duration-500 opacity-90 cursor-pointer hover:opacity-100">
+                    <img id="stack-img-2" src="./tt_02.jpg" onerror="handleImgError(this, 'tt_02')" alt="Dine-In QR View" class="w-full h-full object-cover" width="245" height="490">
+                </div>
+
+                <!-- CARD 1 (MAIN FRONT TOP PHONE CARD - tt_01.jpg - Kitchen KDS) -->
+                <div id="stack-card-1" class="relative w-[215px] sm:w-[260px] md:w-[270px] h-[430px] sm:h-[510px] md:h-[540px] rounded-[2.4rem] sm:rounded-[2.8rem] border-[4px] sm:border-[6px] border-orange-500 bg-stone-950 overflow-hidden shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)] z-40 transform hover:scale-[1.02] transition-all duration-500 ring-4 ring-orange-500/20">
+                    <!-- Dynamic Phone Notch / Island -->
+                    <div class="absolute top-2.5 left-1/2 -translate-x-1/2 w-20 sm:w-24 h-3.5 sm:h-4 bg-black rounded-full z-50 border border-stone-800 flex items-center justify-center">
+                        <div class="w-2 h-2 rounded-full bg-stone-900 border border-stone-700 ml-auto mr-2.5"></div>
+                    </div>
+                    
+                    <!-- Full Screenshot -->
+                    <img id="stack-img-1" src="./tt_01.jpg" onerror="handleImgError(this, 'tt_01')" alt="Main Kitchen KDS View" class="w-full h-full object-cover transition-opacity duration-300" width="270" height="540">
+                    
+                    <!-- Active Label Tag Pill on Phone -->
+                    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-stone-900/95 backdrop-blur-md px-3 py-1 rounded-full border border-orange-500/50 text-[10px] sm:text-[11px] font-black text-orange-400 uppercase tracking-wider shadow-lg z-50 flex items-center gap-1.5 shrink-0 whitespace-nowrap">
+                        <span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-ping"></span>
+                        <span id="stack-active-label">1. Kitchen KDS</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- RANSOM BANNER SECTION -->
+    <!-- ========================================================================= -->
+    <section class="relative bg-stone-950 text-white border-y-4 sm:border-y-8 border-orange-500 overflow-hidden">
+        <!-- Background Video with poster fallback -->
+        <video autoplay loop muted playsinline poster="./growth_feature_1.png" preload="metadata" class="w-full h-auto block opacity-30 pointer-events-none">
+            <source src="./Q Skip.mp4" type="video/mp4">
+        </video>
+        <!-- Dark Overlay Container -->
+        <div class="absolute inset-0 bg-stone-950/75 backdrop-blur-[1px] flex items-center justify-center p-4 sm:p-6 text-center">
+            <div class="max-w-4xl mx-auto space-y-2.5 sm:space-y-4 z-10">
+                <div class="w-10 h-10 sm:w-14 sm:h-14 bg-stone-800/90 rounded-2xl flex items-center justify-center mx-auto border-2 border-stone-700 rotate-3 shadow-xl backdrop-blur-md">
+                    <span class="material-symbols-outlined text-xl sm:text-3xl text-orange-500">percent</span>
+                </div>
+                <h2 class="text-xl sm:text-3xl md:text-5xl font-black leading-tight text-white tracking-tight drop-shadow-md">Stop losing 30% to delivery apps.</h2>
+                <p class="text-xs sm:text-base md:text-xl text-stone-200 max-w-2xl mx-auto leading-relaxed font-semibold drop-shadow-sm">
+                    When your regular customer is walking into your shop, sitting at your table, or driving by to tapau, you shouldn't be paying aggregators a 30% commission.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- EVERYTHING YOU NEED FOR YOUR GROWTH (OPERATIONS & ANALYTICS SHOWCASE) -->
+    <!-- ========================================================================= -->
+    <section id="features" class="py-12 sm:py-20 px-4 sm:px-6 bg-white border-b-2 border-stone-200">
+        <div class="max-w-7xl mx-auto space-y-10 sm:space-y-16">
+            
+            <!-- Section Header -->
+            <div class="text-center space-y-2.5 sm:space-y-3">
+                <h2 class="text-2xl sm:text-4xl md:text-5xl font-black text-stone-900 tracking-tight">
+                    Everything you need for your growth
+                </h2>
+                <p class="text-sm sm:text-base md:text-lg text-stone-500 font-bold max-w-2xl mx-auto leading-relaxed">
+                    From real-time thermal receipt printing & order auditing to hourly peak-time sales heatmaps and automated revenue analytics.
+                </p>
+            </div>
+
+            <!-- Two High-Impact Feature Showcase Cards Grid -->
+            <div class="grid lg:grid-cols-2 gap-6 sm:gap-10">
+                
+                <!-- FEATURE 1: Order History & Thermal Receipts -->
+                <div class="bg-stone-900 text-white rounded-3xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-10 border-4 border-stone-800 shadow-2xl flex flex-col justify-between hover:border-orange-500/80 transition-all duration-300 group">
+                    <div class="space-y-4 sm:space-y-6">
+                        <!-- Top Header Row -->
+                        <div class="flex items-center justify-end">
+                            <span class="text-xs font-bold text-stone-400 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[16px] text-emerald-400">print</span>
+                                <span>Thermal Receipt Ready</span>
+                            </span>
+                        </div>
+
+                        <!-- Title & Description -->
+                        <div class="space-y-2">
+                            <h3 class="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight">
+                                Order History & Thermal Receipts
+                            </h3>
+                            <p class="text-stone-300 font-medium text-xs sm:text-sm md:text-base leading-relaxed">
+                                Audit past fulfilled, cancelled, and refunded orders with full itemized breakdown. Print physical receipts directly via USB/Bluetooth thermal printers or search order history in real time.
+                            </p>
+                        </div>
+
+                        <!-- Feature Bullet Pills -->
+                        <div class="grid grid-cols-2 gap-2 sm:gap-2.5 pt-1">
+                            <div class="bg-stone-950 p-2.5 sm:p-3 rounded-xl border border-stone-800 flex items-center gap-2 text-xs font-bold text-stone-300">
+                                <span class="material-symbols-outlined text-orange-400 text-[16px] sm:text-[18px]">receipt_long</span>
+                                <span>Thermal Print</span>
+                            </div>
+                            <div class="bg-stone-950 p-2.5 sm:p-3 rounded-xl border border-stone-800 flex items-center gap-2 text-xs font-bold text-stone-300">
+                                <span class="material-symbols-outlined text-orange-400 text-[16px] sm:text-[18px]">payments</span>
+                                <span>TNG & DuitNow</span>
+                            </div>
+                        </div>
+
+                        <!-- Dashboard Screenshot Frame Container -->
+                        <div class="relative rounded-2xl overflow-hidden border-2 border-stone-800 bg-stone-950 shadow-2xl group-hover:border-stone-700 transition-colors mt-3">
+                            <div class="bg-stone-950 px-3 py-1.5 flex items-center justify-between border-b border-stone-800">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                                    <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                </div>
+                                <span class="text-[9px] sm:text-[10px] font-mono text-stone-400">kds.tapautime.my/history</span>
+                            </div>
+                            <img src="./growth_feature_1.png" onerror="handleImgError(this, 'growth_1')" alt="Order History & Thermal Receipts Dashboard" class="w-full h-auto object-cover hover:scale-[1.01] transition-transform duration-500" loading="lazy" width="600" height="350">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FEATURE 2: Operations & Sales Analytics -->
+                <div class="bg-stone-900 text-white rounded-3xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-10 border-4 border-stone-800 shadow-2xl flex flex-col justify-between hover:border-orange-500/80 transition-all duration-300 group">
+                    <div class="space-y-4 sm:space-y-6">
+                        <!-- Top Header Row -->
+                        <div class="flex items-center justify-end">
+                            <span class="text-xs font-bold text-stone-400 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[16px] text-emerald-400">analytics</span>
+                                <span>Real-time GMV</span>
+                            </span>
+                        </div>
+
+                        <!-- Title & Description -->
+                        <div class="space-y-2">
+                            <h3 class="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight">
+                                Operations & Sales Analytics
+                            </h3>
+                            <p class="text-stone-300 font-medium text-xs sm:text-sm md:text-base leading-relaxed">
+                                Track gross sales (GMV), monitor peak-hour rush distribution heatmaps (12pm–2pm), analyze takeaway vs dine-in order channel splits, and track your top-selling hawker signature dishes.
+                            </p>
+                        </div>
+
+                        <!-- Feature Bullet Pills -->
+                        <div class="grid grid-cols-2 gap-2 sm:gap-2.5 pt-1">
+                            <div class="bg-stone-950 p-2.5 sm:p-3 rounded-xl border border-stone-800 flex items-center gap-2 text-xs font-bold text-stone-300">
+                                <span class="material-symbols-outlined text-orange-400 text-[16px] sm:text-[18px]">bar_chart</span>
+                                <span>Rush Heatmap</span>
+                            </div>
+                            <div class="bg-stone-950 p-2.5 sm:p-3 rounded-xl border border-stone-800 flex items-center gap-2 text-xs font-bold text-stone-300">
+                                <span class="material-symbols-outlined text-orange-400 text-[16px] sm:text-[18px]">pie_chart</span>
+                                <span>Dine-in vs Tapau</span>
+                            </div>
+                        </div>
+
+                        <!-- Dashboard Screenshot Frame Container -->
+                        <div class="relative rounded-2xl overflow-hidden border-2 border-stone-800 bg-stone-950 shadow-2xl group-hover:border-stone-700 transition-colors mt-3">
+                            <div class="bg-stone-950 px-3 py-1.5 flex items-center justify-between border-b border-stone-800">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                                    <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                </div>
+                                <span class="text-[9px] sm:text-[10px] font-mono text-stone-400">kds.tapautime.my/analytics</span>
+                            </div>
+                            <img src="./growth_feature_2.png" onerror="handleImgError(this, 'growth_2')" alt="Operations & Sales Analytics Dashboard" class="w-full h-auto object-cover hover:scale-[1.01] transition-transform duration-500" loading="lazy" width="600" height="350">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 4-PILLAR PRODUCT DEMO SHOWCASE GRID -->
+    <!-- ========================================================================= -->
+    <section id="product-showcase" class="py-12 sm:py-20 px-4 sm:px-6 bg-stone-900 text-white border-b-8 border-orange-500 relative overflow-hidden">
+        
+        <!-- Ambient Background Glows -->
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-orange-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-orange-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto relative z-10 space-y-10 sm:space-y-16">
+            
+            <!-- Section Header -->
+            <div class="text-center space-y-2.5 sm:space-y-3">
+                <h2 class="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-white">
+                    The Tapau Engine. <span class="text-orange-500">Every Angle Showcase.</span>
+                </h2>
+                <p class="text-xs sm:text-base md:text-lg text-stone-400 font-semibold max-w-xl mx-auto">
+                    Built to delight hungry customers and supercharge hawker kitchen throughput with 0% commission.
+                </p>
+            </div>
+
+            <!-- Alternating Horizontal Showcase Cards Stack -->
+            <div class="space-y-6 sm:space-y-10">
+                
+                <!-- CONTAINER 1: Customer Takeaway App (tt_01.jpg - Picture on RIGHT) -->
+                <div class="bg-stone-950/90 border-2 border-stone-800 rounded-3xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 shadow-2xl overflow-hidden relative group hover:border-orange-500/60 transition-all duration-300">
+                    <div class="grid md:grid-cols-12 gap-5 md:gap-10 items-center">
+                        <!-- Left Details Column -->
+                        <div class="md:col-span-6 space-y-3 sm:space-y-4">
+                            <div class="flex items-center justify-start">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-stone-800/80 border border-stone-700 text-orange-400 flex items-center justify-center font-bold shadow-sm group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                                    <span class="material-symbols-outlined text-[18px] sm:text-[20px]">takeout_dining</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <h3 class="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight">
+                                    Skip the Queue, Not the Meal
+                                </h3>
+                                <p class="text-stone-300 font-medium text-xs sm:text-sm md:text-base leading-relaxed">
+                                    Order and pay ahead right from your phone, then walk in and pick up. No more standing in line to grab your food.
+                                </p>
+                            </div>
+
+                            <ul class="space-y-2 pt-1 font-bold text-stone-300 text-xs sm:text-sm">
+                                <li class="flex items-center gap-2.5">
+                                    <div class="w-6 h-6 rounded-md bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0 border border-orange-500/30 text-xs">
+                                        📱
+                                    </div>
+                                    <span>Order ahead for pickup in just a few taps</span>
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <div class="w-6 h-6 rounded-md bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0 border border-orange-500/30 text-xs">
+                                        🎁
+                                    </div>
+                                    <span>Earn rewards every time you order</span>
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <div class="w-6 h-6 rounded-md bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0 border border-orange-500/30 text-xs">
+                                        🔔
+                                    </div>
+                                    <span>Get notified the moment your order's ready</span>
+                                </li>
+                            </ul>
+
+                            <div class="pt-1">
+                                <a href="https://app.tapautime.my" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 sm:py-3 rounded-xl bg-orange-500 hover:bg-orange-400 text-white font-black text-xs sm:text-sm shadow-md transition-all tap-tactile">
+                                    <span>Try Customer App</span>
+                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Right Screenshot Preview Window -->
+                        <div class="md:col-span-6">
+                            <div class="rounded-2xl overflow-hidden border-2 border-stone-800 bg-stone-900 shadow-2xl group-hover:border-stone-700 transition-colors">
+                                <div class="bg-stone-900 px-3.5 py-1.5 flex items-center justify-between border-b border-stone-800">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                    </div>
+                                    <span class="text-[9px] sm:text-[10px] font-mono text-stone-400">kds.tapautime.my</span>
+                                    <span class="material-symbols-outlined text-stone-400 text-[13px]">verified</span>
+                                </div>
+                                <div class="bg-stone-950 p-3 sm:p-5 flex items-center justify-center border-t border-stone-800">
+                                    <div class="max-w-[210px] sm:max-w-[260px] w-full rounded-2xl overflow-hidden border-2 border-stone-800/80 shadow-2xl bg-black">
+                                        <img src="./tt_01.jpg" onerror="handleImgError(this, 'tt_01')" alt="Kitchen KDS View" class="w-full h-auto object-contain block" loading="lazy" width="260" height="520">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTAINER 2: DISCOVERY & ORDERING (tt_04.jpg - Picture on LEFT on Desktop) -->
+                <div class="bg-stone-950/90 border-2 border-stone-800 rounded-3xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 shadow-2xl overflow-hidden relative group hover:border-orange-500/60 transition-all duration-300">
+                    <div class="grid md:grid-cols-12 gap-5 md:gap-10 items-center">
+                        <!-- Left Screenshot Preview Window -->
+                        <div class="md:col-span-6 order-2 md:order-1">
+                            <div class="rounded-2xl overflow-hidden border-2 border-stone-800 bg-stone-900 shadow-2xl group-hover:border-stone-700 transition-colors">
+                                <div class="bg-stone-900 px-3.5 py-1.5 flex items-center justify-between border-b border-stone-800">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                    </div>
+                                    <span class="text-[9px] sm:text-[10px] font-mono text-stone-400">app.tapautime.my</span>
+                                    <span class="material-symbols-outlined text-stone-400 text-[13px]">verified</span>
+                                </div>
+                                <div class="bg-stone-950 p-3 sm:p-5 flex items-center justify-center border-t border-stone-800">
+                                    <div class="max-w-[210px] sm:max-w-[260px] w-full rounded-2xl overflow-hidden border-2 border-stone-800/80 shadow-2xl bg-black">
+                                        <img src="./tt_04.jpg" onerror="handleImgError(this, 'tt_04')" alt="Discovery & Ordering View" class="w-full h-auto object-contain block" loading="lazy" width="260" height="520">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Details Column -->
+                        <div class="md:col-span-6 space-y-3 sm:space-y-4 order-1 md:order-2">
+                            <div class="flex items-center justify-start">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-stone-800/80 border border-stone-700 text-orange-400 flex items-center justify-center font-bold shadow-sm group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                                    <span class="material-symbols-outlined text-[18px] sm:text-[20px]">search</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <h3 class="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight">
+                                    Every Hawker Stall, One Tap Away
+                                </h3>
+                                <p class="text-stone-300 font-medium text-xs sm:text-sm md:text-base leading-relaxed">
+                                    Customers search, filter, and order from their favorite stalls in seconds. Fast pickup times and halal filters help them find exactly what they're craving.
+                                </p>
+                            </div>
+
+                            <ul class="space-y-2 pt-1 font-bold text-stone-300 text-xs sm:text-sm">
+                                <li class="flex items-center gap-2.5">
+                                    <div class="w-6 h-6 rounded-md bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0 border border-orange-500/30 text-xs">
+                                        🔍
+                                    </div>
+                                    <span>Search by dish, stall, or cuisine</span>
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <div class="w-6 h-6 rounded-md bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0 border border-orange-500/30 text-xs">
+                                        ⚡
+                                    </div>
+                                    <span>Filter by fast pickup time or halal friendly</span>
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <div class="w-6 h-6 rounded-md bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0 border border-orange-500/30 text-xs">
+                                        🥡
+                                    </div>
+                                    <span>Choose takeaway or dine-in in one tap</span>
+                                </li>
+                            </ul>
+
+                            <div class="pt-1">
+                                <a href="https://app.tapautime.my" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 sm:py-3 rounded-xl bg-orange-500 hover:bg-orange-400 text-white font-black text-xs sm:text-sm shadow-md transition-all tap-tactile">
+                                    <span>Browse Stalls Near You</span>
+                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTAINER 3: CUSTOMER RETENTION ENGINE (tt_03.jpg - Picture on RIGHT) -->
+                <div class="bg-stone-950/90 border-2 border-stone-800 rounded-3xl md:rounded-[2.5rem] p-4 sm:p-8 md:p-10 shadow-2xl overflow-hidden relative group hover:border-orange-500/60 transition-all duration-300">
+                    <div class="grid md:grid-cols-12 gap-5 md:gap-10 items-center">
+                        <!-- Left Details Column -->
+                        <div class="md:col-span-6 space-y-3 sm:space-y-4">
+                            <div class="flex items-center justify-start">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-stone-800/80 border border-stone-700 text-orange-400 flex items-center justify-center font-bold shadow-sm group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                                    <span class="material-symbols-outlined text-[18px] sm:text-[20px]">card_membership</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <h3 class="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight">
+                                    Tapau VIP Stamp Card & Vouchers
+                                </h3>
+                                <p class="text-stone-300 font-medium text-xs sm:text-sm md:text-base leading-relaxed">
+                                    Turn one-time diners into loyal regulars with automated stamp cards (Buy 5 meals, get 1 Free Teh Tarik) and exclusive cashback vouchers.
+                                </p>
+                            </div>
+
+                            <ul class="space-y-2 pt-1 font-bold text-stone-300 text-xs sm:text-sm">
+                                <li class="flex items-center gap-2.5">
+                                    <div class="w-6 h-6 rounded-md bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0 border border-orange-500/30 text-xs">
+                                        💳
+                                    </div>
+                                    <span>Digital stamp cards on customer phone</span>
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <div class="w-6 h-6 rounded-md bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0 border border-orange-500/30 text-xs">
+                                        🎟️
+                                    </div>
+                                    <span>Custom RM5 OFF promo vouchers</span>
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <div class="w-6 h-6 rounded-md bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0 border border-orange-500/30 text-xs">
+                                        ⭐
+                                    </div>
+                                    <span>VIP Gold Member tier progression</span>
+                                </li>
+                            </ul>
+
+                            <div class="pt-1">
+                                <a href="https://app.tapautime.my" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 sm:py-3 rounded-xl bg-orange-500 hover:bg-orange-400 text-white font-black text-xs sm:text-sm shadow-md transition-all tap-tactile">
+                                    <span>Explore VIP Rewards</span>
+                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Right Screenshot Preview Window -->
+                        <div class="md:col-span-6">
+                            <div class="rounded-2xl overflow-hidden border-2 border-stone-800 bg-stone-900 shadow-2xl group-hover:border-stone-700 transition-colors">
+                                <div class="bg-stone-900 px-3.5 py-1.5 flex items-center justify-between border-b border-stone-800">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                    </div>
+                                    <span class="text-[9px] sm:text-[10px] font-mono text-stone-400">app.tapautime.my</span>
+                                    <span class="material-symbols-outlined text-stone-400 text-[13px]">verified</span>
+                                </div>
+                                <div class="bg-stone-950 p-3 sm:p-5 flex items-center justify-center border-t border-stone-800">
+                                    <div class="max-w-[210px] sm:max-w-[260px] w-full rounded-2xl overflow-hidden border-2 border-stone-800/80 shadow-2xl bg-black">
+                                        <img src="./tt_03.jpg" onerror="handleImgError(this, 'tt_03')" alt="Order App View" class="w-full h-auto object-contain block" loading="lazy" width="260" height="520">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- INTERACTIVE 30% COMMISSION SAVINGS CALCULATOR -->
+    <!-- ========================================================================= -->
+    <section id="calculator" class="py-12 sm:py-20 px-4 sm:px-6 bg-stone-100 border-b-2 border-stone-200">
+        <div class="max-w-4xl mx-auto bg-white rounded-3xl md:rounded-[2.5rem] border-4 border-stone-900 p-5 sm:p-8 md:p-12 shadow-hard-lg">
+            
+            <div class="text-center mb-6 sm:mb-10 space-y-2 sm:space-y-3">
+                <h2 class="text-2xl sm:text-3xl md:text-5xl font-black text-stone-900">Calculate Your Monthly Savings</h2>
+                <p class="text-stone-500 font-bold text-xs sm:text-sm md:text-base max-w-xl mx-auto">See how much profit you rescue every single month by shifting dine-in and tapau orders away from 30% aggregator commissions.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 sm:gap-10 items-center">
+                <!-- Controls -->
+                <div class="space-y-5">
+                    <div>
+                        <div class="flex justify-between items-center mb-1.5 font-black text-stone-800 text-xs sm:text-sm md:text-base">
+                            <span>Daily Tapau / Dine-in Orders:</span>
+                            <span id="calc-orders-label" class="text-base sm:text-lg md:text-xl text-orange-600 font-black">40 orders/day</span>
+                        </div>
+                        <input type="range" id="calc-orders" min="5" max="250" value="40" step="5" class="w-full h-3 bg-stone-200 rounded-lg appearance-none cursor-pointer" oninput="calculateSavings()">
+                        <div class="flex justify-between text-[10px] sm:text-[11px] font-bold text-stone-400 mt-1">
+                            <span>5 orders</span>
+                            <span>100 orders</span>
+                            <span>250 orders</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-1.5 font-black text-stone-800 text-xs sm:text-sm md:text-base">
+                            <span>Average Ticket Size:</span>
+                            <span id="calc-ticket-label" class="text-base sm:text-lg md:text-xl text-orange-600 font-black">RM 22.00</span>
+                        </div>
+                        <input type="range" id="calc-ticket" min="5" max="80" value="22" step="1" class="w-full h-3 bg-stone-200 rounded-lg appearance-none cursor-pointer" oninput="calculateSavings()">
+                        <div class="flex justify-between text-[10px] sm:text-[11px] font-bold text-stone-400 mt-1">
+                            <span>RM 5</span>
+                            <span>RM 40</span>
+                            <span>RM 80</span>
+                        </div>
+                    </div>
+
+                    <!-- Confirmation Tag -->
+                    <div class="p-3.5 bg-orange-50 border-2 border-orange-200 rounded-2xl text-xs font-bold text-stone-900 leading-relaxed flex items-start gap-2">
+                        <span class="text-base">💡</span>
+                        <span>Aggregators take <strong>30%</strong> of your revenue on every order. Tapau Time charges a flat monthly fee with <strong>0% commission cut</strong>.</span>
+                    </div>
+                </div>
+
+                <!-- Savings Output Card -->
+                <div class="bg-stone-900 text-white rounded-3xl p-5 sm:p-8 border-4 border-stone-900 shadow-xl flex flex-col justify-between text-center space-y-5 sm:space-y-6">
+                    <div>
+                        <span class="text-[10px] sm:text-xs font-black uppercase tracking-widest text-orange-400 block mb-1">Your Rescued Profit</span>
+                        <div class="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight" id="calc-monthly-savings">
+                            RM 7,920
+                        </div>
+                        <span class="text-[11px] sm:text-xs font-bold text-stone-400 block mt-1">saved every single month</span>
+                    </div>
+
+                    <div class="border-t border-stone-800 pt-3 sm:pt-4 space-y-2 text-xs font-bold text-stone-300">
+                        <div class="flex justify-between">
+                            <span>Monthly Gross Sales:</span>
+                            <span id="calc-gross-sales" class="text-white font-black">RM 26,400</span>
+                        </div>
+                        <div class="flex justify-between text-red-400">
+                            <span>Lost to 30% Commission:</span>
+                            <span id="calc-lost-commission" class="font-black">- RM 7,920</span>
+                        </div>
+                        <div class="flex justify-between text-emerald-400 border-t border-stone-800 pt-2 text-xs sm:text-sm">
+                            <span>Annual Net Savings:</span>
+                            <span id="calc-annual-savings" class="font-black">RM 95,040 / yr</span>
+                        </div>
+                    </div>
+
+                    <button onclick="openBookingModal('Calculator')" class="w-full py-3.5 sm:py-4 rounded-xl sm:rounded-2xl bg-orange-500 text-white font-black text-sm sm:text-base hover:bg-orange-400 transition-all shadow-hard-sm border-2 border-stone-900 tap-tactile flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-[18px] sm:text-[20px]">savings</span>
+                        <span>Rescue My Margins Now</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- PRICING HERO SECTION (PARTNER PLAN - ZERO RISK MODEL) -->
+    <!-- ========================================================================= -->
+    <section id="pricing" class="py-14 sm:py-24 px-4 sm:px-6 bg-stone-50">
+        <div class="max-w-7xl mx-auto space-y-10 sm:space-y-14">
+            
+            <!-- Section Headers -->
+            <div class="text-center space-y-3 max-w-3xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-stone-900 tracking-tight">Zero Risk. One Simple Rate.</h2>
+                <p class="text-sm sm:text-base md:text-lg text-stone-500 font-bold leading-relaxed">No setup fees. No monthly subscriptions. Keep 100% of your hard-earned sales.</p>
+            </div>
+
+            <!-- Single Prominent Centered Partner Plan Card -->
+            <div class="max-w-3xl mx-auto w-full pt-4">
+                <div class="relative bg-stone-950 p-6 sm:p-10 md:p-14 rounded-3xl md:rounded-[2.5rem] border-2 border-orange-500/30 shadow-2xl shadow-orange-950/40 flex flex-col items-center text-center transition-all hover:border-orange-500/50">
+                    
+                    <!-- Ambient Glow (Clipped inside rounded card shape) -->
+                    <div class="absolute inset-0 rounded-3xl md:rounded-[2.5rem] overflow-hidden pointer-events-none">
+                        <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl"></div>
+                    </div>
+
+                    <!-- Top Floating Badge (Unclipped with high contrast) -->
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-5 sm:px-6 py-1.5 rounded-full text-[10px] sm:text-[11px] font-black uppercase tracking-widest shadow-lg shadow-orange-500/30 border-2 border-stone-900 flex items-center gap-1.5 whitespace-nowrap z-20">
+                        <span class="material-symbols-outlined text-[15px]">verified</span>
+                        <span>ALL-INCLUSIVE</span>
+                    </div>
+
+                    <!-- Card Header -->
+                    <div class="pt-2 sm:pt-3 mb-1">
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight">Partner Plan</h3>
+                        <p class="text-stone-400 font-bold text-xs sm:text-sm mt-1">Everything your business need</p>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="my-4 sm:my-6 flex items-baseline justify-center">
+                        <span class="text-2xl sm:text-3xl font-extrabold text-stone-400 mr-1.5">RM</span>
+                        <span class="text-6xl sm:text-7xl md:text-8xl font-black text-white tracking-tight">0</span>
+                        <span class="text-stone-400 font-bold text-base sm:text-xl ml-2">/month</span>
+                    </div>
+
+                    <!-- The Guarantees -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-4 mb-7 w-full">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-900/90 border border-emerald-500/30 text-xs sm:text-sm font-extrabold shadow-sm">
+                            <span class="material-symbols-outlined text-emerald-400 text-[18px] sm:text-[20px]">check_circle</span>
+                            <span class="text-stone-100">RM 0 One-time Setup</span>
+                        </div>
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-900/90 border border-emerald-500/30 text-xs sm:text-sm font-extrabold shadow-sm">
+                            <span class="material-symbols-outlined text-emerald-400 text-[18px] sm:text-[20px]">check_circle</span>
+                            <span class="text-stone-100">RM 0 Monthly Fee</span>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="border-t border-stone-800/80 mb-7 sm:mb-8 max-w-xl mx-auto w-full"></div>
+
+                    <!-- Features List (Two-Column Clean Grid) -->
+                    <div class="grid sm:grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-10 max-w-2xl mx-auto w-full mb-8 sm:mb-10 text-left">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-orange-500 text-[20px] sm:text-[22px] shrink-0">check_circle</span>
+                            <span class="text-stone-200 font-extrabold text-xs sm:text-sm md:text-base">Kitchen Display System (KDS) & Audio Alerts</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-orange-500 text-[20px] sm:text-[22px] shrink-0">check_circle</span>
+                            <span class="text-stone-200 font-extrabold text-xs sm:text-sm md:text-base">Self-Serve Table QR Generator</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-orange-500 text-[20px] sm:text-[22px] shrink-0">check_circle</span>
+                            <span class="text-stone-200 font-extrabold text-xs sm:text-sm md:text-base">Real-time Analytics & Automated Payouts</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-orange-500 text-[20px] sm:text-[22px] shrink-0">check_circle</span>
+                            <span class="text-stone-200 font-extrabold text-xs sm:text-sm md:text-base">Zero-fee Cash & Dine-in Support</span>
+                        </div>
+                        <div class="flex items-center gap-3 sm:col-span-2 sm:justify-center">
+                            <span class="material-symbols-outlined text-orange-500 text-[20px] sm:text-[22px] shrink-0">check_circle</span>
+                            <span class="text-stone-200 font-extrabold text-xs sm:text-sm md:text-base">Automated Merchant Onboarding</span>
+                        </div>
+                    </div>
+
+                    <!-- Call to Action (CTA) Button -->
+                    <div class="max-w-md mx-auto w-full">
+                        <a href="https://kds.tapautime.my/onboarding" data-link="onboarding" class="w-full py-4 sm:py-4.5 px-6 rounded-2xl bg-orange-500 hover:bg-orange-400 text-white font-black text-base sm:text-lg border-2 border-stone-900 shadow-hard-sm hover:shadow-hard-md transition-all tap-tactile flex items-center justify-center gap-2 group/btn">
+                            <span>Sign Up Today</span>
+                            <span class="material-symbols-outlined text-[20px] sm:text-[22px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                        <p class="text-stone-400 text-[11px] sm:text-xs font-bold mt-3">Instant activation • No credit card required • Zero risk</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAPAUTIME MERCHANT FAQ SECTION -->
+    <!-- ========================================================================= -->
+    <section id="faq" class="py-14 sm:py-24 px-4 sm:px-6 bg-white border-t-2 border-stone-200">
+        <div class="max-w-4xl mx-auto space-y-8 sm:space-y-12">
+            
+            <!-- Section Header -->
+            <div class="text-center space-y-3">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-stone-900 tracking-tight">TapauTime Merchant FAQ</h2>
+                <p class="text-sm sm:text-base md:text-lg text-stone-500 font-bold leading-relaxed max-w-2xl mx-auto">Clear answers on how TapauTime works, zero-cost operations, hardware requirements, and automated payouts.</p>
+            </div>
+
+            <!-- FAQ Accordion List -->
+            <div class="space-y-4">
+                
+                <!-- Q1 -->
+                <details class="group bg-stone-50 hover:bg-white open:bg-white rounded-2xl sm:rounded-3xl border-2 border-stone-900 shadow-hard-sm transition-all overflow-hidden" open>
+                    <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none font-black text-stone-900 text-base sm:text-lg list-none [&::-webkit-details-marker]:hidden">
+                        <div class="flex items-center gap-3.5 sm:gap-4 pr-3">
+                            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-orange-500 text-white font-black text-xs sm:text-sm flex items-center justify-center border border-stone-900 shrink-0">1</span>
+                            <span>What is TapauTime?</span>
+                        </div>
+                        <span class="material-symbols-outlined text-stone-400 group-open:rotate-180 group-open:text-orange-500 transition-transform duration-200 text-xl sm:text-2xl shrink-0">expand_more</span>
+                    </summary>
+                    <div class="px-5 sm:px-6 pb-5 sm:pb-6 text-stone-600 font-bold text-sm sm:text-base leading-relaxed border-t border-stone-200/80 pt-4">
+                        TapauTime is a digital ordering and kitchen management platform built specifically for independent F&amp;B stalls and kopitiams. We provide you with table QR ordering, a Kitchen Display System (KDS), and automated payouts, all without the fees of traditional delivery apps.
+                    </div>
+                </details>
+
+                <!-- Q2 -->
+                <details class="group bg-stone-50 hover:bg-white open:bg-white rounded-2xl sm:rounded-3xl border-2 border-stone-900 shadow-hard-sm transition-all overflow-hidden">
+                    <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none font-black text-stone-900 text-base sm:text-lg list-none [&::-webkit-details-marker]:hidden">
+                        <div class="flex items-center gap-3.5 sm:gap-4 pr-3">
+                            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-orange-500 text-white font-black text-xs sm:text-sm flex items-center justify-center border border-stone-900 shrink-0">2</span>
+                            <span>How much does TapauTime cost?</span>
+                        </div>
+                        <span class="material-symbols-outlined text-stone-400 group-open:rotate-180 group-open:text-orange-500 transition-transform duration-200 text-xl sm:text-2xl shrink-0">expand_more</span>
+                    </summary>
+                    <div class="px-5 sm:px-6 pb-5 sm:pb-6 text-stone-600 font-bold text-sm sm:text-base leading-relaxed border-t border-stone-200/80 pt-4">
+                        Zero setup fees, zero hardware costs, and zero monthly subscriptions. We charge a flat 5% fee on completed orders to customers. You keep 100% of your sales.
+                    </div>
+                </details>
+
+                <!-- Q3 -->
+                <details class="group bg-stone-50 hover:bg-white open:bg-white rounded-2xl sm:rounded-3xl border-2 border-stone-900 shadow-hard-sm transition-all overflow-hidden">
+                    <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none font-black text-stone-900 text-base sm:text-lg list-none [&::-webkit-details-marker]:hidden">
+                        <div class="flex items-center gap-3.5 sm:gap-4 pr-3">
+                            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-orange-500 text-white font-black text-xs sm:text-sm flex items-center justify-center border border-stone-900 shrink-0">3</span>
+                            <span>Do my customers need to download an app?</span>
+                        </div>
+                        <span class="material-symbols-outlined text-stone-400 group-open:rotate-180 group-open:text-orange-500 transition-transform duration-200 text-xl sm:text-2xl shrink-0">expand_more</span>
+                    </summary>
+                    <div class="px-5 sm:px-6 pb-5 sm:pb-6 text-stone-600 font-bold text-sm sm:text-base leading-relaxed border-t border-stone-200/80 pt-4">
+                        No app download is required. Your customers simply scan the physical QR code on their table (or click your store link for takeaway), browse your menu, and place their order directly through their phone's web browser.
+                    </div>
+                </details>
+
+                <!-- Q4 -->
+                <details class="group bg-stone-50 hover:bg-white open:bg-white rounded-2xl sm:rounded-3xl border-2 border-stone-900 shadow-hard-sm transition-all overflow-hidden">
+                    <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none font-black text-stone-900 text-base sm:text-lg list-none [&::-webkit-details-marker]:hidden">
+                        <div class="flex items-center gap-3.5 sm:gap-4 pr-3">
+                            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-orange-500 text-white font-black text-xs sm:text-sm flex items-center justify-center border border-stone-900 shrink-0">4</span>
+                            <span>Do I need to buy expensive POS hardware?</span>
+                        </div>
+                        <span class="material-symbols-outlined text-stone-400 group-open:rotate-180 group-open:text-orange-500 transition-transform duration-200 text-xl sm:text-2xl shrink-0">expand_more</span>
+                    </summary>
+                    <div class="px-5 sm:px-6 pb-5 sm:pb-6 text-stone-600 font-bold text-sm sm:text-base leading-relaxed border-t border-stone-200/80 pt-4">
+                        Not at all. TapauTime is entirely cloud-based. Your Kitchen Display System (KDS) and merchant dashboard run perfectly on any standard tablet, smartphone, or laptop you already own.
+                    </div>
+                </details>
+
+                <!-- Q5 -->
+                <details class="group bg-stone-50 hover:bg-white open:bg-white rounded-2xl sm:rounded-3xl border-2 border-stone-900 shadow-hard-sm transition-all overflow-hidden">
+                    <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none font-black text-stone-900 text-base sm:text-lg list-none [&::-webkit-details-marker]:hidden">
+                        <div class="flex items-center gap-3.5 sm:gap-4 pr-3">
+                            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-orange-500 text-white font-black text-xs sm:text-sm flex items-center justify-center border border-stone-900 shrink-0">5</span>
+                            <span>How do I get paid?</span>
+                        </div>
+                        <span class="material-symbols-outlined text-stone-400 group-open:rotate-180 group-open:text-orange-500 transition-transform duration-200 text-xl sm:text-2xl shrink-0">expand_more</span>
+                    </summary>
+                    <div class="px-5 sm:px-6 pb-5 sm:pb-6 text-stone-600 font-bold text-sm sm:text-base leading-relaxed border-t border-stone-200/80 pt-4">
+                        Your payouts are 100% automated. All digital payments collected from your customers are batched and settled directly to your registered Malaysian bank account. It takes 5-7 business working days for your payouts to be settled.
+                    </div>
+                </details>
+
+                <!-- Q6 -->
+                <details class="group bg-stone-50 hover:bg-white open:bg-white rounded-2xl sm:rounded-3xl border-2 border-stone-900 shadow-hard-sm transition-all overflow-hidden">
+                    <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none font-black text-stone-900 text-base sm:text-lg list-none [&::-webkit-details-marker]:hidden">
+                        <div class="flex items-center gap-3.5 sm:gap-4 pr-3">
+                            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-orange-500 text-white font-black text-xs sm:text-sm flex items-center justify-center border border-stone-900 shrink-0">6</span>
+                            <span>What payment methods can my customers use?</span>
+                        </div>
+                        <span class="material-symbols-outlined text-stone-400 group-open:rotate-180 group-open:text-orange-500 transition-transform duration-200 text-xl sm:text-2xl shrink-0">expand_more</span>
+                    </summary>
+                    <div class="px-5 sm:px-6 pb-5 sm:pb-6 text-stone-600 font-bold text-sm sm:text-base leading-relaxed border-t border-stone-200/80 pt-4">
+                        We only accept Online Banking (FPX), and E-Wallets only. No cash.
+                    </div>
+                </details>
+
+                <!-- Q7 -->
+                <details class="group bg-stone-50 hover:bg-white open:bg-white rounded-2xl sm:rounded-3xl border-2 border-stone-900 shadow-hard-sm transition-all overflow-hidden">
+                    <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none font-black text-stone-900 text-base sm:text-lg list-none [&::-webkit-details-marker]:hidden">
+                        <div class="flex items-center gap-3.5 sm:gap-4 pr-3">
+                            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-orange-500 text-white font-black text-xs sm:text-sm flex items-center justify-center border border-stone-900 shrink-0">7</span>
+                            <span>It gets incredibly loud in my kitchen. Will I miss orders?</span>
+                        </div>
+                        <span class="material-symbols-outlined text-stone-400 group-open:rotate-180 group-open:text-orange-500 transition-transform duration-200 text-xl sm:text-2xl shrink-0">expand_more</span>
+                    </summary>
+                    <div class="px-5 sm:px-6 pb-5 sm:pb-6 text-stone-600 font-bold text-sm sm:text-base leading-relaxed border-t border-stone-200/80 pt-4">
+                        No. We built the TapauTime KDS specifically for noisy kopitiam environments. The system features a loud, built-in audio chime that alerts you the second a new ticket drops in, so you can stay focused on the wok.
+                    </div>
+                </details>
+
+                <!-- Q8 -->
+                <details class="group bg-stone-50 hover:bg-white open:bg-white rounded-2xl sm:rounded-3xl border-2 border-stone-900 shadow-hard-sm transition-all overflow-hidden">
+                    <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none font-black text-stone-900 text-base sm:text-lg list-none [&::-webkit-details-marker]:hidden">
+                        <div class="flex items-center gap-3.5 sm:gap-4 pr-3">
+                            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-orange-500 text-white font-black text-xs sm:text-sm flex items-center justify-center border border-stone-900 shrink-0">8</span>
+                            <span>Do I need to register for SST to use this?</span>
+                        </div>
+                        <span class="material-symbols-outlined text-stone-400 group-open:rotate-180 group-open:text-orange-500 transition-transform duration-200 text-xl sm:text-2xl shrink-0">expand_more</span>
+                    </summary>
+                    <div class="px-5 sm:px-6 pb-5 sm:pb-6 text-stone-600 font-bold text-sm sm:text-base leading-relaxed border-t border-stone-200/80 pt-4">
+                        For the vast majority of hawkers, no. In Malaysia, F&amp;B operators only need to register for Sales and Service Tax (SST) if their stall's revenue exceeds RM 1.5 million a year. Unless you hit that threshold, the food you sell remains SST-free for your customers.
+                    </div>
+                </details>
+
+                <!-- Q9 -->
+                <details class="group bg-stone-50 hover:bg-white open:bg-white rounded-2xl sm:rounded-3xl border-2 border-stone-900 shadow-hard-sm transition-all overflow-hidden">
+                    <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none font-black text-stone-900 text-base sm:text-lg list-none [&::-webkit-details-marker]:hidden">
+                        <div class="flex items-center gap-3.5 sm:gap-4 pr-3">
+                            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-orange-500 text-white font-black text-xs sm:text-sm flex items-center justify-center border border-stone-900 shrink-0">9</span>
+                            <span>Is TapauTime available everywhere in Malaysia?</span>
+                        </div>
+                        <span class="material-symbols-outlined text-stone-400 group-open:rotate-180 group-open:text-orange-500 transition-transform duration-200 text-xl sm:text-2xl shrink-0">expand_more</span>
+                    </summary>
+                    <div class="px-5 sm:px-6 pb-5 sm:pb-6 text-stone-600 font-bold text-sm sm:text-base leading-relaxed border-t border-stone-200/80 pt-4">
+                        Unfortunately, no. At this moment, TapauTime is only available in East Malaysia.
+                    </div>
+                </details>
+
+                <!-- Q10 -->
+                <details class="group bg-stone-50 hover:bg-white open:bg-white rounded-2xl sm:rounded-3xl border-2 border-stone-900 shadow-hard-sm transition-all overflow-hidden">
+                    <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none font-black text-stone-900 text-base sm:text-lg list-none [&::-webkit-details-marker]:hidden">
+                        <div class="flex items-center gap-3.5 sm:gap-4 pr-3">
+                            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-orange-500 text-white font-black text-xs sm:text-sm flex items-center justify-center border border-stone-900 shrink-0">10</span>
+                            <span>How long does it take to get my stall online?</span>
+                        </div>
+                        <span class="material-symbols-outlined text-stone-400 group-open:rotate-180 group-open:text-orange-500 transition-transform duration-200 text-xl sm:text-2xl shrink-0">expand_more</span>
+                    </summary>
+                    <div class="px-5 sm:px-6 pb-5 sm:pb-6 text-stone-600 font-bold text-sm sm:text-base leading-relaxed border-t border-stone-200/80 pt-4">
+                        Exactly 5 minutes to fill out the onboarding application form. Once submitted, our team will review your application. It will take 2-3 business working days to review and approve your application.
+                    </div>
+                </details>
+
+            </div>
+
+            <!-- Mini Bottom CTA Card -->
+            <div class="bg-stone-950 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center text-white border-2 border-stone-900 shadow-hard flex flex-col sm:flex-row items-center justify-between gap-5">
+                <div class="text-center sm:text-left space-y-1">
+                    <h3 class="text-lg sm:text-xl font-black tracking-tight">Ready to modernize your stall?</h3>
+                    <p class="text-stone-400 text-xs sm:text-sm font-bold">Takes only 5 minutes to submit your details with zero upfront risk.</p>
+                </div>
+                <a href="https://kds.tapautime.my/onboarding" data-link="onboarding" class="px-6 py-3.5 rounded-xl bg-orange-500 hover:bg-orange-400 text-white font-black text-sm border-2 border-stone-900 shadow-hard-sm tap-tactile flex items-center justify-center gap-2 shrink-0">
+                    <span>Register My Stall</span>
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- INTERACTIVE LEAD CAPTURE / BOOKING MODAL (BOTTOM SHEET ON MOBILE) -->
+    <!-- ========================================================================= -->
+    <div id="booking-modal" class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
+        <div class="bg-white rounded-t-3xl sm:rounded-3xl border-t-4 sm:border-4 border-stone-900 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+            <!-- Close button -->
+            <button onclick="closeBookingModal()" aria-label="Close Booking Window" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-800 flex items-center justify-center font-black tap-tactile">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+
+            <div class="text-center mb-5">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-2 border-2 border-orange-200">
+                    <span class="material-symbols-outlined text-xl sm:text-2xl">store</span>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-black text-stone-900">Book Your Free Setup</h3>
+                <p class="text-xs font-bold text-stone-500 mt-1">We'll get your digital menu and QR codes ready in 24 hours.</p>
+            </div>
+
+            <form id="setup-form" onsubmit="handleBookingSubmit(event)" class="space-y-3.5">
+                <div>
+                    <label class="block text-xs font-extrabold uppercase text-stone-700 mb-1">Your Name</label>
+                    <input type="text" id="book-name" required autocomplete="name" placeholder="e.g. Uncle Lim" class="w-full px-4 py-3 rounded-xl border-2 border-stone-200 focus:border-stone-900 focus:outline-none font-semibold text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold uppercase text-stone-700 mb-1">Shop / Stall Name</label>
+                    <input type="text" id="book-shop" required autocomplete="organization" placeholder="e.g. Hainan Kopitiam Hub" class="w-full px-4 py-3 rounded-xl border-2 border-stone-200 focus:border-stone-900 focus:outline-none font-semibold text-sm">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-extrabold uppercase text-stone-700 mb-1">Shop Type</label>
+                        <select id="book-type" class="w-full px-3 py-3 rounded-xl border-2 border-stone-200 focus:border-stone-900 focus:outline-none font-semibold text-xs bg-white">
+                            <option value="Kopitiam / Cafe">Kopitiam / Cafe</option>
+                            <option value="Hawker Stall">Hawker Stall</option>
+                            <option value="Bistro / Restaurant">Bistro / Restaurant</option>
+                            <option value="Food Truck / Kiosk">Food Truck / Kiosk</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold uppercase text-stone-700 mb-1">City / Town</label>
+                        <input type="text" id="book-city" required placeholder="e.g. Miri / Kuching" class="w-full px-4 py-3 rounded-xl border-2 border-stone-200 focus:border-stone-900 focus:outline-none font-semibold text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold uppercase text-stone-700 mb-1">Phone Number</label>
+                    <input type="tel" id="book-phone" inputmode="tel" autocomplete="tel" required placeholder="e.g. 012-888 9999" class="w-full px-4 py-3 rounded-xl border-2 border-stone-200 focus:border-stone-900 focus:outline-none font-semibold text-sm">
+                </div>
+
+                <input type="hidden" id="book-tier" value="General">
+
+                <button type="submit" id="book-submit-btn" class="w-full py-3.5 rounded-xl bg-orange-500 text-white font-black text-sm sm:text-base hover:bg-orange-600 border-2 border-stone-900 shadow-hard-sm transition-all mt-2 flex items-center justify-center gap-2 tap-tactile">
+                    <span class="material-symbols-outlined text-[18px]">send</span>
+                    <span>Submit & Claim Free Onboarding</span>
+                </button>
+            </form>
+
+            <div id="booking-success" class="hidden text-center py-6 space-y-3">
+                <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto border-2 border-emerald-300">
+                    <span class="material-symbols-outlined text-3xl">check</span>
+                </div>
+                <h4 class="text-xl sm:text-2xl font-black text-stone-900">Request Received!</h4>
+                <p class="text-xs font-bold text-stone-600 max-w-xs mx-auto">
+                    Thank you! Our onboarding specialist will contact you within 4 business hours to set up your store menu.
+                </p>
+                <div class="pt-2 flex flex-col gap-2">
+                    <a href="https://app.tapautime.my" data-link="shop" target="_blank" class="px-5 py-3 rounded-xl bg-stone-900 text-white font-black text-xs shadow-sm tap-tactile">
+                        Explore Customer Ordering Demo
+                    </a>
+                    <button onclick="closeBookingModal()" class="text-xs font-bold text-stone-500 hover:text-stone-900 py-1.5">
+                        Close Window
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- F&B PROFIT TEST POP-OUT MODAL -->
+    <!-- ========================================================================= -->
+    <div id="profit-test-modal" class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-stone-900/75 backdrop-blur-sm animate-fade-in overflow-y-auto">
+        <div class="bg-white border-t-4 sm:border-4 border-stone-900 rounded-t-3xl sm:rounded-3xl max-w-2xl w-full p-5 sm:p-8 shadow-2xl relative overflow-hidden text-stone-900 my-0 sm:my-auto max-h-[92vh] overflow-y-auto">
+            <!-- Modal Close Button -->
+            <button onclick="closeProfitTestModal()" aria-label="Close Quiz" class="absolute top-4 right-4 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-100 hover:bg-orange-500 hover:text-white text-stone-900 flex items-center justify-center font-black transition-all border-2 border-stone-900 z-20 tap-tactile">
+                <span class="material-symbols-outlined text-[18px] sm:text-[20px]">close</span>
+            </button>
+
+            <!-- Top Header & Progress Bar -->
+            <div class="mb-4 sm:mb-6 pr-10">
+                <div class="flex items-center gap-2 mb-1.5">
+                    <span class="material-symbols-outlined text-orange-500 text-lg">insights</span>
+                    <span class="text-xs uppercase font-black tracking-wider text-stone-900">
+                        F&B Profit Test
+                    </span>
+                </div>
+                <div class="w-full bg-stone-200 h-2 sm:h-2.5 rounded-full overflow-hidden mt-2 border border-stone-300">
+                    <div id="modal-profit-progress" class="bg-orange-500 h-full rounded-full transition-all duration-300 shadow-sm" style="width: 10%;"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Stage Container -->
+            <div id="modal-quiz-stage" class="space-y-5 min-h-[300px] sm:min-h-[360px] flex flex-col justify-between">
+                <div class="flex items-center justify-between text-xs font-bold">
+                    <span id="modal-q-badge" class="text-stone-800 uppercase font-black">Question 1 of 10</span>
+                    <span id="modal-q-percent" class="text-stone-500 font-semibold">10% Completed</span>
+                </div>
+
+                <div class="my-auto py-3">
+                    <h3 id="modal-q-text" class="text-lg sm:text-2xl md:text-3xl font-black text-stone-900 text-center leading-tight">
+                        Do delivery apps show your competitors' food right next to yours?
+                    </h3>
+                </div>
+
+                <div class="space-y-2.5 pt-2">
+                    <button onclick="handleModalAnswer(true)" class="w-full py-3.5 px-6 rounded-2xl bg-orange-500 hover:bg-orange-400 text-white font-black text-base sm:text-xl shadow-hard border-2 border-stone-900 transition-all tap-tactile flex items-center justify-center gap-2.5">
+                        <span class="material-symbols-outlined text-xl sm:text-2xl">check_circle</span>
+                        <span>YES</span>
+                    </button>
+                    <button onclick="handleModalAnswer(false)" class="w-full py-3.5 px-6 rounded-2xl bg-stone-100 hover:bg-stone-200 border-2 border-stone-900 text-stone-800 font-black text-base sm:text-xl shadow-hard-sm transition-all tap-tactile flex items-center justify-center gap-2.5">
+                        <span class="material-symbols-outlined text-xl sm:text-2xl text-stone-500">cancel</span>
+                        <span>NO</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lead Gate Stage Container -->
+            <div id="modal-gate-stage" class="hidden space-y-4 text-center">
+                <div class="space-y-1.5">
+                    <span class="material-symbols-outlined text-orange-500 text-4xl">insights</span>
+                    <h3 class="text-xl sm:text-2xl md:text-3xl font-black text-stone-900">Your Profit Score is Ready.</h3>
+                    <p class="text-stone-600 text-xs sm:text-sm font-semibold">Enter your details to reveal your cafe's profit leak breakdown.</p>
+                </div>
+
+                <div id="modal-gate-error" class="hidden p-3 rounded-xl bg-red-100 border-2 border-red-300 text-red-700 text-xs font-bold"></div>
+
+                <form onsubmit="handleModalGateSubmit(event)" class="space-y-3.5 text-left pt-1">
+                    <div>
+                        <label class="block text-xs uppercase font-extrabold text-stone-700 mb-1">Cafe Name</label>
+                        <input type="text" id="modal-cafe-name" required placeholder="e.g. Kopitiam Corner" class="w-full px-4 py-3 rounded-xl bg-stone-50 border-2 border-stone-200 text-stone-900 placeholder-stone-400 focus:outline-none focus:border-stone-900 font-semibold text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase font-extrabold text-stone-700 mb-1">Email Address</label>
+                        <input type="email" id="modal-email" required inputmode="email" autocomplete="email" placeholder="e.g. boss@mycafe.com" class="w-full px-4 py-3 rounded-xl bg-stone-50 border-2 border-stone-200 text-stone-900 placeholder-stone-400 focus:outline-none focus:border-stone-900 font-semibold text-sm">
+                    </div>
+                    <button type="submit" id="modal-gate-submit-btn" class="w-full py-3.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-black text-base sm:text-lg border-2 border-stone-900 shadow-hard transition-all flex items-center justify-center gap-2 mt-3 tap-tactile">
+                        <span>Reveal My Results</span>
+                        <span class="material-symbols-outlined text-lg sm:text-xl">arrow_forward</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Results Stage Container -->
+            <div id="modal-results-stage" class="hidden space-y-4 sm:space-y-6 text-center">
+                <div class="space-y-2">
+                    <span id="modal-res-badge" class="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full border-2 bg-amber-500 border-amber-600 text-white shadow-sm mx-auto">
+                        Moderate Risk Level
+                    </span>
+                    <h3 id="modal-res-title" class="text-xl sm:text-3xl md:text-4xl font-black text-stone-900 leading-tight">
+                        Serious Margin Leaks Detected
+                    </h3>
+                </div>
+
+                <div id="modal-res-box" class="p-5 rounded-2xl bg-amber-50 border-4 border-amber-500 space-y-1 shadow-md">
+                    <div id="modal-res-score" class="text-4xl sm:text-5xl md:text-6xl font-black text-amber-600 tracking-tight">70%</div>
+                    <p id="modal-res-label" class="text-stone-700 text-xs font-black uppercase tracking-wider">Profit Leak Risk</p>
+                </div>
+
+                <p id="modal-res-desc" class="text-stone-700 text-xs sm:text-sm md:text-base leading-relaxed font-bold">
+                    "You are leaving serious margin on the table. The delivery apps are taking a cut of your profits while keeping your customer data a secret."
+                </p>
+
+                <div class="pt-1">
+                    <button onclick="openConsultationForm()" class="w-full py-3.5 px-5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-black text-sm sm:text-lg border-2 border-stone-900 shadow-hard transition-all flex items-center justify-center gap-2 tap-tactile">
+                        <span>Boost your margins now</span>
+                        <span class="material-symbols-outlined text-lg sm:text-xl">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Consultation Form Stage Container -->
+            <div id="modal-consultation-stage" class="hidden space-y-3.5 text-left">
+                <div class="text-center space-y-1">
+                    <div class="w-10 h-10 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-1 border-2 border-orange-200">
+                        <span class="material-symbols-outlined text-xl">support_agent</span>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-black text-stone-900">Ready to boost your revenue?</h3>
+                    <p class="text-stone-600 text-xs font-semibold">Fill in your details below</p>
+                </div>
+
+                <div id="modal-consult-error" class="hidden p-3 rounded-xl bg-red-100 border-2 border-red-300 text-red-700 text-xs font-bold"></div>
+
+                <form onsubmit="handleConsultationSubmit(event)" class="space-y-3 pt-1">
+                    <div>
+                        <label class="block text-xs uppercase font-extrabold text-stone-700 mb-1">Name</label>
+                        <input type="text" id="consult-name" required autocomplete="name" placeholder="e.g. Alex Tan" class="w-full px-4 py-2.5 sm:py-3 rounded-xl bg-stone-50 border-2 border-stone-200 text-stone-900 placeholder-stone-400 focus:outline-none focus:border-stone-900 font-semibold text-sm">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase font-extrabold text-stone-700 mb-1">Company Name</label>
+                        <input type="text" id="consult-company" required autocomplete="organization" placeholder="e.g. Kopitiam Corner" class="w-full px-4 py-2.5 sm:py-3 rounded-xl bg-stone-50 border-2 border-stone-200 text-stone-900 placeholder-stone-400 focus:outline-none focus:border-stone-900 font-semibold text-sm">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase font-extrabold text-stone-700 mb-1">Email Address</label>
+                        <input type="email" id="consult-email" required inputmode="email" autocomplete="email" placeholder="e.g. boss@mycafe.com" class="w-full px-4 py-2.5 sm:py-3 rounded-xl bg-stone-50 border-2 border-stone-200 text-stone-900 placeholder-stone-400 focus:outline-none focus:border-stone-900 font-semibold text-sm">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase font-extrabold text-stone-700 mb-1">Profit Test Result</label>
+                        <div class="relative">
+                            <input type="text" id="consult-score" readonly class="w-full px-4 py-2.5 rounded-xl bg-amber-50 border-2 border-orange-400 text-stone-900 font-black text-xs sm:text-sm cursor-not-allowed">
+                            <span class="material-symbols-outlined absolute right-3 top-2.5 text-orange-500 text-lg">verified</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase font-extrabold text-stone-700 mb-1">Message</label>
+                        <textarea id="consult-body" rows="2" placeholder="Tell us about your cafe goals or questions..." class="w-full px-4 py-2.5 rounded-xl bg-stone-50 border-2 border-stone-200 text-stone-900 placeholder-stone-400 focus:outline-none focus:border-stone-900 font-semibold text-sm resize-none"></textarea>
+                    </div>
+
+                    <button type="submit" id="consult-submit-btn" class="w-full py-3.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-black text-sm sm:text-base border-2 border-stone-900 shadow-hard transition-all flex items-center justify-center gap-2 mt-2 tap-tactile">
+                        <span>Claim your free action plan</span>
+                        <span class="material-symbols-outlined text-lg">send</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Consultation Success Stage Container -->
+            <div id="modal-consult-success" class="hidden space-y-3 text-center py-4">
+                <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto border-2 border-emerald-300">
+                    <span class="material-symbols-outlined text-3xl">check</span>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-black text-stone-900">Request Submitted!</h3>
+                <p class="text-stone-600 text-xs sm:text-sm font-semibold max-w-sm mx-auto">
+                    Thank you! Our F&B specialists have received your details and test score. We will email you shortly.
+                </p>
+                <div class="pt-2">
+                    <button onclick="closeProfitTestModal()" class="w-full py-3 rounded-xl bg-stone-900 hover:bg-stone-800 text-white font-black text-sm border-2 border-stone-900 shadow-hard transition-all tap-tactile">
+                        Done & Close Window
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- STICKY MOBILE CONVERSION DOCK (VISIBLE ON MOBILE ONLY < 768px) -->
+    <!-- ========================================================================= -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-stone-950/95 backdrop-blur-md border-t-2 border-stone-800 px-3.5 py-2.5 flex items-center gap-2.5 pb-safe shadow-2xl">
+        <a href="https://app.tapautime.my" data-link="shop" target="_blank" class="flex-1 text-center bg-stone-800 hover:bg-stone-700 text-stone-100 py-2.5 rounded-xl font-extrabold text-xs border border-stone-700 flex items-center justify-center gap-1 tap-tactile">
+            <span class="material-symbols-outlined text-[16px] text-orange-400">play_circle</span>
+            <span>Demo</span>
+        </a>
+        <button onclick="openBookingModal('Mobile Dock')" class="flex-[1.4] text-center bg-orange-500 hover:bg-orange-600 text-white py-2.5 rounded-xl font-black text-xs border-2 border-stone-900 shadow-hard-sm flex items-center justify-center gap-1.5 tap-tactile">
+            <span class="material-symbols-outlined text-[16px]">bolt</span>
+            <span>Claim Free Setup</span>
+        </button>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- FOOTER -->
+    <!-- ========================================================================= -->
+    <footer class="bg-stone-950 text-stone-500 py-10 sm:py-16 px-4 sm:px-6 text-center border-t-4 border-stone-800 mt-auto">
+        <div class="max-w-4xl mx-auto space-y-5 sm:space-y-8">
+            <div class="flex flex-col items-center justify-center gap-2.5">
+                <div class="h-10 w-10 sm:h-12 sm:w-12 bg-white rounded-2xl flex items-center justify-center p-1 border-2 border-stone-700 shadow-md">
+                    <img src="./icons/tapau-logo.png" alt="Tapau Time Logo" class="h-full w-full object-contain" width="44" height="44">
+                </div>
+                <span class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">Tapau Time</span>
+            </div>
+            
+            <p class="text-xs sm:text-base font-semibold text-stone-400 max-w-md mx-auto">
+                Empowering Malaysian hawkers, cafes, and restaurants to take back their hard-earned margins.
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs font-extrabold text-stone-400">
+                <a href="https://app.tapautime.my" data-link="shop" class="hover:text-orange-400 transition-colors">Customer Ordering Demo</a>
+                <span class="hidden sm:inline">•</span>
+                <a href="https://kds.tapautime.my" data-link="admin" class="hover:text-orange-400 transition-colors">Merchant Portal</a>
+                <span class="hidden sm:inline">•</span>
+                <a href="#pricing" class="hover:text-orange-400 transition-colors">Pricing Plans</a>
+                <span class="hidden sm:inline">•</span>
+                <a href="#faq" class="hover:text-orange-400 transition-colors">Merchant FAQ</a>
+            </div>
+
+            <p class="text-[10px] sm:text-xs font-bold tracking-wider uppercase text-stone-600 border-t border-stone-900 pt-5">
+                &copy; <span id="year"></span> Operated by ZENNESIS (Miri, Sarawak). All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- ========================================================================= -->
+    <!-- JAVASCRIPT LOGIC & ANIMATION ENGINES -->
+    <!-- ========================================================================= -->
+    <script>
+        // Set dynamic copyright year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // 1. Dynamic 4-Card Stack Navigation
+        function bringCardToFront(targetKey, labelText) {
+            const keys = ['tt_01', 'tt_02', 'tt_03', 'tt_04'];
+            const reordered = [targetKey, ...keys.filter(k => k !== targetKey)];
+
+            const labelEl = document.getElementById('stack-active-label');
+            if (labelEl && labelText) labelEl.textContent = labelText;
+
+            // Animate card transitions
+            [1, 2, 3, 4].forEach((num, idx) => {
+                const imgEl = document.getElementById(`stack-img-${num}`);
+                const k = reordered[idx];
+                if (imgEl && k) {
+                    imgEl.style.opacity = '0';
+                    setTimeout(() => {
+                        if (typeof TAPAU_SCREENSHOTS !== 'undefined' && TAPAU_SCREENSHOTS && TAPAU_SCREENSHOTS[k]) {
+                            imgEl.src = TAPAU_SCREENSHOTS[k];
+                        } else {
+                            imgEl.src = `./${k}.jpg`;
+                        }
+                        imgEl.style.opacity = '1';
+                    }, 80 + num * 20);
+                }
+            });
+        }
+
+        // 2. Mobile Pricing Tab Switcher
+        function switchPricingTab(tier) {
+            const tabs = {
+                starter: document.getElementById('tab-pricing-starter'),
+                premium: document.getElementById('tab-pricing-premium'),
+                multi: document.getElementById('tab-pricing-multi')
+            };
+
+            const cards = {
+                starter: document.getElementById('pricing-card-starter'),
+                premium: document.getElementById('pricing-card-premium'),
+                multi: document.getElementById('pricing-card-multi')
+            };
+
+            Object.keys(tabs).forEach(t => {
+                if (tabs[t]) {
+                    if (t === tier) {
+                        tabs[t].className = 'pricing-tab-btn flex-1 py-2 text-xs font-black rounded-xl transition-all bg-stone-900 text-white shadow-sm tap-tactile';
+                    } else {
+                        tabs[t].className = 'pricing-tab-btn flex-1 py-2 text-xs font-black rounded-xl transition-all text-stone-600 tap-tactile';
+                    }
+                }
+
+                if (cards[t]) {
+                    if (t === tier) {
+                        cards[t].classList.remove('hidden');
+                        cards[t].classList.add('flex');
+                    } else {
+                        cards[t].classList.add('hidden');
+                        cards[t].classList.remove('flex');
+                    }
+                }
+            });
+        }
+
+        // 3. Smart Subdomain Links for Local vs Production
+        function initDomainLinks() {
+            const isProd = window.location.hostname.includes('tapautime.my');
+            const shopUrl = isProd ? 'https://app.tapautime.my' : './order.html';
+            const adminUrl = isProd ? 'https://kds.tapautime.my' : './merchant_login.html';
+            const homeUrl = isProd ? 'https://tapautime.my' : './index.html';
+            const onboardingUrl = isProd ? 'https://kds.tapautime.my/onboarding' : 'http://localhost:3001/onboarding';
+
+            document.querySelectorAll('[data-link="shop"]').forEach(el => el.href = shopUrl);
+            document.querySelectorAll('[data-link="admin"]').forEach(el => el.href = adminUrl);
+            document.querySelectorAll('[data-link="home"]').forEach(el => el.href = homeUrl);
+            document.querySelectorAll('[data-link="onboarding"]').forEach(el => el.href = onboardingUrl);
+        }
+        initDomainLinks();
+
+        // 4. Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.textContent = 'close';
+            } else {
+                menu.classList.add('hidden');
+                icon.textContent = 'menu';
+            }
+        }
+
+        // 5. Animated Number Counter Engine (Odometer Effect)
+        let lastSavings = 7920;
+        function animateValue(element, start, end, duration) {
+            if (!element) return;
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const current = Math.floor(progress * (end - start) + start);
+                element.textContent = `RM ${current.toLocaleString()}`;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // 6. Savings Calculator Calculation Engine
+        function calculateSavings() {
+            const orders = parseInt(document.getElementById('calc-orders').value, 10);
+            const ticket = parseFloat(document.getElementById('calc-ticket').value);
+
+            document.getElementById('calc-orders-label').textContent = `${orders} orders/day`;
+            document.getElementById('calc-ticket-label').textContent = `RM ${ticket.toFixed(2)}`;
+
+            const monthlyOrders = orders * 30;
+            const monthlyGross = monthlyOrders * ticket;
+            const lostCommission = monthlyGross * 0.30;
+            const tapauPlanCost = 98.00; // Premium Plan
+            const netMonthlySavings = Math.max(0, lostCommission - tapauPlanCost);
+            const annualSavings = netMonthlySavings * 12;
+
+            const savingsEl = document.getElementById('calc-monthly-savings');
+            animateValue(savingsEl, lastSavings, Math.round(netMonthlySavings), 200);
+            lastSavings = Math.round(netMonthlySavings);
+
+            document.getElementById('calc-gross-sales').textContent = `RM ${Math.round(monthlyGross).toLocaleString()}`;
+            document.getElementById('calc-lost-commission').textContent = `- RM ${Math.round(lostCommission).toLocaleString()}`;
+            document.getElementById('calc-annual-savings').textContent = `RM ${Math.round(annualSavings).toLocaleString()} / yr`;
+        }
+        calculateSavings();
+
+        // 7. Lead Capture Booking Modal Logic
+        function openBookingModal(tier = 'General') {
+            const modal = document.getElementById('booking-modal');
+            const tierInput = document.getElementById('book-tier');
+            if (tierInput) tierInput.value = tier;
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.getElementById('setup-form').classList.remove('hidden');
+                document.getElementById('booking-success').classList.add('hidden');
+                document.body.classList.add('overflow-hidden');
+            }
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('booking-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('book-submit-btn');
+            btn.disabled = true;
+            btn.innerHTML = `<span class="animate-spin material-symbols-outlined text-[18px]">progress_activity</span> Processing...`;
+
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = `<span class="material-symbols-outlined text-[18px]">send</span> <span>Submit & Claim Free Onboarding</span>`;
+                document.getElementById('setup-form').classList.add('hidden');
+                document.getElementById('booking-success').classList.remove('hidden');
+            }, 800);
+        }
+
+        // 8. F&B PROFIT TEST QUIZ ENGINE
+        const modalQuestions = [
+            { text: "Do delivery apps show your competitors' food right next to yours?", points: 10 },
+            { text: "Do you have to pay for \"boosts\" or ads just to be seen on the app?", points: 10 },
+            { text: "Are you losing thousands of Ringgit a month just to pay app fees?", points: 10 },
+            { text: "Did you have to raise your online prices just to survive the high fees?", points: 10 },
+            { text: "Are your high commission fees secretly funding the delivery app's reward program?", points: 12 },
+            { text: "After hundreds of online sales, do you still have zero customer phone numbers?", points: 12 },
+            { text: "Do takeaway and phone orders cause a messy traffic jam at your counter?", points: 8 },
+            { text: "Do customers complain about waiting too long to pick up their order?", points: 12 },
+            { text: "If you could keep 100% of your takeaway revenue, would your net profit significantly grow?", points: 8 },
+            { text: "Are you ready to own your customer database and launch automated stamp cards?", points: 8 }
+        ];
+
+        let modalCurrentIndex = 0;
+        let modalScore = 0;
+
+        function openProfitTestModal() {
+            modalCurrentIndex = 0;
+            modalScore = 0;
+            updateModalQuestionUI();
+            
+            document.getElementById('modal-quiz-stage').classList.remove('hidden');
+            document.getElementById('modal-gate-stage').classList.add('hidden');
+            document.getElementById('modal-results-stage').classList.add('hidden');
+            document.getElementById('modal-consultation-stage').classList.add('hidden');
+            document.getElementById('modal-consult-success').classList.add('hidden');
+
+            const modal = document.getElementById('profit-test-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            }
+        }
+
+        function closeProfitTestModal() {
+            const modal = document.getElementById('profit-test-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+
+        function updateModalQuestionUI() {
+            const q = modalQuestions[modalCurrentIndex];
+            const badgeEl = document.getElementById('modal-q-badge');
+            const percentEl = document.getElementById('modal-q-percent');
+            const textEl = document.getElementById('modal-q-text');
+            const progressBar = document.getElementById('modal-profit-progress');
+
+            const progressVal = Math.round(((modalCurrentIndex + 1) / modalQuestions.length) * 100);
+
+            if (badgeEl) badgeEl.textContent = `Question ${modalCurrentIndex + 1} of ${modalQuestions.length}`;
+            if (percentEl) percentEl.textContent = `${progressVal}% Completed`;
+            if (textEl) textEl.textContent = q.text;
+            if (progressBar) progressBar.style.width = `${progressVal}%`;
+        }
+
+        function handleModalAnswer(isYes) {
+            if (isYes) {
+                modalScore += modalQuestions[modalCurrentIndex].points;
+            }
+
+            if (modalCurrentIndex < modalQuestions.length - 1) {
+                modalCurrentIndex++;
+                updateModalQuestionUI();
+            } else {
+                const progressBar = document.getElementById('modal-profit-progress');
+                if (progressBar) progressBar.style.width = '100%';
+                showModalResults();
+            }
+        }
+
+        function showModalResults() {
+            const badgeEl = document.getElementById('modal-res-badge');
+            const titleEl = document.getElementById('modal-res-title');
+            const boxEl = document.getElementById('modal-res-box');
+            const scoreEl = document.getElementById('modal-res-score');
+            const labelEl = document.getElementById('modal-res-label');
+            const descEl = document.getElementById('modal-res-desc');
+
+            const finalScore = modalScore;
+            if (scoreEl) scoreEl.textContent = `${finalScore} / 100`;
+
+            if (finalScore <= 20) {
+                if (badgeEl) {
+                    badgeEl.className = 'inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full border-2 bg-emerald-600 border-emerald-700 text-white shadow-sm mx-auto';
+                    badgeEl.innerHTML = '<span class="material-symbols-outlined text-[16px]">verified</span> LOW RISK LEVEL';
+                }
+                if (titleEl) titleEl.textContent = 'You run a tight ship!';
+                if (boxEl) boxEl.className = 'p-5 rounded-2xl bg-emerald-50 border-4 border-emerald-500 space-y-1 shadow-sm';
+                if (scoreEl) scoreEl.className = 'text-4xl sm:text-5xl font-black text-emerald-600 tracking-tight';
+                if (labelEl) labelEl.textContent = 'PROFIT LEAK RISK';
+                if (descEl) descEl.textContent = '"You run a tight ship! But even small commission leaks add up over the year. Let\'s optimize your direct orders so you keep 100% of what you earn."';
+            } else if (finalScore <= 40) {
+                if (badgeEl) {
+                    badgeEl.className = 'inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full border-2 bg-amber-500 border-amber-600 text-white shadow-sm mx-auto';
+                    badgeEl.innerHTML = '<span class="material-symbols-outlined text-[16px]">warning</span> MODERATE RISK LEVEL';
+                }
+                if (titleEl) titleEl.textContent = '⚠️ Serious Margin Leaks Detected';
+                if (boxEl) boxEl.className = 'p-5 rounded-2xl bg-amber-50 border-4 border-amber-500 space-y-1 shadow-md';
+                if (scoreEl) scoreEl.className = 'text-4xl sm:text-5xl font-black text-amber-600 tracking-tight';
+                if (labelEl) labelEl.textContent = 'PROFIT LEAK RISK';
+                if (descEl) descEl.textContent = '"You are leaving serious margin on the table. The delivery apps are taking a cut of your profits while keeping your customer data a secret."';
+            } else {
+                if (badgeEl) {
+                    badgeEl.className = 'inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full border-2 bg-red-600 border-red-700 text-white shadow-md animate-pulse mx-auto';
+                    badgeEl.innerHTML = '<span class="material-symbols-outlined text-[16px]">warning</span> 🚨 CRITICAL SEVERE RISK';
+                }
+                if (titleEl) titleEl.textContent = '🚨 Red Alert: Severe Profit Loss!';
+                if (boxEl) boxEl.className = 'p-5 rounded-2xl bg-red-50 border-4 border-red-600 space-y-2 shadow-xl animate-pulse';
+                if (scoreEl) scoreEl.className = 'text-4xl sm:text-6xl font-black text-red-600 tracking-tight';
+                if (labelEl) labelEl.textContent = '⚠️ CRITICAL MARGIN RISK';
+                if (descEl) descEl.textContent = '"Red Alert: You are doing all the hard work in the kitchen, but the delivery apps are taking your profits and owning your customers. You need to take your brand back today."';
+            }
+
+            document.getElementById('modal-quiz-stage').classList.add('hidden');
+            document.getElementById('modal-results-stage').classList.remove('hidden');
+        }
+
+        function openConsultationForm() {
+            const finalScore = modalScore;
+            const riskText = finalScore <= 20 ? 'Low Risk Level' : finalScore <= 40 ? 'Moderate Risk Level' : 'Severe High Vulnerability';
+            const scoreInput = document.getElementById('consult-score');
+            if (scoreInput) scoreInput.value = `${finalScore} / 100 Profit Leak Risk (${riskText})`;
+            
+            document.getElementById('modal-results-stage').classList.add('hidden');
+            document.getElementById('modal-consultation-stage').classList.remove('hidden');
+        }
+
+        async function handleConsultationSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('consult-name').value.trim();
+            const company = document.getElementById('consult-company').value.trim();
+            const email = document.getElementById('consult-email').value.trim();
+            const body = document.getElementById('consult-body').value.trim();
+            const errorEl = document.getElementById('modal-consult-error');
+            const btn = document.getElementById('consult-submit-btn');
+
+            if (!name || !company || !email) {
+                if (errorEl) {
+                    errorEl.textContent = 'Please fill in your Name, Company Name, and Email Address.';
+                    errorEl.classList.remove('hidden');
+                }
+                return;
+            }
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<span class="animate-spin material-symbols-outlined text-[18px]">progress_activity</span> Submitting Request...`;
+            }
+
+            const payload = {
+                contact_name: name,
+                cafe_name: company,
+                email_address: email,
+                quiz_score: modalScore,
+                message_body: body
+            };
+
+            const SUPABASE_URL = "https://iaqohdvdebgxtfbxijsw.supabase.co";
+            const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlhcW9oZHZkZWJneHRmYnhpanN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwNzkyNjIsImV4cCI6MjEwMjY1NTI2Mn0.DFFY_o-wlxonj1mlHsHe3M9_ELGWtTmaqgc1iGr33WE";
+
+            try {
+                await fetch(`${SUPABASE_URL}/rest/v1/tapautime_leads`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(payload)
+                });
+            } catch (err) {
+                console.warn('Consultation submit fetch:', err);
+            }
+
+            document.getElementById('modal-consultation-stage').classList.add('hidden');
+            document.getElementById('modal-consult-success').classList.remove('hidden');
+        }
+
+        // Close modals on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeBookingModal();
+                closeProfitTestModal();
+            }
+        });
+    </script>
+</body>
+</html>

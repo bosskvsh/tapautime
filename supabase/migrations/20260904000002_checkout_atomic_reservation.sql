@@ -1,0 +1,174 @@
+-- =============================================================================
+-- Migration: 20260904000002_checkout_atomic_reservation.sql
+-- Description: Deadlock-free atomic inventory reservation & rollback RPCs
+-- Aligned with: architecture.md, architectureessentials.md, cloud.md
+-- =============================================================================
+
+-- =============================================================================
+-- 1. ATOMIC INVENTORY RESERVATION (Soft-lock & decrement before payment)
+-- =============================================================================
+
+CREATE OR REPLACE FUNCTION public.checkout_atomic_reservation(
+    p_items JSONB -- Array of items: [{"item_id": "...", "quantity": 1}, ...]
+)
+RETURNS JSONB AS $$
+DECLARE
+    v_item RECORD;
+    v_reserved_list JSONB := '[]'::jsonb;
+    v_expected_count INT;
+BEGIN
+    -- 1. Validate input presence
+    IF p_items IS NULL OR jsonb_array_length(p_items) = 0 THEN
+        RAISE EXCEPTION 'INVALID_ARGUMENT: Items array cannot be empty.';
+    END IF;
+
+    -- Count distinct valid item UUIDs requested
+    SELECT count(DISTINCT (COALESCE(elem->>'item_id', elem->>'id'))::UUID)
+    INTO v_expected_count
+    FROM jsonb_array_elements(p_items) AS elem
+    WHERE COALESCE(elem->>'item_id', elem->>'id') IS NOT NULL;
+
+    IF v_expected_count = 0 THEN
+        RAISE EXCEPTION 'INVALID_ARGUMENT: No valid item UUIDs provided.';
+    END IF;
+
+    -- 2. Consolidate quantities & sort by item_id to mathematically prevent deadlocks
+    -- Row-level locking (FOR UPDATE) is executed in deterministic alphabetical order
+    FOR v_item IN
+        WITH parsed_items AS (
+            SELECT 
+                (COALESCE(elem->>'item_id', elem->>'id'))::UUID AS item_id,
+                GREATEST(COALESCE((elem->>'quantity')::INT, (elem->>'qty')::INT, 1), 0) AS quantity
+            FROM jsonb_array_elements(p_items) AS elem
+        ),
+        aggregated_items AS (
+            SELECT 
+                item_id, 
+                SUM(quantity)::INT AS total_quantity
+            FROM parsed_items
+            WHERE item_id IS NOT NULL
+            GROUP BY item_id
+            ORDER BY item_id ASC
+        )
+        SELECT 
+            ai.item_id,
+            ai.total_quantity,
+            mi.name AS item_name,
+            mi.stock_quantity,
+            mi.is_available
+        FROM aggregated_items ai
+        JOIN public.menu_items mi ON mi.id = ai.item_id
+        FOR UPDATE OF mi -- Row-level lock acquired in ascending item_id order
+    LOOP
+        -- 3. Check item availability
+        IF NOT v_item.is_available THEN
+            RAISE EXCEPTION 'ITEM_UNAVAILABLE: Item "%" (%) is currently marked unavailable.', 
+                v_item.item_name, v_item.item_id;
+        END IF;
+
+        -- 4. Check stock threshold
+        IF v_item.stock_quantity < v_item.total_quantity THEN
+            RAISE EXCEPTION 'INSUFFICIENT_STOCK: Item "%" (%) only has % left in stock, but % was requested.',
+                v_item.item_name, v_item.item_id, v_item.stock_quantity, v_item.total_quantity;
+        END IF;
+
+        -- 5. Decrement stock atomically
+        UPDATE public.menu_items
+        SET 
+            stock_quantity = stock_quantity - v_item.total_quantity,
+            is_available = ((stock_quantity - v_item.total_quantity) > 0),
+            updated_at = now()
+        WHERE id = v_item.item_id;
+
+        -- 6. Collect reservation summary
+        v_reserved_list := v_reserved_list || jsonb_build_object(
+            'item_id', v_item.item_id,
+            'name', v_item.item_name,
+            'reserved_quantity', v_item.total_quantity,
+            'remaining_stock', v_item.stock_quantity - v_item.total_quantity
+        );
+    END LOOP;
+
+    -- 7. Ensure all requested items existed
+    IF jsonb_array_length(v_reserved_list) < v_expected_count THEN
+        RAISE EXCEPTION 'ITEM_NOT_FOUND: One or more requested menu items do not exist in menu_items.';
+    END IF;
+
+    -- 8. Return structured success payload for Edge Function
+    RETURN jsonb_build_object(
+        'success', true,
+        'reserved_count', jsonb_array_length(v_reserved_list),
+        'reserved_items', v_reserved_list,
+        'timestamp', now()
+    );
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
+
+-- =============================================================================
+-- 2. ATOMIC INVENTORY RELEASE (Rollback stock on payment cancellation/timeout)
+-- =============================================================================
+
+CREATE OR REPLACE FUNCTION public.release_atomic_reservation(
+    p_items JSONB -- Array of items: [{"item_id": "...", "quantity": 1}, ...]
+)
+RETURNS JSONB AS $$
+DECLARE
+    v_item RECORD;
+    v_released_list JSONB := '[]'::jsonb;
+BEGIN
+    IF p_items IS NULL OR jsonb_array_length(p_items) = 0 THEN
+        RETURN jsonb_build_object('success', true, 'released_count', 0, 'released_items', '[]'::jsonb);
+    END IF;
+
+    FOR v_item IN
+        WITH parsed_items AS (
+            SELECT 
+                (COALESCE(elem->>'item_id', elem->>'id'))::UUID AS item_id,
+                GREATEST(COALESCE((elem->>'quantity')::INT, (elem->>'qty')::INT, 1), 0) AS quantity
+            FROM jsonb_array_elements(p_items) AS elem
+        ),
+        aggregated_items AS (
+            SELECT 
+                item_id, 
+                SUM(quantity)::INT AS total_quantity
+            FROM parsed_items
+            WHERE item_id IS NOT NULL
+            GROUP BY item_id
+            ORDER BY item_id ASC
+        )
+        SELECT 
+            ai.item_id,
+            ai.total_quantity,
+            mi.name AS item_name,
+            mi.stock_quantity
+        FROM aggregated_items ai
+        JOIN public.menu_items mi ON mi.id = ai.item_id
+        FOR UPDATE OF mi -- Row-level lock in deterministic ascending order
+    LOOP
+        UPDATE public.menu_items
+        SET 
+            stock_quantity = stock_quantity + v_item.total_quantity,
+            is_available = true,
+            updated_at = now()
+        WHERE id = v_item.item_id;
+
+        v_released_list := v_released_list || jsonb_build_object(
+            'item_id', v_item.item_id,
+            'name', v_item.item_name,
+            'restored_quantity', v_item.total_quantity,
+            'restored_stock', v_item.stock_quantity + v_item.total_quantity
+        );
+    END LOOP;
+
+    RETURN jsonb_build_object(
+        'success', true,
+        'released_count', jsonb_array_length(v_released_list),
+        'released_items', v_released_list,
+        'timestamp', now()
+    );
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
+
+-- Grant execution permissions
+GRANT EXECUTE ON FUNCTION public.checkout_atomic_reservation(JSONB) TO anon, authenticated, service_role;
+GRANT EXECUTE ON FUNCTION public.release_atomic_reservation(JSONB) TO anon, authenticated, service_role;

@@ -1,0 +1,118 @@
+# CONTINUITY.md — TapauTime Engineering Continuity & Gate Tracker
+
+**Project:** TapauTime (Kopitiam Multi-Merchant Micro-Takeaway PWA)  
+**Current Phase:** Gate 4 (Execution & Verification Complete)  
+**Target Feature:** Curlec (Razorpay) Gateway Integration & Pure Takeaway (Tapau) Alignment  
+**Status:** Complete (Build passing, Curlec edge function + PWA modal active, Dine-in elements sanitized)  
+
+---
+
+## 1. Context & Architecture Alignment
+* **Curlec Two-Legged Pre-Creation:**
+  - Supabase Edge Function `checkout` creates server-side order at `https://api.razorpay.com/v1/orders` in sen (`Math.round(totalAmount * 100)`).
+  - PWA dynamically loads `https://checkout.razorpay.com/v1/checkout.js` and instantiates Razorpay modal with `#f97316` brand styling.
+  - Webhook `payment-webhook` verifies HMAC-SHA256 signature and captures `payment.captured` events.
+* **Customer PWA Pure Takeaway (Tapau) Alignment:**
+  - Customer PWA is strictly dedicated to takeaways ("tapau").
+  - Removed all dine-in badges, table numbers, and dine-in waivers from `CartDrawer.tsx` and `CheckoutScreen.tsx`.
+  - Added Zustand schema version migration (`version: 2`) in `useCartStore.ts` to automatically purge legacy `orderType: 'dine_in'` from client `localStorage`.
+* **Current Objective:** Modernize the entire ordering checkout loop across [`apps/customer-pwa/src/components/CartDrawer.tsx`](file:///c:/Users/cleve/OneDrive/Desktop/tapau%20time/apps/customer-pwa/src/components/CartDrawer.tsx) and [`apps/customer-pwa/src/screens/CheckoutScreen.tsx`](file:///c:/Users/cleve/OneDrive/Desktop/tapau%20time/apps/customer-pwa/src/screens/CheckoutScreen.tsx).
+* **Operational Requirements:**
+  1. Auntie-proof item management in Cart Drawer: Swipe-to-delete gesture, direct 44px+ trash confirmation, and jumbo stepper controls.
+  2. Dine-in vs. Tapau (Takeaway) segmented toggle with dynamic packaging fee calculation.
+  3. Transparent cost breakdown in both Cart Drawer and Checkout Screen (Subtotal, Packaging, Platform Fee Waived, Total).
+  4. Comprehensive order review on Checkout Screen (currently missing: customer cannot see ordered dishes before locking payment).
+  5. Agency-grade payment method selection: High-contrast cards for DuitNow QR, Online Banking, and Cash on Collection with active state styling.
+  6. Sticky high-contrast action bar for 'Place Order' with safe-area bottom padding and spring physics tactile confirmation.
+
+---
+
+## 2. Symbol Impact Mapping (Gate 2 - Completed)
+
+### 2.1 File & Symbol Footprint
+* [`apps/customer-pwa/src/components/CartDrawer.tsx`](file:///c:/Users/cleve/OneDrive/Desktop/tapau%20time/apps/customer-pwa/src/components/CartDrawer.tsx):
+  - `CartDrawer`: Sliding bottom sheet.
+  - `items`: List of `CartItem` entries with `selectedModifiers` and `specialInstructions`.
+  - `updateQuantity`: Decreasing to 0 removes items, but lacks direct deletion affordance or swipe gesture.
+  - Steppers: Currently 32x32px (`w-8 h-8`), below accessibility threshold. Needs 44px+ jumbo stepper.
+  - Pricing display: Currently only shows a single checkout button without breakdown. Needs fee breakdown (Subtotal, Tapau Box fee, Total).
+* [`apps/customer-pwa/src/screens/CheckoutScreen.tsx`](file:///c:/Users/cleve/OneDrive/Desktop/tapau%20time/apps/customer-pwa/src/screens/CheckoutScreen.tsx):
+  - `CheckoutScreen`: Main payment and order placement view.
+  - Order Review: Currently only shows a small pill `Total Payable (X items)`. The actual list of dishes, customized modifiers, and notes is completely invisible to the customer.
+  - Payment Selection: Currently basic radio buttons (`manual_transfer`, `gateway`, `cash`). Needs high-contrast cards with copyable DuitNow details, clear upload drag/tap target, and distinct radio icons.
+  - Sticky Footer: `Lock & Place Order • RM XX.XX` button docked above bottom nav. Needs safe-area anchoring, clear visual hierarchy, and instant optimistic feedback.
+* [`apps/customer-pwa/src/stores/useCartStore.ts`](file:///c:/Users/cleve/OneDrive/Desktop/tapau%20time/apps/customer-pwa/src/stores/useCartStore.ts):
+  - `isTakeaway`: Boolean state, default `true`.
+  - `setIsTakeaway`: Setter for order type.
+  - `getTotalAmount`: Currently computes sum of item unit prices. Needs helper for packaging fee calculation (e.g. RM0.50 per takeaway order or per item).
+
+---
+
+## 3. Gate 3 Implementation Plan (Proposed)
+
+### Phase 1: Cart Drawer Modernization (`CartDrawer.tsx`)
+- **Swipe-to-Delete & Item Removal**:
+  - Implement touch swipe gesture (`onTouchStart`, `onTouchMove`, `onTouchEnd`) with rubber-band resistance revealing a red trash zone.
+  - Provide an explicit 44px trash button for direct deletion without requiring gestures.
+  - Jumbo 44px tactile quantity stepper buttons (`-` and `+`).
+- **Dine-in vs. Tapau Mode Toggle**:
+  - Segmented toggle at the top of the cart: `🥡 Tapau (Takeaway)` vs `🍽️ Makan Sini (Dine In)`.
+- **Transparent Price Breakdown**:
+  - Detailed fee ledger: Subtotal, Packaging Fee (RM0.50 for Tapau, RM0.00 for Dine-in), Platform Fee (`RM 0.00 Waived`), and Final Total.
+- **Agency-Grade Bottom Dock**:
+  - Grab handle pill, safe-area padding, and high-contrast `Checkout • RM XX.XX` button with spring tactile feedback.
+
+### Phase 2: Checkout Screen Overhaul (`CheckoutScreen.tsx`)
+- **Order Review Section**:
+  - Render an interactive dish review card listing all items, modifier tags, special instructions notes, and item subtotals.
+- **High-Contrast Payment Cards**:
+  - Redesign payment methods as distinct, selectable cards with custom checked indicators:
+    1. **DuitNow QR / Instant Transfer**: Coral/Pink branded badge, one-tap copy button for stall bank details, enhanced receipt upload with thumbnail and size compression badge.
+    2. **Online Banking / Cards (FPX)**: Instant settlement badge with bank logos.
+    3. **Cash on Collection**: High-contrast card with counter pickup instructions.
+- **Price Breakdown Card**:
+  - Transparent itemized invoice card showing Subtotal, Packaging, Tax, and Final Total.
+- **Sticky Auntie-Proof 'Place Order' Button**:
+  - 56px high-contrast floating button pinned above bottom nav bar with safe-area spacing and spring press physics (`scale: 0.98`).
+  - Strict validation preventing submission without receipt when manual transfer is selected.
+
+---
+
+## 4. Execution State (Gate 4)
+- [x] **Phase 1:** Modernize `CartDrawer.tsx` with swipe-to-delete, jumbo steppers, takeaway toggle, and fee breakdown.
+- [x] **Phase 2:** Overhaul `CheckoutScreen.tsx` with full order item review, high-contrast payment cards, and sticky action bar.
+- [x] **Phase 3:** Integrate fee computation into `useCartStore.ts` and checkout payload.
+- [x] **Phase 4:** Verify compilation (`tsc --noEmit` passed), Vite production build passed (1.95s), and update knowledge graph.
+- [x] **Phase 5:** Implemented Auntie-proof Pull-Down-to-Refresh across all customer screens (`HomeScreen`, `MenuScreen`, `OrdersScreen`, `OrderStatusScreen`, `RewardsScreen`, `ProfileScreen`, `CheckoutScreen`) and standalone web app (`order.html`, `app.js`, `style.css`) with rubber-band damping, rotating arrow, animated SVG spinner, and haptic feedback.
+- [x] **Phase 6:** Updated `BottomNavBar.tsx` from floating pill island container to classic native-app edge-to-edge docked styling (`w-full`, `left-0`, `right-0`, `bottom-0`, `rounded-t-2xl`, and `pb-[max(env(safe-area-inset-bottom),0.5rem)]`) with an elevated central orange order FAB button.
+- [x] **Phase 7:** Replaced center elevated button icon in [`BottomNavBar.tsx`](file:///c:/Users/cleve/OneDrive/Desktop/tapau%20time/apps/customer-pwa/src/components/BottomNavBar.tsx) with the authentic Tapau box logo from [`apps/customer-pwa/public/tapautime_logo.png`](file:///c:/Users/cleve/OneDrive/Desktop/tapau%20time/apps/customer-pwa/public/tapautime_logo.png) (`/tapautime_logo.png`).
+- [x] **Phase 8:** Created Supabase migration [`supabase/migrations/20260908000001_add_dine_in_and_payment_columns_to_orders.sql`](file:///c:/Users/cleve/OneDrive/Desktop/tapau%20time/supabase/migrations/20260908000001_add_dine_in_and_payment_columns_to_orders.sql) adding `order_type`, `table_number`, `payment_method`, and `payment_status` to `public.orders` table for dine-in & payment expansion.
+- [x] **Phase 9 (Gate 4 Completed):** Created customer Dine-In route (`/dine-in/:merchantSlug/:tableNumber`) with `react-router-dom` in `App.tsx` and `main.tsx`. Implemented [`DineInMenu.tsx`](file:///c:/Users/cleve/OneDrive/Desktop/tapau%20time/apps/customer-pwa/src/screens/DineInMenu.tsx) featuring persistent `"Dine-In • Table [tableNumber]"` verified beacon top banner, strict suppression of takeaway toggles, state locking in [`useCartStore.ts`](file:///c:/Users/cleve/OneDrive/Desktop/tapau%20time/apps/customer-pwa/src/stores/useCartStore.ts) (`order_type: 'dine_in'`, packaging fee strictly hardcoded to `RM 0.00 Waived`), and checkout integration in [`CheckoutScreen.tsx`](file:///c:/Users/cleve/OneDrive/Desktop/tapau%20time/apps/customer-pwa/src/screens/CheckoutScreen.tsx) saving `order_type`, `table_number`, `payment_method`, and `payment_status` directly to Supabase `orders` table. Verified clean compilation across both workspaces (`tsc && vite build`).
+- [x] **Phase 10 (Gate 4 Completed):** Upgraded Merchant Kitchen Display System (`apps/merchant-web/src/stores/useMerchantKDSStore.ts` and `apps/merchant-web/src/screens/KDSScreen.tsx`) with dine-in vs takeaway badges (emerald `TABLE [table_number]` vs orange `TAPAU`), the cash payment gate (pulsating amber warning border and `⚠️ CASH PAYMENT REQUIRED • UNPAID` banner when `payment_status === 'pending_cash'`), optimistic cash collection workflow via `[💵 Collect Cash & Confirm]` button with double-tap lock and Supabase persistence, and exported `KitchenDisplaySystem = KDSScreen` alias. Verified 100% clean production builds across workspaces (`npm run build`).
+- [x] **Phase 11 (Gate 4 Completed):** Implemented Curlec (by Razorpay Malaysia) two-legged payment architecture. Created `apps/customer-pwa/.env` with `VITE_CURLEC_KEY_ID` and `supabase/.env` with `CURLEC_KEY_ID` and `CURLEC_KEY_SECRET`. Declared types in `apps/customer-pwa/src/vite-env.d.ts` and documented in `.env.example`. Upgraded `supabase/functions/checkout/index.ts` to pre-create official Curlec orders (`https://api.razorpay.com/v1/orders`) returning `curlec_order_id`. Updated `CheckoutScreen.tsx` with dynamic Razorpay checkout loader (`checkout.js`), `#f97316` brand orange theme, success/dismissal handlers, and post-payment Supabase capture. Upgraded `supabase/functions/payment-webhook/index.ts` with HMAC-SHA256 signature verification (`x-razorpay-signature`) and automatic `payment.captured` handling. Verified 100% clean production builds (`npm run build`).
+- [x] **Phase 12 (Gate 4 Completed):** Resolved dine-in QR code routing bug in Customer PWA. Updated `apps/customer-pwa/src/App.tsx` mount effect to inspect `window.location.pathname` for `/:merchantSlug/:tableNumber` (and `/dine-in/:merchantSlug/:tableNumber`), resolve merchant record via Supabase `slug` query, set `selectedMerchant` state, initialize dine-in context (`setDineInContext(tableNumber)`), transition immediately to `'menu'`, and cleanly strip URL path via `window.history.replaceState({}, '', '/')`. Updated `apps/customer-pwa/src/stores/useCartStore.ts` to store `tableNumber` and `orderType: 'dine_in' | 'takeaway'` with zero-fee calculation for dine-in (`convenience_fee = 0`, `service_fee = 0`, `platform_fee = 0`). Updated `CheckoutScreen.tsx` and `supabase/functions/checkout/index.ts` to dispatch physical `table_number` and `order_type: 'dine_in'` to Supabase `orders` table. Added Dine-In badges to `MenuScreen.tsx`, `CartDrawer.tsx`, and `CheckoutScreen.tsx`. Verified 100% clean builds across workspaces (`build:customer` and `build:merchant`).
+
+
+---
+
+## 5. Session Memory & Bug Tracker (Gate 5)
+* [2026-09-06] **Network Tab Privacy Leaks:** Never give customers direct `SELECT` access to `ledger_entries` via RLS. Always use a `SECURITY DEFINER` RPC to fetch receipts. 
+* [2026-09-06] **Websocket Drop Resiliency:** Mobile PWAs frequently lose websocket connections. Always include a fallback fetch `onMount` and within the polling interval to ensure state resolves correctly.
+* [2026-09-06] **Relational Realtime Races:** Supabase inserts parent (`orders`) and child (`order_items`) rows sequentially. Realtime `INSERT` triggers on the parent will often fetch empty child arrays. Always use a delayed retry (e.g., 500ms) and a child-table listener to hydrate the UI.
+* [2026-09-06] **Defensive JSONB Normalization:** Never assume JSONB modifier payloads arrive in a strict schema. Always run them through a defensive normalizer to handle raw strings, variant keys, and comma-delimited lists.
+* [2026-09-07] **Zero-Latency State Handoff:** For screen navigations (e.g., Home ➔ Menu), always pass the known entity object via React state/props to render the UI immediately. Run a resilient background Supabase fetch simultaneously to sync any stale data. Never block the initial render with a loading spinner if partial data is already available.
+* [2026-09-07] **Auntie-Proof Tactile Feedback:** Mobile web apps lack native hover states. For primary interactive cards and buttons, always use GSAP spring physics (`pointerdown` scale down, `pointerup` scale up with `back.out`) to provide instant tactile confirmation. Always wrap GSAP animations in a `prefers-reduced-motion` check to ensure accessibility.
+* [2026-09-07] **Ambiguous Foreign Keys (PGRST201):** When a table has multiple foreign keys referencing the same target table (e.g., `item_id` and `linked_item_id` for modifiers), Supabase/PostgREST will fail the query if embedded without qualification. Always qualify the relation explicitly in the select query (e.g., `table!fk_name(columns)`).
+* [2026-09-07] **No Silent Failures:** Never evaluate Supabase data with a simple `if (!error && data) { ... }` without an explicit `if (error) console.error(...)` check beforehand to ensure query failures are exposed.
+* [2026-09-07] **Contextual Fallback Modifiers & Cart Hashing:** When custom modifiers are missing in cloud storage, provide domain-specific fallback presets (e.g. Kopitiam Ice & Sugar for drinks; Spiciness & Sambal for noodles/rice). Always hash customer special instructions alongside modifier IDs into `cartItemId` so custom orders with distinct notes do not accidentally collide or overwrite each other in the cart.
+* [2026-09-07] **Smart Fallback Presets:** When building UI components that rely on database relations (like modifiers or options) that might be empty during early development, always implement intelligent, localized fallback presets. This ensures the UI remains fully testable and the layout doesn't collapse on empty states.
+* [2026-09-07] **Scoped Bottom Sheet Drag Gestures:** On mobile bottom sheets with scrollable contents, scope drag-to-dismiss touch handlers strictly to the top grab handle and static header zone. This allows native 1:1 finger tracking and dismissal while preserving uninhibited momentum scrolling across interior option lists.
+* [2026-09-07] **Rubber-Band Pull-to-Refresh Physics:** In mobile touch interfaces, logarithmic damping (`Math.min(MAX_PULL, Math.pow(deltaY, 0.85) * 1.5)`) provides authentic native resistance. Always gate the gesture strictly to `window.scrollY <= 0` and suppress during active modal/drawer states to prevent gesture cross-talk. Include a minimum spinner visibility delay (e.g. 450ms) to prevent visual flashing during instant network responses.
+* [2026-09-23] **Single-Source Availability Engine:** Availability must never be a stored boolean flipped by clients or cron jobs. Added `supabase/migrations/20260923000001_merchant_availability_engine.sql` (`public.hhmm_to_minutes`, `merchant_schedule_for_date`, `merchant_schedule_open`, `merchant_window_bounds`, `merchant_next_open_at`, `merchant_availability_status`, `is_merchant_accepting_now` + the `public.merchant_availability` view) enforcing `is_open AND is_accepting_orders AND (schedule_enforced ? schedule_open AND now <= last_order_at : true)` in Asia/Kuching with overnight windows and date exceptions. Rewired `supabase/functions/checkout` (inline hours math deleted, now one RPC), merchant Store Settings (renders derived state, pause writes `is_accepting_orders`), customer PWA Menu and dine-in Menu (derived `is_currently_open` + `next_open_at`, 60s re-evaluation). Merchant Settings offers a pause/resume override plus an automation toggle persisted as `schedule_enforced`. IMPORTANT: apply the migration before deploying the clients, otherwise the availability queries fall back to the legacy `is_open` flag.
+* [2026-09-23] **Merchant Self Pick-up Address:** Added a "Self Pick-up Address" card to merchant Store Settings (`apps/merchant-web/src/screens/StoreSettingsScreen.tsx`) that reads/writes `merchants.location.address` (merged into the existing JSONB so lat/lng and other keys are preserved — no migration required; RLS "Owners can manage merchant" already covers the update). The address is loaded once per merchant (never on the 60s availability poll, so it cannot clobber typing). Customer PWA now surfaces it as a labelled pick-up location instead of leaking it into the cuisine/tagline slot: Home `pickup_address` mapping + HawkerCard pin-icon meta segment (search still matches the address), Menu header renders "Self pick-up: {address}", and Checkout shows a dedicated "Self Pick-up" card above the payment methods (fallback copy: "Collect at the {stall} counter"). The legacy root PWA (`app.js`) tagline already derives from `location.address`, so it updates automatically.
+* [2026-09-23] **Self Pick-up Confirmation Gate on Checkout:** The customer PWA "Proceed to Checkout" button (`CartDrawer`) no longer navigates directly — it opens a `role="alertdialog"` confirmation showing the merchant's `location.address` (fresh-fetched on click, spinner while loading, fallback "{stall} counter") with "Back to Cart" / "Confirm & Continue" actions. Only Confirm closes the drawer and fires `onProceedToCheckout()`; backdrop click, Escape, or drawer close dismiss the modal without entering checkout. The drawer's merchant query now selects `is_open, business_name, location` so the address is pre-warmed when the drawer opens. Note: `screens/CartScreen.tsx` also has a "Proceed to Checkout" button but is dead code (not rendered by `App.tsx`); the CartDrawer is the sole live checkout entry point.
+* [2026-09-23] **Grid Tile Colour Customization:** Added `supabase/migrations/20260924000002_grid_tile_colors.sql` adding `merchants.grid_card_bg_color`, `grid_item_name_color`, `grid_price_color` (TEXT, defaults `#FFFFFF` / `#1C1917` / `#E86A1C` reproducing the original look). IMPORTANT: apply the migration before deploying — if missing, both clients degrade gracefully to the defaults. Merchant Storefront Studio gained a "Grid Tile Colours" section (native color swatches + hex display, optimistic save with revert-on-error, live mini-tile preview, Reset to defaults). Customer PWA `MenuItemGridCard` accepts a `tileColors` prop applied via inline styles (caption bg, name, price); list view, overlays, badges and disabled states unchanged.
+* [2026-09-23] **Storefront Overhaul (Banner ➔ Background, Picture Category Tabs, Grid/List):** Added `supabase/migrations/20260925000001_storefront_overhaul.sql` adding `merchants.background_url` (TEXT), `merchants.menu_layout` (TEXT CHECK 'list'|'grid' DEFAULT 'grid') and `merchants.category_images` (JSONB name→URL map). IMPORTANT: apply the migration before deploying the clients — if missing, the menu gracefully renders a grid default with a plain backdrop and letter-tile tabs (no query errors, `select('*')` simply omits the columns). Merchant Store Settings: the Store Banner card was fully purged (state, upload handler, toast usage, select fields, JSX) and replaced by a **Storefront Studio** card holding (a) Page Background upload/remove → `merchant-assets/backgrounds/{id}/background.{ext}` → `background_url`, (b) a List/Grid segmented control persisting `menu_layout` (merchant sets the default; customers have NO toggle), and (c) circular per-category tab image uploaders → `merchant-assets/category-icons/{id}/{slug}.{ext}` merged into `category_images`, with the category list derived from distinct `menu_items.category` plus an `All` slot (loaded once per merchant, never on the 60s poll). Profile Photo card copy updated (now also shown on the menu header). Customer PWA `MenuScreen`: header banner cover + Unsplash fallback deleted; hero now renders `background_url` (plain brand gradient when unset) with a circular `profile_url` avatar (first-letter fallback on error) beside the truncated title/meta — deliberately NO posts/followers/message tabs. Text category pills replaced by circular picture tabs reading `category_images` (case-insensitive lookup, per-key image-error fallback to a letter tile). The page body applies `background_url` as a fixed washed backdrop (multi-layer `backgroundImage` with an 88% stone-50 gradient). Menu renders the new `MenuItemGridCard` (3-col square photo tiles, 2-line name + RM price caption, identical modifier-modal/cart flow) when `menu_layout='grid'`, or the untouched `MenuItemCard` rows when 'list'. `banner_url` column kept for history but rendered nowhere; all studio state lives on `merchants` so the existing Menu realtime subscription pushes edits live. Legacy `app.js`/`merchant.html` Storefront Studio untouched.
+* [2026-09-24] **Merchant Promo Code Review Workflow:** Added `supabase/migrations/20260925000003_merchant_promo_codes.sql` with merchant-owned submissions, pending/active/rejected states, uniqueness for pending/active codes, strict RLS, realtime publication, and the administrator-only `review_merchant_promo_code` RPC. Added the merchant **Promo Codes** tab beside Settings and the admin `/promo-codes` review screen with pending, active, and rejected views, approve/reject actions, rejection reasons, merchant names, realtime refresh, and a sidebar pending badge. Customer checkout redemption remains unchanged. IMPORTANT: apply the migration before deploying the clients.
+* [2026-09-25] **Merchant Promo Code Discounts + Duration:** Added `supabase/migrations/20260925000004_merchant_promo_discounts.sql` (RM/percentage discount terms, admin approval validation, `promo_code`/`promo_code_id`/`discount_amount` audit columns on `orders` and `master_transactions`, and service-role-only promo calculation) and `supabase/migrations/20260925000006_merchant_promo_duration.sql` (mutually exclusive `duration_type` of `expiration` or `usage_limit`, `expiration_date`, `max_uses`, `used_count`, the `merchant_promo_code_redemptions` claim table, and the `consume_merchant_promo_code` / `commit_merchant_promo_code_use` / `release_merchant_promo_code_use` RPCs). Merchant Promo Codes now collects discount type/value plus either an expiration date or a maximum-use count; Admin Promo Codes displays those terms; Customer checkout validates through the hosted `checkout` Edge Function, applies the discount to the food subtotal only, and rejects expired or exhausted codes. Usage-limited codes are claimed atomically at order creation, committed to the created order, released if order creation fails before an order exists, and abandoned claims older than the 15-minute inventory hold are automatically reclaimed. Existing promo codes without duration terms remain valid without a limit. Both migrations were applied to the hosted project and the updated `checkout` function was deployed.
+

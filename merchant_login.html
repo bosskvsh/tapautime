@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merchant Sign In - Tapau Time</title>
+    <meta name="description" content="Sign in to your Tapau Time merchant kitchen display system, live orders, and storefront customization studio.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./icons/tapau-logo.png">
+
+    <!-- Load Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                        }
+                    },
+                    boxShadow: {
+                        'hard': '4px 4px 0px 0px rgba(28,25,23,1)',
+                        'hard-sm': '2px 2px 0px 0px rgba(28,25,23,1)',
+                        'hard-lg': '6px 6px 0px 0px rgba(28,25,23,1)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-50 text-stone-900 antialiased selection:bg-orange-500 selection:text-white min-h-screen flex flex-col lg:flex-row overflow-x-hidden">
+
+    <!-- ========================================================================= -->
+    <!-- LEFT PANEL: LOGIN FORM -->
+    <!-- ========================================================================= -->
+    <div class="w-full lg:w-1/2 flex flex-col px-6 py-8 md:px-14 relative bg-white z-10 min-h-screen justify-between">
+        
+        <!-- Top Navigation / Back Button -->
+        <div class="flex items-center justify-between w-full max-w-md mx-auto pt-2">
+            <a href="https://tapautime.my" data-link="home" class="flex items-center gap-2 text-stone-600 hover:text-stone-900 transition-colors font-black text-sm group">
+                <span class="material-symbols-outlined text-[20px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                <span>Back to Home</span>
+            </a>
+            
+            <a href="https://tapautime.my" data-link="home" class="flex items-center gap-2">
+                <div class="h-9 w-9 bg-white rounded-xl flex items-center justify-center p-1 border-2 border-stone-900 shadow-hard-sm">
+                    <img src="./icons/tapau-logo.png" alt="Tapau Time" class="h-full w-full object-contain">
+                </div>
+            </a>
+        </div>
+
+        <!-- Main Form Container -->
+        <div class="max-w-md w-full mx-auto my-auto py-6">
+            
+            <div class="mb-5">
+                <h1 id="auth-heading" class="text-3xl md:text-4xl font-black text-stone-900 mb-1 tracking-tight">Welcome back, Boss.</h1>
+                <p id="auth-subheading" class="text-stone-500 font-bold text-sm">Sign in to manage kitchen orders and customize your store.</p>
+            </div>
+
+            <form id="merchant-login-form" class="space-y-4" onsubmit="handleLoginSubmit(event)">
+                
+                <!-- Email Field -->
+                <div class="space-y-1.5">
+                    <label for="email" id="email-label" class="block text-xs font-extrabold text-stone-700 uppercase tracking-wide">Work Email / Stall ID</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 text-[20px]">mail</span>
+                        <input type="text" id="email" required placeholder="boss@kopitiam.com" class="w-full pl-11 pr-4 py-3.5 bg-stone-50 border-2 border-stone-200 rounded-xl focus:outline-none focus:border-stone-900 focus:bg-white transition-all font-bold text-stone-900 placeholder-stone-400 text-sm">
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div class="space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <label for="password" class="block text-xs font-extrabold text-stone-700 uppercase tracking-wide">Password</label>
+                        <a id="forgot-link" href="#" onclick="alert('Please enter your email to reset password.'); return false;" class="text-xs font-black text-orange-600 hover:text-orange-700 transition-colors">Forgot password?</a>
+                    </div>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 text-[20px]">lock</span>
+                        <input type="password" id="password" required placeholder="••••••••" class="w-full pl-11 pr-11 py-3.5 bg-stone-50 border-2 border-stone-200 rounded-xl focus:outline-none focus:border-stone-900 focus:bg-white transition-all font-bold text-stone-900 placeholder-stone-400 text-sm">
+                        <button type="button" onclick="togglePasswordVisibility()" class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 text-[20px]">
+                            visibility
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Remember Me & Table Select -->
+                <div class="flex items-center justify-between pt-1">
+                    <label class="flex items-center gap-2 cursor-pointer select-none">
+                        <input id="remember" name="remember" type="checkbox" checked class="h-4 w-4 rounded border-2 border-stone-300 text-orange-500 accent-orange-500 cursor-pointer">
+                        <span class="text-xs font-bold text-stone-600">Remember session</span>
+                    </label>
+                    <span id="session-badge" class="text-[11px] font-black text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Kitchen Online</span>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="login-btn" class="w-full bg-stone-900 text-white text-base font-black py-4 rounded-xl shadow-hard hover:translate-y-0.5 hover:shadow-hard-sm active:scale-[0.99] transition-all border-2 border-stone-900 flex items-center justify-center gap-2 mt-2">
+                    <span id="login-btn-icon" class="material-symbols-outlined text-[20px]">login</span>
+                    <span id="login-btn-text">Sign In to Kitchen KDS</span>
+                </button>
+            </form>
+
+            <div class="mt-8 text-center border-t border-stone-100 pt-6">
+                <div class="mt-3">
+                    <a href="https://app.tapautime.my" data-link="shop" target="_blank" class="text-xs font-extrabold text-stone-500 hover:text-orange-600 flex items-center justify-center gap-1">
+                        <span>Looking for customer ordering? Click here</span>
+                        <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Copyright -->
+        <div class="max-w-md w-full mx-auto text-center pt-2 pb-2">
+            <p class="text-[11px] font-bold text-stone-400 uppercase tracking-widest">&copy; <span id="year"></span> Tapau Time. All rights reserved.</p>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- RIGHT PANEL: VALUE PROP & LIVE KDS TEASER -->
+    <!-- ========================================================================= -->
+    <div class="hidden lg:flex w-1/2 bg-stone-900 relative items-center justify-center overflow-hidden border-l-8 border-orange-500 p-16 min-h-screen">
+        
+        <!-- Ambient Glow Elements -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-orange-500 rounded-full mix-blend-screen filter blur-[128px] opacity-20 transform translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-stone-700 rounded-full mix-blend-screen filter blur-[128px] opacity-30 transform -translate-x-1/2 translate-y-1/2"></div>
+        
+        <div class="relative z-10 max-w-lg space-y-8">
+            <div class="w-16 h-16 bg-stone-800 rounded-2xl flex items-center justify-center border-2 border-stone-700 shadow-xl rotate-3">
+                <span class="material-symbols-outlined text-3xl text-orange-500">soup_kitchen</span>
+            </div>
+            
+            <!-- Core Value Proposition -->
+            <div class="space-y-3">
+                <h2 class="text-4xl md:text-5xl font-black text-white leading-tight tracking-tight">
+                    Stop paying 30% ransom on your regular customers.
+                </h2>
+                <p class="text-lg text-stone-400 font-semibold leading-relaxed">
+                    Log in to view incoming live orders, toggle kitchen prep statuses with 1 tap, and customize your shop atmosphere and promotional discounts.
+                </p>
+            </div>
+            
+            <!-- Mini KDS Preview Mockup -->
+            <div class="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-700 rounded-3xl p-6 shadow-2xl space-y-4">
+                <div class="flex justify-between items-center border-b border-stone-700/80 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                        <span class="text-xs font-black text-stone-200 uppercase tracking-wider">Live Kitchen Stream</span>
+                    </div>
+                    <span class="px-2.5 py-0.5 rounded-full bg-orange-500/20 text-orange-400 text-[10px] font-black uppercase">
+                        Realtime Sync
+                    </span>
+                </div>
+
+                <div class="bg-stone-950 rounded-2xl p-4 border border-stone-800 flex items-center justify-between gap-4">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl font-black text-white tracking-tight">#088</span>
+                            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-black uppercase">Cooking</span>
+                        </div>
+                        <p class="text-xs font-bold text-stone-400 mt-1">1x Hainan Kopi Peng (Kaw), 1x Wantan Mee</p>
+                    </div>
+                    <span class="text-xs font-black text-orange-400">RM 15.30</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- LOGIN SCRIPT -->
+    <!-- ========================================================================= -->
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Smart Subdomain Links for Local vs Production
+        function initDomainLinks() {
+            const isProd = window.location.hostname.includes('tapautime.my');
+            const shopUrl = isProd ? 'https://app.tapautime.my' : './order.html';
+            const homeUrl = isProd ? 'https://tapautime.my' : './index.html';
+
+            document.querySelectorAll('[data-link="shop"]').forEach(el => el.href = shopUrl);
+            document.querySelectorAll('[data-link="home"]').forEach(el => el.href = homeUrl);
+            document.querySelectorAll('[data-link="pricing"]').forEach(el => el.href = isProd ? 'https://tapautime.my#pricing' : './index.html#pricing');
+        }
+        initDomainLinks();
+
+        async function handleLoginSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('login-btn');
+            btn.disabled = true;
+            
+            const email = document.getElementById('email').value.trim();
+            const passwordInput = document.getElementById('password');
+            const password = passwordInput ? passwordInput.value : '';
+            btn.innerHTML = `<span class="animate-spin material-symbols-outlined text-[20px]">progress_activity</span> Authenticating with Supabase...`;
+
+        var sb = getSupabase();
+            if (sb && password) {
+                try {
+                    const signInRes = await sb.auth.signInWithPassword({
+                        email: email,
+                        password: password
+                    });
+
+                    if (signInRes.error) {
+                        if (signInRes.error.message.includes('Email not confirmed')) {
+                            if (confirm('Please confirm your email address first. Check your inbox and Spam/Junk folder.\n\nWould you like us to resend the confirmation email now?')) {
+                                await resendConfirmationEmail(email);
+                            }
+                        } else {
+                            alert('Sign in error: ' + signInRes.error.message);
+                        }
+                        btn.disabled = false;
+                        btn.innerHTML = `<span>Sign In to Merchant Portal</span>`;
+                        return;
+                    }
+
+                    if (signInRes.data && signInRes.data.user) {
+                        const u = signInRes.data.user;
+                        const merchantId = 'merchant-' + u.id.substring(0, 8);
+                        localStorage.setItem('tapau_current_merchant_id', merchantId);
+                        localStorage.setItem('tapau_is_new_merchant', 'false');
+                        localStorage.setItem('tapau_merchant_session', JSON.stringify({
+                            email: u.email,
+                            name: u.user_metadata?.store_name || u.email.split('@')[0] || 'Merchant',
+                            merchantId: merchantId,
+                            userId: u.id
+                        }));
+                    }
+                } catch(err) {
+                    console.warn('Supabase signIn error:', err);
+                }
+            } else {
+                localStorage.setItem('tapau_merchant_session', JSON.stringify({
+                    email: email,
+                    name: email.split('@')[0] || 'Merchant'
+                }));
+            }
+
+            setTimeout(() => {
+                window.location.href = 'merchant.html';
+            }, 400);
+        }
+
+        // Initialize Supabase eagerly so it can auto-detect ?code= in URL for PKCE exchange
+        var sbClient = (function() {
+            try {
+                if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
+                    return window.supabase.createClient(
+                        'https://iaqohdvdebgxtfbxijsw.supabase.co',
+                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlhcW9oZHZkZWJneHRmYnhpanN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwNzkyNjIsImV4cCI6MjEwMjY1NTI2Mn0.DFFY_o-wlxonj1mlHsHe3M9_ELGWtTmaqgc1iGr33WE',
+                        { auth: { detectSessionInUrl: true, flowType: 'pkce', persistSession: true } }
+                    );
+                }
+            } catch (e) {
+                console.warn('[Tapau] Supabase init warning:', e);
+            }
+            return null;
+        })();
+
+        function getSupabase() { return sbClient; }
+
+        async function resendConfirmationEmail(email) {
+            var sb = getSupabase();
+            if (!sb || !email) return;
+            try {
+                var res = await sb.auth.resend({ type: 'signup', email: email });
+                if (res.error) {
+                    alert('Could not resend email: ' + res.error.message);
+                } else {
+                    alert('Confirmation email resent! Please check your inbox and Spam/Junk folder.');
+                }
+            } catch(e) {
+                alert('Resend failed: ' + (e.message || String(e)));
+            }
+        }
+
+        // Restore an existing Supabase session if the merchant is already signed in
+        (async function restoreMerchantSession() {
+            var sb = getSupabase();
+            if (!sb) return;
+            try {
+                var res = await sb.auth.getSession();
+                if (res.data && res.data.session && res.data.session.user) {
+                    var u = res.data.session.user;
+                    var merchantId = 'merchant-' + (u.id ? u.id.substring(0, 8) : Date.now().toString(36));
+                    var storeName = u.user_metadata?.store_name || u.user_metadata?.full_name || u.user_metadata?.name || (u.email ? u.email.split('@')[0] : 'Merchant');
+
+                    localStorage.setItem('tapau_current_merchant_id', merchantId);
+                    localStorage.setItem('tapau_merchant_session', JSON.stringify({
+                        email: u.email || '',
+                        name: storeName,
+                        merchantId: merchantId,
+                        userId: u.id || null,
+                        isNewMerchant: false,
+                        savedAt: Date.now()
+                    }));
+
+                    window.location.href = 'merchant.html';
+                }
+            } catch(e) {
+                console.warn('[Tapau Merchant] Session restore notice:', e);
+            }
+        })();
+    </script>
+</body>
+</html>
