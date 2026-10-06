@@ -12,7 +12,7 @@
     "dev:merchant": "npm run dev --workspace=@tapautime/merchant-web",
     "dev:dining": "npm run dev --workspace=@tapautime/dining-web",
     "dev:admin": "npm run dev --workspace=@tapautime/admin-web",
-    "build:customer": "npm run build --workspace=@tapautime/customer-pwa",
+    "build:customer": "npm run build --workspace=@tapautime/customer-pwa && cp -r apps/customer-pwa/functions ./functions",
     "build:merchant": "npm run build --workspace=@tapautime/merchant-web",
     "build:dining": "npm run build --workspace=@tapautime/dining-web",
     "build:admin": "npm run build --workspace=@tapautime/admin-web",
