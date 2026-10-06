@@ -4,10 +4,10 @@ import { Crown, Search, Loader2 } from 'lucide-react';
 
 interface Merchant {
   id: string;
-  name: string;
+  business_name: string;
   slug: string;
   has_tapaulinkpro: boolean;
-  status: string;
+  is_open: boolean;
 }
 
 export const TapauLinkPROScreen: React.FC = () => {
@@ -24,8 +24,8 @@ export const TapauLinkPROScreen: React.FC = () => {
       setLoading(true);
       const { data, error } = await supabase
         .from('merchants')
-        .select('id, name, slug, has_tapaulinkpro, status')
-        .order('name', { ascending: true });
+        .select('id, business_name, slug, has_tapaulinkpro, is_open')
+        .order('business_name', { ascending: true });
 
       if (error) throw error;
       setMerchants(data || []);
@@ -64,7 +64,7 @@ export const TapauLinkPROScreen: React.FC = () => {
   };
 
   const filteredMerchants = merchants.filter((m) => 
-    m.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    m.business_name.toLowerCase().includes(searchTerm.toLowerCase()) || 
     m.slug.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -100,7 +100,7 @@ export const TapauLinkPROScreen: React.FC = () => {
               <tr>
                 <th className="px-6 py-4">Merchant Name</th>
                 <th className="px-6 py-4">Slug / Subdomain</th>
-                <th className="px-6 py-4">Account Status</th>
+                <th className="px-6 py-4">Store Status</th>
                 <th className="px-6 py-4 text-right">TapauLinkPRO</th>
               </tr>
             </thead>
@@ -122,7 +122,7 @@ export const TapauLinkPROScreen: React.FC = () => {
                 filteredMerchants.map((merchant) => (
                   <tr key={merchant.id} className="hover:bg-stone-800/20 transition-colors">
                     <td className="px-6 py-4">
-                      <div className="font-bold text-stone-200">{merchant.name}</div>
+                      <div className="font-bold text-stone-200">{merchant.business_name}</div>
                       <div className="text-xs text-stone-500 font-mono">{merchant.id}</div>
                     </td>
                     <td className="px-6 py-4">
@@ -140,11 +140,11 @@ export const TapauLinkPROScreen: React.FC = () => {
                     </td>
                     <td className="px-6 py-4">
                       <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                        merchant.status === 'active' 
+                        merchant.is_open 
                           ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-800/80' 
                           : 'bg-stone-800 text-stone-400 border border-stone-700'
                       }`}>
-                        {merchant.status}
+                        {merchant.is_open ? 'Open' : 'Closed'}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
