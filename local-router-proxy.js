@@ -37,9 +37,20 @@ const server = http.createServer(async (req, res) => {
 
   try {
     // 1. Subdomain Request Logic (e.g. merchant-slug.localhost:3000)
-    // Assuming host is something like "merchant-slug.localhost:3000"
-    if (host !== `app.localhost:${PROXY_PORT}` && host !== `localhost:${PROXY_PORT}`) {
-      const subdomain = host.split('.')[0];
+    const RESERVED_SUBDOMAINS = new Set([
+      'app',
+      'kds',
+      'merchant',
+      'admin',
+      'dinein',
+      'dining',
+      'www',
+      'api'
+    ]);
+
+    const subdomain = host.split('.')[0].toLowerCase();
+
+    if (!RESERVED_SUBDOMAINS.has(subdomain) && host !== `app.localhost:${PROXY_PORT}` && host !== `localhost:${PROXY_PORT}`) {
       
       const { data: merchant } = await supabase
         .from('merchants')

@@ -13,10 +13,24 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     return next();
   }
 
-  const isSubdomain = hostname !== 'app.tapautime.my' && hostname !== 'tapautime.my' && !hostname.includes('localhost') && !hostname.includes('.pages.dev');
+  const RESERVED_SUBDOMAINS = new Set([
+    'app',
+    'kds',
+    'merchant',
+    'admin',
+    'dinein',
+    'dining',
+    'www',
+    'api',
+    'mail',
+    'cpanel',
+    'webmail'
+  ]);
+
+  const subdomain = hostname.split('.')[0].toLowerCase();
+  const isSubdomain = !RESERVED_SUBDOMAINS.has(subdomain) && hostname !== 'tapautime.my' && !hostname.includes('localhost') && !hostname.includes('.pages.dev');
 
   if (isSubdomain) {
-    const subdomain = hostname.split('.')[0];
     
     // Fetch merchant from Supabase REST API (Edge friendly)
     if (env.VITE_SUPABASE_URL && env.VITE_SUPABASE_ANON_KEY) {
