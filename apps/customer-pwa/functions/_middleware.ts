@@ -13,7 +13,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     return next();
   }
 
-  const isSubdomain = hostname !== 'app.tapautime.my' && hostname !== 'tapautime.my' && !hostname.includes('localhost');
+  const isSubdomain = hostname !== 'app.tapautime.my' && hostname !== 'tapautime.my' && !hostname.includes('localhost') && !hostname.includes('.pages.dev');
 
   if (isSubdomain) {
     const subdomain = hostname.split('.')[0];
