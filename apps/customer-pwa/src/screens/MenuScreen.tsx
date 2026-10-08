@@ -7,6 +7,7 @@ import { PreorderDateTimeModal } from '../components/PreorderDateTimeModal';
 import { CartModifier } from '../stores/useCartStore';
 import { supabase } from '../lib/supabase';
 import { PullToRefresh } from '../components/PullToRefresh';
+import { BundleSelectionModal, BundleOffer } from '../components/BundleSelectionModal';
 
 export interface MerchantDetails {
   id: string;
@@ -125,6 +126,10 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
   const [profilePhotoFailed, setProfilePhotoFailed] = useState(false);
   const [failedCategoryImages, setFailedCategoryImages] = useState<Record<string, boolean>>({});
   const [pendingPreorderItem, setPendingPreorderItem] = useState<MenuItem | null>(null);
+  const [bundles, setBundles] = useState<BundleOffer[]>([]);
+  const [promoCodes, setPromoCodes] = useState<Array<{ id: string; code: string; discount_type: string; discount_value: number }>>([]);
+  const [activeBundleModal, setActiveBundleModal] = useState<BundleOffer | null>(null);
+  const [copiedPromoCode, setCopiedPromoCode] = useState<string | null>(null);
   const { 
     items: cartItems, 
     getTotalAmount, 
@@ -287,12 +292,76 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
     }
   }, [targetMerchantId, preorderOnly]);
 
+  const fetchOffers = useCallback(async () => {
+    if (!targetMerchantId) {
+      setBundles([]);
+      setPromoCodes([]);
+      return;
+    }
+    try {
+      const [bundlesRes, promosRes] = await Promise.all([
+        supabase
+          .from('merchant_bundle_offers')
+          .select('*')
+          .eq('merchant_id', targetMerchantId)
+          .eq('is_active', true)
+          .order('created_at', { ascending: false }),
+        supabase
+          .from('merchant_promo_codes')
+          .select('id, code, discount_type, discount_value, status, duration_type, expiration_date, max_uses, used_count')
+          .eq('merchant_id', targetMerchantId)
+          .eq('status', 'active'),
+      ]);
+
+      if (!bundlesRes.error && bundlesRes.data) {
+        setBundles(
+          bundlesRes.data.map((b: any) => ({
+            id: b.id,
+            merchant_id: b.merchant_id,
+            bundle_type: b.bundle_type,
+            title: b.title,
+            fixed_price: Number(b.fixed_price) || 0,
+            applicable_to: b.applicable_to || 'both',
+            item_ids: Array.isArray(b.item_ids) ? b.item_ids : [],
+            is_active: b.is_active !== false,
+          }))
+        );
+      } else {
+        setBundles([]);
+      }
+
+      if (!promosRes.error && promosRes.data) {
+        const today = new Date().toISOString().slice(0, 10);
+        const valid = promosRes.data.filter((p: any) => {
+          if (p.duration_type === 'expiration' && p.expiration_date && p.expiration_date < today) return false;
+          if (p.duration_type === 'usage_limit' && p.max_uses && Number(p.used_count) >= Number(p.max_uses)) return false;
+          return true;
+        });
+        setPromoCodes(
+          valid.map((p: any) => ({
+            id: p.id,
+            code: p.code,
+            discount_type: p.discount_type,
+            discount_value: Number(p.discount_value) || 0,
+          }))
+        );
+      } else {
+        setPromoCodes([]);
+      }
+    } catch (err) {
+      console.warn('[MenuScreen] Error fetching offers:', err);
+      setBundles([]);
+      setPromoCodes([]);
+    }
+  }, [targetMerchantId]);
+
   useEffect(() => {
     if (!targetMerchantId) return;
 
     setCartMerchant(targetMerchantId);
     fetchMerchantDetails();
     fetchMenuItems();
+    fetchOffers();
 
     // Supabase Realtime subscription to live menu updates
     const menuChannel = supabase
@@ -327,11 +396,46 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
       )
       .subscribe();
 
+    // Realtime subscriptions to bundle offers and promo codes
+    const bundleChannel = supabase
+      .channel(`customer-bundle-offers-${targetMerchantId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'merchant_bundle_offers',
+          filter: `merchant_id=eq.${targetMerchantId}`,
+        },
+        () => {
+          fetchOffers();
+        }
+      )
+      .subscribe();
+
+    const promoChannel = supabase
+      .channel(`customer-promos-${targetMerchantId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'merchant_promo_codes',
+          filter: `merchant_id=eq.${targetMerchantId}`,
+        },
+        () => {
+          fetchOffers();
+        }
+      )
+      .subscribe();
+
     return () => {
       supabase.removeChannel(menuChannel);
       supabase.removeChannel(merchantChannel);
+      supabase.removeChannel(bundleChannel);
+      supabase.removeChannel(promoChannel);
     };
-  }, [fetchMerchantDetails, fetchMenuItems, setCartMerchant, targetMerchantId]);
+  }, [fetchMerchantDetails, fetchMenuItems, fetchOffers, setCartMerchant, targetMerchantId]);
 
   const handleAddToCart = (
     item: MenuItem,
@@ -363,6 +467,36 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
       unitPriceWithModifiers,
       specialInstructions: noteClean || undefined,
       availableQuantity: item.available_quantity,
+    });
+  };
+
+  const handleAddBundleToCart = (
+    bundle: BundleOffer,
+    selectedDishes: MenuItem[],
+    instructions?: string
+  ) => {
+    if (!isOpen) {
+      console.warn('[MenuScreen] Cannot add bundle to cart: stall is closed.');
+      return;
+    }
+    setCartMerchant(targetMerchantId);
+
+    const dishesNames = selectedDishes.map((d) => d.name).join(', ');
+    const dishesIds = selectedDishes.map((d) => d.id).sort().join('-');
+    const cartItemId = `bundle-${bundle.id}-${dishesIds}-${Date.now()}`;
+    const noteText = instructions
+      ? `Combo items: ${dishesNames}. Note: ${instructions}`
+      : `Combo items: ${dishesNames}`;
+
+    addItem({
+      cartItemId,
+      id: selectedDishes[0]?.id || bundle.id,
+      name: `${bundle.title} (${bundle.bundle_type === 'buy_3_fixed_price' ? '3-Item' : '2-Item'} Combo)`,
+      price: bundle.fixed_price,
+      quantity: 1,
+      selectedModifiers: [],
+      unitPriceWithModifiers: bundle.fixed_price,
+      specialInstructions: noteText,
     });
   };
 
@@ -429,8 +563,8 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
   };
 
   const handleRefresh = useCallback(async () => {
-    await Promise.all([fetchMerchantDetails(), fetchMenuItems()]);
-  }, [fetchMerchantDetails, fetchMenuItems]);
+    await Promise.all([fetchMerchantDetails(), fetchMenuItems(), fetchOffers()]);
+  }, [fetchMerchantDetails, fetchMenuItems, fetchOffers]);
 
   return (
     <PullToRefresh
@@ -626,6 +760,98 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
 
       {/* Menu List */}
       <div className="flex-1 p-4 max-w-lg mx-auto w-full space-y-6">
+        {/* Special Offers & Combo Deals Section */}
+        {(bundles.length > 0 || promoCodes.length > 0) && (
+          <div className="space-y-3">
+            <div className="flex items-center justify-between px-0.5">
+              <div className="flex items-center gap-2">
+                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-orange-500/15 text-orange-500 text-sm">
+                  🎁
+                </span>
+                <h2 className={`text-base sm:text-lg font-black tracking-tight drop-shadow-sm ${textOnPhoto ? 'text-white' : 'text-stone-900'}`}>
+                  Offers &amp; Bundles
+                </h2>
+              </div>
+            </div>
+
+            {/* Bundle Deals Cards */}
+            {bundles.length > 0 && (
+              <div className="grid grid-cols-1 gap-2.5">
+                {bundles.map((bundle) => {
+                  const isBuy3 = bundle.bundle_type === 'buy_3_fixed_price';
+                  return (
+                    <div
+                      key={bundle.id}
+                      className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-br from-white via-orange-50/40 to-amber-50/20 border border-orange-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-stone-900"
+                    >
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-orange-600 to-amber-600 px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-white shadow-xs">
+                            {isBuy3 ? 'Buy 3 at a fixed price' : 'Buy 2 at a fixed price'}
+                          </span>
+                        </div>
+                        <h3 className="font-extrabold text-sm sm:text-base text-stone-900 mt-1">
+                          {bundle.title}
+                        </h3>
+                        <p className="text-xs text-stone-500 mt-0.5">
+                          {bundle.item_ids && bundle.item_ids.length > 0
+                            ? `Choose ${isBuy3 ? 3 : 2} dishes from ${bundle.item_ids.length} qualifying items`
+                            : `Mix & match any ${isBuy3 ? 3 : 2} dishes on the menu`}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center justify-between sm:flex-col sm:items-end gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-orange-100">
+                        <span className="font-mono text-base sm:text-lg font-black text-brand-orange">
+                          RM {bundle.fixed_price.toFixed(2)}
+                        </span>
+                        <button
+                          type="button"
+                          disabled={!isOpen}
+                          onClick={() => setActiveBundleModal(bundle)}
+                          className="min-h-[38px] px-4 rounded-xl bg-orange-600 hover:bg-orange-500 disabled:bg-stone-200 disabled:text-stone-400 text-white font-black text-xs shadow-xs active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
+                        >
+                          <span>Select Combo</span>
+                          <span className="text-[11px]">→</span>
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* Promo Code Chips */}
+            {promoCodes.length > 0 && (
+              <div className="flex flex-wrap gap-2 pt-1">
+                {promoCodes.map((promo) => (
+                  <div
+                    key={promo.id}
+                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-stone-200/90 shadow-2xs text-xs"
+                  >
+                    <span className="font-mono font-black text-stone-900 tracking-wider">
+                      🎟️ {promo.code}
+                    </span>
+                    <span className="text-stone-500 text-[11px]">
+                      ({promo.discount_type === 'fixed' ? `RM ${promo.discount_value.toFixed(2)} off` : `${promo.discount_value}% off`})
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard?.writeText(promo.code);
+                        setCopiedPromoCode(promo.code);
+                        setTimeout(() => setCopiedPromoCode(null), 2500);
+                      }}
+                      className="px-2 py-0.5 rounded-lg bg-orange-50 hover:bg-orange-100 text-brand-orange text-[10px] font-black uppercase transition-colors cursor-pointer"
+                    >
+                      {copiedPromoCode === promo.code ? 'Copied!' : 'Copy'}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Best Seller Section — 2 columns of 3 items (min 2 items, max 6 items) */}
         {bestSellerItems.length >= 2 && (
           <div className="space-y-3">
@@ -792,6 +1018,14 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
             setSelectedItem(itemToOpen);
           }
         }}
+      />
+      {/* Bundle Selection Modal */}
+      <BundleSelectionModal
+        bundle={activeBundleModal}
+        menuItems={menuItems}
+        isOpen={Boolean(activeBundleModal)}
+        onClose={() => setActiveBundleModal(null)}
+        onConfirm={handleAddBundleToCart}
       />
       </div>
     </PullToRefresh>

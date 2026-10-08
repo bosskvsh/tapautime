@@ -50,6 +50,7 @@ interface CheckoutRequestBody {
   packaging_fee_amount?: number;
   subtotal?: number;
   gross_total?: number;
+  order_balance_fee?: number;
   is_preorder?: boolean;
   scheduled_pickup_date?: string; // timestamptz — carries both date and time
 }
@@ -598,16 +599,19 @@ serve(async (req: Request) => {
     // Financial split calculations:
     // subtotal: Sum of all items in cart (e.g., 12.00)
     const subtotal = Number((itemsSubtotalCents / 100).toFixed(2));
-    // convenience_fee: Flat rate RM 0.48
-    const convenienceFee = items.length > 0 ? 0.48 : 0.00;
+    // convenience_fee (processing fee): Flat rate RM 1.00
+    const convenienceFee = items.length > 0 ? 1.00 : 0.00;
     const convenienceFeeCents = Math.round(convenienceFee * 100);
-    // service_fee: Dynamic 1.8% of cart subtotal
-    const serviceFeeCents = Math.round(itemsSubtotalCents * 0.018);
+    // service_fee: Dynamic 3.8% of cart subtotal
+    const serviceFeeCents = Math.round(itemsSubtotalCents * 0.038);
     const serviceFee = Number((serviceFeeCents / 100).toFixed(2));
-    // Platform fees cover convenience and service charges. Merchant packaging
-    // fees remain payable and are included in the gross total before a promo
-    // discount is applied to the food subtotal.
-    const platformFeeCents = convenienceFeeCents + serviceFeeCents;
+    // order_balance_fee: RM 0.50 small order top-up fee for orders under RM 12.00 (removed at >= RM 12.00)
+    const orderBalanceFee = (items.length > 0 && subtotal < 12.00) ? 0.50 : 0.00;
+    const orderBalanceFeeCents = Math.round(orderBalanceFee * 100);
+    // Platform fees cover convenience, service, and order balance top-up charges.
+    // Merchant packaging fees remain payable and are included in the gross total before
+    // a promo discount is applied to the food subtotal.
+    const platformFeeCents = convenienceFeeCents + serviceFeeCents + orderBalanceFeeCents;
     const platformFee = Number((platformFeeCents / 100).toFixed(2));
     const packagingFeeCents = calculatedOrders.reduce(
       (sum, order) => sum + order.packagingFeeCents,
@@ -618,7 +622,7 @@ serve(async (req: Request) => {
     // Calculate promo code discount server-side for security. The database RPC
     // verifies the active code, its merchant, and its submitted terms.
     const promoCode = (body.promo_code || '').trim().toUpperCase();
-    const grossTotal = Number((subtotal + packagingFee + convenienceFee + serviceFee).toFixed(2));
+    const grossTotal = Number((subtotal + packagingFee + convenienceFee + serviceFee + orderBalanceFee).toFixed(2));
     let discount = 0;
     let promoCodeId: string | null = null;
     let isLegacyPromo = false;
@@ -828,15 +832,17 @@ serve(async (req: Request) => {
       remainingDiscountCents -= allocatedDiscountCents;
       const subOrderDiscount = Number((allocatedDiscountCents / 100).toFixed(2));
       const subOrderConvenienceFee = index === 0 ? convenienceFee : 0.00;
-      const subOrderServiceFee = Number((Math.round(co.itemsSubtotalCents * 0.018) / 100).toFixed(2));
-      const subOrderPlatformFee = Number((subOrderConvenienceFee + subOrderServiceFee).toFixed(2));
+      const subOrderOrderBalanceFee = index === 0 ? orderBalanceFee : 0.00;
+      const subOrderServiceFee = Number((Math.round(co.itemsSubtotalCents * 0.038) / 100).toFixed(2));
+      const subOrderPlatformFee = Number((subOrderConvenienceFee + subOrderServiceFee + subOrderOrderBalanceFee).toFixed(2));
       const subOrderTotal = calculatedOrders.length === 1 && promoCode
         ? finalTotal
         : Number(
             (
               co.itemsSubtotalCents +
               (index === 0 ? convenienceFeeCents : 0) +
-              Math.round(co.itemsSubtotalCents * 0.018) +
+              (index === 0 ? orderBalanceFeeCents : 0) +
+              Math.round(co.itemsSubtotalCents * 0.038) +
               co.packagingFeeCents -
               allocatedDiscountCents
             ) / 100
@@ -1037,6 +1043,7 @@ serve(async (req: Request) => {
               subtotal: `RM ${subtotal.toFixed(2)}`,
               convenience_fee: `RM ${convenienceFee.toFixed(2)}`,
               service_fee: `RM ${serviceFee.toFixed(2)}`,
+              order_balance_fee: orderBalanceFee > 0 ? `RM ${orderBalanceFee.toFixed(2)}` : 'RM 0.00',
               tapautime_fee: `RM ${platformFee.toFixed(2)}`,
               merchant_cut: `RM ${effectiveMerchantCut.toFixed(2)}`,
               table_number: tableNumber || 'takeaway',
@@ -1073,6 +1080,7 @@ serve(async (req: Request) => {
         subtotal,
         convenience_fee: convenienceFee,
         service_fee: serviceFee,
+        order_balance_fee: orderBalanceFee,
         platform_fee: platformFee,
         discount,
         promo: promoCalculation,

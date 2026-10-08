@@ -164,17 +164,17 @@ export const OrderStatusScreen: React.FC<OrderStatusScreenProps> = ({
             updated &&
             (updated.id === targetId ||
               updated.display_id === targetId ||
-              (displayPin && updated.pickup_pin === displayPin) ||
-              (activeOrder && (updated.id === activeOrder.id || updated.display_id === activeOrder.display_id || (activeOrder.pickup_pin && updated.pickup_pin === activeOrder.pickup_pin))))
+              (displayPin && updated.pickup_pin === displayPin))
           ) {
             const nextStatus = resolveOrderStatusFromRow(updated);
             if (nextStatus) {
-              updateOrderStatus(activeOrder?.id || updated.id, nextStatus);
+              const store = useCustomerOrderStore.getState();
+              store.updateOrderStatus(targetId, nextStatus);
 
               // Proactively fetch immutable receipt when transitioned to completed
               if (nextStatus === 'completed') {
                 setIsReceiptLoading(true);
-                fetchOrderReceipt(activeOrder?.id || updated.id).finally(() => {
+                store.fetchOrderReceipt(targetId).finally(() => {
                   setIsReceiptLoading(false);
                 });
               }
@@ -205,10 +205,11 @@ export const OrderStatusScreen: React.FC<OrderStatusScreenProps> = ({
 
         if (data) {
           const nextStatus = resolveOrderStatusFromRow(data);
-          updateOrderStatus(activeOrder?.id || data.id, nextStatus);
+          const store = useCustomerOrderStore.getState();
+          store.updateOrderStatus(targetId, nextStatus);
 
-          if (nextStatus === 'completed' && !activeOrder?.receipt) {
-            fetchOrderReceipt(activeOrder?.id || data.id);
+          if (nextStatus === 'completed' && !store.activeOrder?.receipt) {
+            store.fetchOrderReceipt(targetId);
           }
         }
       } catch (err) {
@@ -220,7 +221,7 @@ export const OrderStatusScreen: React.FC<OrderStatusScreenProps> = ({
       supabase.removeChannel(channel);
       clearInterval(interval);
     };
-  }, [activeOrder?.id, activeOrder?.receipt, activeOrder?.pickup_pin, orderId, displayPin, updateOrderStatus, fetchOrderReceipt]);
+  }, [activeOrder?.id, orderId, displayPin]);
 
   // Proactively fetch receipt if order is already completed on mount
   useEffect(() => {

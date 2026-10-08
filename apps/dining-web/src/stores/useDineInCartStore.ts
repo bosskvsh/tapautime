@@ -32,7 +32,9 @@ interface DineInCartStore {
   getTotalCount: () => number;
   getSubtotal: () => number;
   getConvenienceFee: () => number;
+  getProcessingFee: () => number;
   getServiceFee: () => number;
+  getOrderBalanceFee: () => number;
   getPlatformFee: () => number;
   getTotalAmount: () => number;
 }
@@ -96,21 +98,31 @@ export const useDineInCartStore = create<DineInCartStore>((set, get) => ({
 
   getConvenienceFee: () => {
     const hasItems = get().items.length > 0;
-    return hasItems ? 0.48 : 0;
+    return hasItems ? 1.00 : 0;
+  },
+
+  getProcessingFee: () => {
+    return get().getConvenienceFee();
   },
 
   getServiceFee: () => {
     const subtotal = get().getSubtotal();
     if (subtotal <= 0) return 0;
-    return Number((Math.round(subtotal * 100 * 0.018) / 100).toFixed(2));
+    return Number((Math.round(subtotal * 100 * 0.038) / 100).toFixed(2));
+  },
+
+  getOrderBalanceFee: () => {
+    const subtotal = get().getSubtotal();
+    const hasItems = get().items.length > 0;
+    return hasItems && subtotal < 12.00 ? 0.50 : 0;
   },
 
   getPlatformFee: () => {
-    return Number((get().getConvenienceFee() + get().getServiceFee()).toFixed(2));
+    return Number((get().getConvenienceFee() + get().getServiceFee() + get().getOrderBalanceFee()).toFixed(2));
   },
 
   getTotalAmount: () =>
     Number(
-      (get().getSubtotal() + get().getConvenienceFee() + get().getServiceFee()).toFixed(2)
+      (get().getSubtotal() + get().getConvenienceFee() + get().getServiceFee() + get().getOrderBalanceFee()).toFixed(2)
     ),
 }));

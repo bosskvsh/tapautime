@@ -1,19 +1,23 @@
-# Graph Report - tapau time  (2026-10-06)
+# Graph Report - tapau time  (2026-10-08)
 
 ## Corpus Check
-- 354 files · ~2,562,882 words
+- 366 files · ~2,907,180 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1367 nodes · 1887 edges · 161 communities (83 shown, 47 thin omitted)
+- 1406 nodes · 1929 edges · 164 communities (81 shown, 51 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 5 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
+## Graph Freshness
+- Built from commit: `5f43f2ec`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
+
 ## Community Hubs (Navigation)
 - inspect_orders.mjs
-- CartDrawer.tsx
-- customer-pwa/src/screens/CheckoutScreen.tsx
-- customer-pwa/src/App.tsx
+- AuthScreen.tsx
+- verify_order_balance_fee.cjs
 - devDependencies
 - compilerOptions
 - dining-web/src/screens/MenuScreen.tsx
@@ -29,9 +33,7 @@
 - check_db.js
 - write-authscreen.mjs
 - test-query.mjs
-- BottomNavBar.tsx
-- customer-pwa/src/components/ItemModifierModal.tsx
-- merchant-web/src/App.tsx
+- merchant-web/src/lib/supabase.ts
 - MenuManagerScreen.tsx
 - WalletScreen.tsx
 - audio.ts
@@ -51,7 +53,7 @@
 - no_mock_data.md
 - useMerchantKDSStore
 - promo_code_copywriting.md
-- useMerchantRealtimeOrders.ts
+- merchant-web/src/App.tsx
 - Senior Full-Stack Engineering Protocol
 - Senior Deep Debugging Protocol (High Efficiency)
 - devDependencies
@@ -66,7 +68,12 @@
 - inspect_users.mjs
 - test_merchant_fetch.mjs
 - check_deploy_args.mjs
+- local-router-proxy.js
 - refund-order/index.ts
+- _middleware.ts
+- copy_functions.cjs
+- functions/_middleware.ts
+- functions/functions/_middleware.ts
 - compilerOptions
 - schema.ts
 - useMerchantOrders.ts
@@ -122,7 +129,7 @@
 - Store
 - inspect_views.js
 - check_bundle.cjs
-- HomeScreen.tsx
+- customer-pwa/src/App.tsx
 - inspect_ui.js
 - find_line.js
 - AudioAlarmController
@@ -151,7 +158,7 @@
 7. `compilerOptions` - 16 edges
 8. `scripts` - 14 edges
 9. `useCartStore` - 13 edges
-10. `useCustomerOrderStore` - 11 edges
+10. `useCustomerOrderStore` - 12 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `CustomerOrderStore` --references--> `CustomerReceipt`  [EXTRACTED]
@@ -160,31 +167,23 @@
   apps/customer-pwa/src/stores/useCustomerOrderStore.ts → src/types/schema.ts
 - `useMerchantRealtimeOrders()` --indirect_call--> `mapDbOrderToKDSOrder()`  [INFERRED]
   apps/merchant-web/src/hooks/useMerchantRealtimeOrders.ts → apps/merchant-web/src/lib/orderMapper.ts
-- `CustomerAppLayout()` --calls--> `useAuthStore`  [EXTRACTED]
-  apps/customer-pwa/src/App.tsx → apps/customer-pwa/src/stores/useAuthStore.ts
 - `CustomerAppLayout()` --calls--> `useCartStore`  [EXTRACTED]
   apps/customer-pwa/src/App.tsx → apps/customer-pwa/src/stores/useCartStore.ts
+- `BundleSelectionModalProps` --references--> `MenuItem`  [EXTRACTED]
+  apps/customer-pwa/src/components/BundleSelectionModal.tsx → apps/customer-pwa/src/components/MenuItemCard.tsx
 
 ## Import Cycles
 - None detected.
 
-## Communities (161 total, 47 thin omitted)
+## Communities (164 total, 51 thin omitted)
 
 ### Community 0 - "inspect_orders.mjs"
 Cohesion: 0.33
 Nodes (4): __dirname, env, envContent, __filename
 
-### Community 1 - "CartDrawer.tsx"
-Cohesion: 0.15
-Nodes (3): CartDrawerProps, SwipeableCartItemProps, CartItem
-
-### Community 2 - "customer-pwa/src/screens/CheckoutScreen.tsx"
-Cohesion: 0.14
-Nodes (22): AuthModal(), AuthModalProps, ContactNumberModal(), ContactNumberModalProps, normalizeMalaysianPhone(), CHECKOUT_EDGE_FUNCTION_URL, supabase, SUPABASE_ANON_KEY (+14 more)
-
-### Community 3 - "customer-pwa/src/App.tsx"
-Cohesion: 0.18
-Nodes (22): App(), CustomerAppLayout(), Screen, TopNavBar(), TopNavBarProps, HomeScreen(), OrdersScreen(), OrdersScreenProps (+14 more)
+### Community 1 - "AuthScreen.tsx"
+Cohesion: 0.40
+Nodes (3): AuthScreen(), AuthScreenProps, LoginScreenProps
 
 ### Community 4 - "devDependencies"
 Cohesion: 0.05
@@ -238,17 +237,9 @@ Nodes (4): b, bLower, files, terms
 Cohesion: 0.40
 Nodes (3): __dirname, __filename, supabase
 
-### Community 24 - "BottomNavBar.tsx"
-Cohesion: 0.50
-Nodes (3): BottomNavBar(), BottomNavBarProps, NavTab
-
-### Community 25 - "customer-pwa/src/components/ItemModifierModal.tsx"
-Cohesion: 0.16
-Nodes (11): CartDrawer(), isGroupSingleSelect(), ItemModifierModal(), ItemModifierModalProps, MenuItem, ModifierGroup, CartScreen(), CartScreenProps (+3 more)
-
-### Community 26 - "merchant-web/src/App.tsx"
-Cohesion: 0.11
-Nodes (18): MerchantStatus, NAV_ITEMS, NavItemConfig, NavTab, UseHeartbeatOptions, UseHeartbeatResult, supabase, SUPABASE_ANON_KEY (+10 more)
+### Community 26 - "merchant-web/src/lib/supabase.ts"
+Cohesion: 0.18
+Nodes (11): useHeartbeat(), UseHeartbeatOptions, UseHeartbeatResult, UseMerchantRealtimeOrdersOptions, supabase, SUPABASE_ANON_KEY, SUPABASE_URL, ApplicationFormState (+3 more)
 
 ### Community 27 - "MenuManagerScreen.tsx"
 Cohesion: 0.36
@@ -263,8 +254,8 @@ Cohesion: 0.47
 Nodes (5): CHIME_DATA_URI, CHIME_FALLBACK_FILE, getChimeAudio(), playOrderChime(), unlockAudioContext()
 
 ### Community 30 - "customer-pwa/src/screens/MenuScreen.tsx"
-Cohesion: 0.18
-Nodes (14): MenuItem, MenuItemCard(), MenuItemCardProps, DEFAULT_GRID_TILE_COLORS, GridTileColors, MenuItemGridCard(), PreorderDateTimeModal(), PreorderDateTimeModalProps (+6 more)
+Cohesion: 0.06
+Nodes (31): BundleOffer, BundleSelectionModal(), BundleSelectionModalProps, CartDrawer(), CartDrawerProps, SwipeableCartItemProps, isGroupSingleSelect(), ItemModifierModal() (+23 more)
 
 ### Community 31 - "generate_audio.js"
 Cohesion: 0.40
@@ -275,8 +266,8 @@ Cohesion: 0.05
 Nodes (40): dependencies, lucide-react, react, react-dom, react-router-dom, recharts, @supabase/supabase-js, zustand (+32 more)
 
 ### Community 33 - "admin-web/src/App.tsx"
-Cohesion: 0.07
-Nodes (36): App(), AdminGuard(), AdminGuardProps, AdminLayout(), supabase, SUPABASE_ANON_KEY, SUPABASE_URL, ApplicationsScreen() (+28 more)
+Cohesion: 0.06
+Nodes (40): App(), AdminGuard(), AdminGuardProps, AdminLayout(), supabase, SUPABASE_ANON_KEY, SUPABASE_URL, ApplicationsScreen() (+32 more)
 
 ### Community 34 - "scripts"
 Cohesion: 0.14
@@ -303,16 +294,16 @@ Cohesion: 0.13
 Nodes (8): APP_DATA, AudioEngine, getSupabase(), Haptic, NOTE: orders_v2 schema only has: display_id, merchant_id, current_status,, Store, TapauCloud, UI
 
 ### Community 45 - "merchant-web/src/screens/PromoCodesScreen.tsx"
-Cohesion: 0.19
-Nodes (13): formatDate(), formatDateOnly(), formatDiscount(), formatDuration(), normalizeCode(), PromoApplicability, PromoCodeRequest, PromoCodesScreen() (+5 more)
+Cohesion: 0.15
+Nodes (16): BundleOffer, BundleType, formatDate(), formatDateOnly(), formatDiscount(), formatDuration(), MenuItemOption, normalizeCode() (+8 more)
 
 ### Community 47 - "useMerchantKDSStore"
-Cohesion: 0.29
-Nodes (10): QRGeneratorScreen(), QRGeneratorScreenProps, checkIfCurrentlyOpenLocal(), formatKuchingClock(), getKuchingTime(), StoreNameRequest, StoreSettingsScreen(), StoreSettingsScreenProps (+2 more)
+Cohesion: 0.22
+Nodes (12): QRGeneratorScreen(), QRGeneratorScreenProps, checkIfCurrentlyOpenLocal(), formatKuchingClock(), getKuchingTime(), StoreNameRequest, StoreSettingsScreen(), StoreSettingsScreenProps (+4 more)
 
-### Community 51 - "useMerchantRealtimeOrders.ts"
-Cohesion: 0.30
-Nodes (12): App(), FALLBACK_SOUND_PATH, getNewOrderAudio(), NEW_ORDER_SOUND_PATH, playNewOrderSound(), repeatTimeoutIds, stopNewOrderSound(), unlockNewOrderAudio() (+4 more)
+### Community 51 - "merchant-web/src/App.tsx"
+Cohesion: 0.22
+Nodes (14): App(), MerchantStatus, NAV_ITEMS, NavItemConfig, NavTab, FALLBACK_SOUND_PATH, getNewOrderAudio(), NEW_ORDER_SOUND_PATH (+6 more)
 
 ### Community 52 - "Senior Full-Stack Engineering Protocol"
 Cohesion: 0.15
@@ -361,6 +352,14 @@ Nodes (4): __dirname, env, envContent, __filename
 ### Community 64 - "test_merchant_fetch.mjs"
 Cohesion: 0.40
 Nodes (4): __dirname, env, envContent, __filename
+
+### Community 66 - "local-router-proxy.js"
+Cohesion: 0.29
+Nodes (6): { createClient }, http, httpProxy, proxy, server, supabase
+
+### Community 70 - "copy_functions.cjs"
+Cohesion: 0.40
+Nodes (4): dest, fs, path, src
 
 ### Community 183 - "compilerOptions"
 Cohesion: 0.06
@@ -411,7 +410,7 @@ Cohesion: 0.04
 Nodes (44): dependencies, dotenv, lucide-react, qrcode.react, react, react-dom, recharts, @supabase/supabase-js (+36 more)
 
 ### Community 728 - "useMerchantKDSStore.ts"
-Cohesion: 0.20
+Cohesion: 0.22
 Nodes (16): mapDbOrderToKDSOrder(), normalizeModifiers(), KDSScreen(), KitchenDisplaySystem, formatDate(), isPast(), isToday(), isTomorrow() (+8 more)
 
 ### Community 755 - "AudioAlarmController"
@@ -470,9 +469,9 @@ Nodes (6): appJs, fs, orderHtml, renderViewMatches, sections, viewsFound
 Cohesion: 0.50
 Nodes (3): fs, live, local
 
-### Community 840 - "HomeScreen.tsx"
-Cohesion: 0.15
-Nodes (14): HeroCard(), HeroCardProps, MerchantCard(), MerchantCardProps, MerchantMerchant, PullToRefresh(), PullToRefreshProps, RefreshStatus (+6 more)
+### Community 840 - "customer-pwa/src/App.tsx"
+Cohesion: 0.06
+Nodes (62): App(), CustomerAppLayout(), Screen, AuthModal(), AuthModalProps, ContactNumberModal(), ContactNumberModalProps, normalizeMalaysianPhone() (+54 more)
 
 ### Community 841 - "inspect_ui.js"
 Cohesion: 0.33
@@ -503,21 +502,21 @@ Cohesion: 0.83
 Nodes (3): canvasToBlob(), compressReceiptImage(), loadImage()
 
 ## Knowledge Gaps
-- **598 isolated node(s):** `TapauCloud`, `APP_DATA`, `AudioEngine`, `Haptic`, `UI` (+593 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 758 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **47 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **619 isolated node(s):** `TapauCloud`, `APP_DATA`, `AudioEngine`, `Haptic`, `UI` (+614 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 785 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **51 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `supabase` connect `customer-pwa/src/screens/CheckoutScreen.tsx` to `CartDrawer.tsx`, `customer-pwa/src/App.tsx`, `HomeScreen.tsx`, `customer-pwa/src/components/ItemModifierModal.tsx`, `customer-pwa/src/screens/MenuScreen.tsx`?**
+- **Why does `useMerchantKDSStore` connect `useMerchantKDSStore` to `merchant-web/src/screens/PromoCodesScreen.tsx`, `merchant-web/src/App.tsx`, `useMerchantKDSStore.ts`, `merchant-web/src/lib/supabase.ts`, `MenuManagerScreen.tsx`, `WalletScreen.tsx`?**
   _High betweenness centrality (0.002) - this node is a cross-community bridge._
-- **Why does `useMerchantKDSStore` connect `useMerchantKDSStore` to `merchant-web/src/screens/PromoCodesScreen.tsx`, `useMerchantRealtimeOrders.ts`, `useMerchantKDSStore.ts`, `merchant-web/src/App.tsx`, `MenuManagerScreen.tsx`, `WalletScreen.tsx`?**
+- **Why does `supabase` connect `customer-pwa/src/App.tsx` to `customer-pwa/src/screens/MenuScreen.tsx`?**
   _High betweenness centrality (0.002) - this node is a cross-community bridge._
+- **Why does `useCartStore` connect `customer-pwa/src/screens/MenuScreen.tsx` to `customer-pwa/src/App.tsx`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `TapauCloud`, `APP_DATA`, `AudioEngine` to the rest of the system?**
-  _598 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `customer-pwa/src/screens/CheckoutScreen.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.14039408866995073 - nodes in this community are weakly interconnected._
+  _619 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.05263157894736842 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**

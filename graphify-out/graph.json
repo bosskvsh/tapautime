@@ -4,303 +4,30 @@
   "graph": {},
   "nodes": [
     {
-      "id": "apps_customer_pwa_src_components_cartdrawer_cartdrawerprops",
-      "label": "CartDrawerProps",
+      "id": "apps_merchant_web_src_screens_authscreen_authscreenprops",
+      "label": "AuthScreenProps",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "CartDrawer.tsx",
+      "community_name": "AuthScreen.tsx",
       "file_type": "code",
-      "norm_label": "cartdrawerprops",
-      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
-      "source_location": "L7"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_cartdrawer_swipeablecartitemprops",
-      "label": "SwipeableCartItemProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "CartDrawer.tsx",
-      "file_type": "code",
-      "norm_label": "swipeablecartitemprops",
-      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
-      "source_location": "L13"
-    },
-    {
-      "id": "apps_customer_pwa_src_stores_usecartstore_cartitem",
-      "label": "CartItem",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "CartDrawer.tsx",
-      "file_type": "code",
-      "norm_label": "cartitem",
-      "source_file": "apps/customer-pwa/src/stores/useCartStore.ts",
-      "source_location": "L12"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_auth_authmodal_authmodalprops",
-      "label": "AuthModalProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "authmodalprops",
-      "source_file": "apps/customer-pwa/src/components/auth/AuthModal.tsx",
-      "source_location": "L7"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_auth_contactnumbermodal_contactnumbermodalprops",
-      "label": "ContactNumberModalProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "contactnumbermodalprops",
-      "source_file": "apps/customer-pwa/src/components/auth/ContactNumberModal.tsx",
-      "source_location": "L8"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_checkoutscreen_checkoutscreenprops",
-      "label": "CheckoutScreenProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "checkoutscreenprops",
-      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
-      "source_location": "L11"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_checkoutscreen_packagingfeetype",
-      "label": "PackagingFeeType",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "packagingfeetype",
-      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
-      "source_location": "L30"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_checkoutscreen_paymentmethodtype",
-      "label": "PaymentMethodType",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "paymentmethodtype",
-      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
-      "source_location": "L32"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_checkoutscreen_promoquote",
-      "label": "PromoQuote",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "promoquote",
-      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
-      "source_location": "L16"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_profilescreen_ordersummary",
-      "label": "OrderSummary",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "ordersummary",
-      "source_file": "apps/customer-pwa/src/screens/ProfileScreen.tsx",
-      "source_location": "L8"
-    },
-    {
-      "id": "apps_customer_pwa_src_stores_useauthstore_authstate",
-      "label": "AuthState",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "authstate",
-      "source_file": "apps/customer-pwa/src/stores/useAuthStore.ts",
+      "norm_label": "authscreenprops",
+      "source_file": "apps/merchant-web/src/screens/AuthScreen.tsx",
       "source_location": "L5"
     },
     {
-      "id": "apps_customer_pwa_src_stores_usecustomerstore_customerstore",
-      "label": "CustomerStore",
+      "id": "apps_merchant_web_src_screens_loginscreen_loginscreenprops",
+      "label": "LoginScreenProps",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
+      "community": 1,
+      "community_name": "AuthScreen.tsx",
       "file_type": "code",
-      "norm_label": "customerstore",
-      "source_file": "apps/customer-pwa/src/stores/useCustomerStore.ts",
+      "norm_label": "loginscreenprops",
+      "source_file": "apps/merchant-web/src/screens/LoginScreen.tsx",
       "source_location": "L4"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_bottomnavbar_bottomnavbarprops",
-      "label": "BottomNavBarProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "BottomNavBar.tsx",
-      "file_type": "code",
-      "norm_label": "bottomnavbarprops",
-      "source_file": "apps/customer-pwa/src/components/BottomNavBar.tsx",
-      "source_location": "L6"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_bottomnavbar_navtab",
-      "label": "NavTab",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "BottomNavBar.tsx",
-      "file_type": "code",
-      "norm_label": "navtab",
-      "source_file": "apps/customer-pwa/src/components/BottomNavBar.tsx",
-      "source_location": "L4"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_itemmodifiermodal_itemmodifiermodalprops",
-      "label": "ItemModifierModalProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "itemmodifiermodalprops",
-      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
-      "source_location": "L18"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_itemmodifiermodal_menuitem",
-      "label": "MenuItem",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "menuitem",
-      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
-      "source_location": "L7"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_itemmodifiermodal_modifiergroup",
-      "label": "ModifierGroup",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "modifiergroup",
-      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
-      "source_location": "L30"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_cartscreen_cartscreenprops",
-      "label": "CartScreenProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "cartscreenprops",
-      "source_file": "apps/customer-pwa/src/screens/CartScreen.tsx",
-      "source_location": "L4"
-    },
-    {
-      "id": "apps_customer_pwa_src_stores_usecartstore_cartmodifier",
-      "label": "CartModifier",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "cartmodifier",
-      "source_file": "apps/customer-pwa/src/stores/useCartStore.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "apps_customer_pwa_src_stores_usecartstore_cartstore",
-      "label": "CartStore",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "cartstore",
-      "source_file": "apps/customer-pwa/src/stores/useCartStore.ts",
-      "source_location": "L27"
-    },
-    {
-      "id": "apps_merchant_web_src_app_merchantstatus",
-      "label": "MerchantStatus",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "merchantstatus",
-      "source_file": "apps/merchant-web/src/App.tsx",
-      "source_location": "L32"
-    },
-    {
-      "id": "apps_merchant_web_src_app_navitemconfig",
-      "label": "NavItemConfig",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "navitemconfig",
-      "source_file": "apps/merchant-web/src/App.tsx",
-      "source_location": "L34"
-    },
-    {
-      "id": "apps_merchant_web_src_app_navtab",
-      "label": "NavTab",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "navtab",
-      "source_file": "apps/merchant-web/src/App.tsx",
-      "source_location": "L31"
     },
     {
       "id": "apps_merchant_web_src_hooks_useheartbeat_useheartbeatoptions",
@@ -309,7 +36,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
+      "community_name": "merchant-web/src/lib/supabase.ts",
       "file_type": "code",
       "norm_label": "useheartbeatoptions",
       "source_file": "apps/merchant-web/src/hooks/useHeartbeat.ts",
@@ -322,37 +49,24 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
+      "community_name": "merchant-web/src/lib/supabase.ts",
       "file_type": "code",
       "norm_label": "useheartbeatresult",
       "source_file": "apps/merchant-web/src/hooks/useHeartbeat.ts",
       "source_location": "L29"
     },
     {
-      "id": "apps_merchant_web_src_screens_authscreen_authscreenprops",
-      "label": "AuthScreenProps",
+      "id": "apps_merchant_web_src_hooks_usemerchantrealtimeorders_usemerchantrealtimeordersoptions",
+      "label": "UseMerchantRealtimeOrdersOptions",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
+      "community_name": "merchant-web/src/lib/supabase.ts",
       "file_type": "code",
-      "norm_label": "authscreenprops",
-      "source_file": "apps/merchant-web/src/screens/AuthScreen.tsx",
-      "source_location": "L5"
-    },
-    {
-      "id": "apps_merchant_web_src_screens_loginscreen_loginscreenprops",
-      "label": "LoginScreenProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "loginscreenprops",
-      "source_file": "apps/merchant-web/src/screens/LoginScreen.tsx",
-      "source_location": "L4"
+      "norm_label": "usemerchantrealtimeordersoptions",
+      "source_file": "apps/merchant-web/src/hooks/useMerchantRealtimeOrders.ts",
+      "source_location": "L8"
     },
     {
       "id": "apps_merchant_web_src_screens_onboardingscreen_applicationformstate",
@@ -361,7 +75,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
+      "community_name": "merchant-web/src/lib/supabase.ts",
       "file_type": "code",
       "norm_label": "applicationformstate",
       "source_file": "apps/merchant-web/src/screens/OnboardingScreen.tsx",
@@ -374,24 +88,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
+      "community_name": "merchant-web/src/lib/supabase.ts",
       "file_type": "code",
       "norm_label": "onboardingscreenprops",
       "source_file": "apps/merchant-web/src/screens/OnboardingScreen.tsx",
       "source_location": "L4"
-    },
-    {
-      "id": "apps_merchant_web_src_screens_storesetupscreen_storesetupscreenprops",
-      "label": "StoreSetupScreenProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "storesetupscreenprops",
-      "source_file": "apps/merchant-web/src/screens/StoreSetupScreen.tsx",
-      "source_location": "L6"
     },
     {
       "id": "apps_merchant_web_src_components_modifiermanagermodal_itemmodifier",
@@ -589,134 +290,95 @@
       "source_location": "L6"
     },
     {
-      "id": "apps_customer_pwa_src_app_screen",
-      "label": "Screen",
+      "id": "apps_customer_pwa_src_components_bundleselectionmodal_bundleoffer",
+      "label": "BundleOffer",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "screen",
-      "source_file": "apps/customer-pwa/src/App.tsx",
-      "source_location": "L21"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_topnavbar_topnavbarprops",
-      "label": "TopNavBarProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "topnavbarprops",
-      "source_file": "apps/customer-pwa/src/components/TopNavBar.tsx",
+      "norm_label": "bundleoffer",
+      "source_file": "apps/customer-pwa/src/components/BundleSelectionModal.tsx",
       "source_location": "L4"
     },
     {
-      "id": "apps_customer_pwa_src_screens_ordersscreen_ordersscreenprops",
-      "label": "OrdersScreenProps",
+      "id": "apps_customer_pwa_src_components_bundleselectionmodal_bundleselectionmodalprops",
+      "label": "BundleSelectionModalProps",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "ordersscreenprops",
-      "source_file": "apps/customer-pwa/src/screens/OrdersScreen.tsx",
-      "source_location": "L14"
+      "norm_label": "bundleselectionmodalprops",
+      "source_file": "apps/customer-pwa/src/components/BundleSelectionModal.tsx",
+      "source_location": "L15"
     },
     {
-      "id": "apps_customer_pwa_src_screens_orderstatusscreen_orderstatusscreenprops",
-      "label": "OrderStatusScreenProps",
+      "id": "apps_customer_pwa_src_components_cartdrawer_cartdrawerprops",
+      "label": "CartDrawerProps",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "orderstatusscreenprops",
-      "source_file": "apps/customer-pwa/src/screens/OrderStatusScreen.tsx",
-      "source_location": "L12"
+      "norm_label": "cartdrawerprops",
+      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
+      "source_location": "L7"
     },
     {
-      "id": "apps_customer_pwa_src_screens_rewardsscreen_rewardsscreenprops",
-      "label": "RewardsScreenProps",
+      "id": "apps_customer_pwa_src_components_cartdrawer_swipeablecartitemprops",
+      "label": "SwipeableCartItemProps",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "rewardsscreenprops",
-      "source_file": "apps/customer-pwa/src/screens/RewardsScreen.tsx",
-      "source_location": "L4"
+      "norm_label": "swipeablecartitemprops",
+      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
+      "source_location": "L13"
     },
     {
-      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_customerorder",
-      "label": "CustomerOrder",
+      "id": "apps_customer_pwa_src_components_itemmodifiermodal_itemmodifiermodalprops",
+      "label": "ItemModifierModalProps",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "customerorder",
-      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
-      "source_location": "L57"
+      "norm_label": "itemmodifiermodalprops",
+      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
+      "source_location": "L18"
     },
     {
-      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_customerorderstore",
-      "label": "CustomerOrderStore",
+      "id": "apps_customer_pwa_src_components_itemmodifiermodal_menuitem",
+      "label": "MenuItem",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "customerorderstore",
-      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
-      "source_location": "L79"
+      "norm_label": "menuitem",
+      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
+      "source_location": "L7"
     },
     {
-      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_orderstatus",
-      "label": "OrderStatus",
+      "id": "apps_customer_pwa_src_components_itemmodifiermodal_modifiergroup",
+      "label": "ModifierGroup",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "orderstatus",
-      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
-      "source_location": "L8"
-    },
-    {
-      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_paymentstatus",
-      "label": "PaymentStatus",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "paymentstatus",
-      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
-      "source_location": "L50"
-    },
-    {
-      "id": "src_types_schema_customerreceipt",
-      "label": "CustomerReceipt",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "customerreceipt",
-      "source_file": "src/types/schema.ts",
-      "source_location": "L236"
+      "norm_label": "modifiergroup",
+      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
+      "source_location": "L30"
     },
     {
       "id": "apps_customer_pwa_src_components_menuitemcard_menuitem",
@@ -771,6 +433,19 @@
       "source_location": "L3"
     },
     {
+      "id": "apps_customer_pwa_src_screens_cartscreen_cartscreenprops",
+      "label": "CartScreenProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "cartscreenprops",
+      "source_file": "apps/customer-pwa/src/screens/CartScreen.tsx",
+      "source_location": "L4"
+    },
+    {
       "id": "apps_customer_pwa_src_screens_menuscreen_menuscreenprops",
       "label": "MenuScreenProps",
       "_callable": true,
@@ -781,7 +456,7 @@
       "file_type": "code",
       "norm_label": "menuscreenprops",
       "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
-      "source_location": "L37"
+      "source_location": "L38"
     },
     {
       "id": "apps_customer_pwa_src_screens_menuscreen_merchantdetails",
@@ -794,7 +469,46 @@
       "file_type": "code",
       "norm_label": "merchantdetails",
       "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
-      "source_location": "L11"
+      "source_location": "L12"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecartstore_cartitem",
+      "label": "CartItem",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "cartitem",
+      "source_file": "apps/customer-pwa/src/stores/useCartStore.ts",
+      "source_location": "L12"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecartstore_cartmodifier",
+      "label": "CartModifier",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "cartmodifier",
+      "source_file": "apps/customer-pwa/src/stores/useCartStore.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecartstore_cartstore",
+      "label": "CartStore",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "cartstore",
+      "source_file": "apps/customer-pwa/src/stores/useCartStore.ts",
+      "source_location": "L27"
     },
     {
       "id": "apps_admin_web_src_components_adminguard_adminguardprops",
@@ -1003,6 +717,32 @@
       "norm_label": "storenamechangerequest",
       "source_file": "apps/admin-web/src/screens/StallsScreen.tsx",
       "source_location": "L31"
+    },
+    {
+      "id": "apps_admin_web_src_screens_tapaulinkproscreen_editmodalstate",
+      "label": "EditModalState",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "admin-web/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "editmodalstate",
+      "source_file": "apps/admin-web/src/screens/TapauLinkPROScreen.tsx",
+      "source_location": "L13"
+    },
+    {
+      "id": "apps_admin_web_src_screens_tapaulinkproscreen_merchant",
+      "label": "Merchant",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "admin-web/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "merchant",
+      "source_file": "apps/admin-web/src/screens/TapauLinkPROScreen.tsx",
+      "source_location": "L5"
     },
     {
       "id": "apps_admin_web_src_stores_useadminauthstore_adminauthstate",
@@ -1538,6 +1278,45 @@
       "source_location": "L8"
     },
     {
+      "id": "apps_merchant_web_src_screens_promocodesscreen_bundleoffer",
+      "label": "BundleOffer",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "merchant-web/src/screens/PromoCodesScreen.tsx",
+      "file_type": "code",
+      "norm_label": "bundleoffer",
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L27"
+    },
+    {
+      "id": "apps_merchant_web_src_screens_promocodesscreen_bundletype",
+      "label": "BundleType",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "merchant-web/src/screens/PromoCodesScreen.tsx",
+      "file_type": "code",
+      "norm_label": "bundletype",
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L25"
+    },
+    {
+      "id": "apps_merchant_web_src_screens_promocodesscreen_menuitemoption",
+      "label": "MenuItemOption",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 45,
+      "community_name": "merchant-web/src/screens/PromoCodesScreen.tsx",
+      "file_type": "code",
+      "norm_label": "menuitemoption",
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L39"
+    },
+    {
       "id": "apps_merchant_web_src_screens_promocodesscreen_promoapplicability",
       "label": "PromoApplicability",
       "_callable": true,
@@ -1548,7 +1327,7 @@
       "file_type": "code",
       "norm_label": "promoapplicability",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L19"
+      "source_location": "L23"
     },
     {
       "id": "apps_merchant_web_src_screens_promocodesscreen_promocoderequest",
@@ -1561,7 +1340,7 @@
       "file_type": "code",
       "norm_label": "promocoderequest",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L21"
+      "source_location": "L46"
     },
     {
       "id": "apps_merchant_web_src_screens_promocodesscreen_promocodestatus",
@@ -1574,7 +1353,7 @@
       "file_type": "code",
       "norm_label": "promocodestatus",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L16"
+      "source_location": "L20"
     },
     {
       "id": "apps_merchant_web_src_screens_promocodesscreen_promodiscounttype",
@@ -1587,7 +1366,7 @@
       "file_type": "code",
       "norm_label": "promodiscounttype",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L17"
+      "source_location": "L21"
     },
     {
       "id": "apps_merchant_web_src_screens_promocodesscreen_promodurationtype",
@@ -1600,7 +1379,7 @@
       "file_type": "code",
       "norm_label": "promodurationtype",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L18"
+      "source_location": "L22"
     },
     {
       "id": "supabase_functions_payment_webhook_index_webhookpayload",
@@ -1653,6 +1432,19 @@
       "norm_label": "storesettingsscreenprops",
       "source_file": "apps/merchant-web/src/screens/StoreSettingsScreen.tsx",
       "source_location": "L39"
+    },
+    {
+      "id": "apps_merchant_web_src_screens_storesetupscreen_storesetupscreenprops",
+      "label": "StoreSetupScreenProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "useMerchantKDSStore",
+      "file_type": "code",
+      "norm_label": "storesetupscreenprops",
+      "source_file": "apps/merchant-web/src/screens/StoreSetupScreen.tsx",
+      "source_location": "L6"
     },
     {
       "id": "src_types_payment_bankoption",
@@ -1759,17 +1551,43 @@
       "source_location": "L3"
     },
     {
-      "id": "apps_merchant_web_src_hooks_usemerchantrealtimeorders_usemerchantrealtimeordersoptions",
-      "label": "UseMerchantRealtimeOrdersOptions",
+      "id": "apps_merchant_web_src_app_merchantstatus",
+      "label": "MerchantStatus",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 51,
-      "community_name": "useMerchantRealtimeOrders.ts",
+      "community_name": "merchant-web/src/App.tsx",
       "file_type": "code",
-      "norm_label": "usemerchantrealtimeordersoptions",
-      "source_file": "apps/merchant-web/src/hooks/useMerchantRealtimeOrders.ts",
-      "source_location": "L8"
+      "norm_label": "merchantstatus",
+      "source_file": "apps/merchant-web/src/App.tsx",
+      "source_location": "L32"
+    },
+    {
+      "id": "apps_merchant_web_src_app_navitemconfig",
+      "label": "NavItemConfig",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 51,
+      "community_name": "merchant-web/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "navitemconfig",
+      "source_file": "apps/merchant-web/src/App.tsx",
+      "source_location": "L34"
+    },
+    {
+      "id": "apps_merchant_web_src_app_navtab",
+      "label": "NavTab",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 51,
+      "community_name": "merchant-web/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "navtab",
+      "source_file": "apps/merchant-web/src/App.tsx",
+      "source_location": "L31"
     },
     {
       "id": "apps_dining_web_src_components_cartisland_cartislandprops",
@@ -1965,6 +1783,45 @@
       "norm_label": "dineincartstore",
       "source_file": "apps/dining-web/src/stores/useDineInCartStore.ts",
       "source_location": "L22"
+    },
+    {
+      "id": "apps_customer_pwa_functions_middleware_env",
+      "label": "Env",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "_middleware.ts",
+      "file_type": "code",
+      "norm_label": "env",
+      "source_file": "apps/customer-pwa/functions/_middleware.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "functions_middleware_env",
+      "label": "Env",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 71,
+      "community_name": "functions/_middleware.ts",
+      "file_type": "code",
+      "norm_label": "env",
+      "source_file": "functions/_middleware.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "functions_functions_middleware_env",
+      "label": "Env",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 72,
+      "community_name": "functions/functions/_middleware.ts",
+      "file_type": "code",
+      "norm_label": "env",
+      "source_file": "functions/functions/_middleware.ts",
+      "source_location": "L1"
     },
     {
       "id": "apps_merchant_web_src_stores_usemerchantkdsstore_kdsmodifieritem",
@@ -2198,7 +2055,7 @@
       "file_type": "code",
       "norm_label": "calculatedorder",
       "source_file": "supabase/functions/checkout/index.ts",
-      "source_location": "L522"
+      "source_location": "L523"
     },
     {
       "id": "supabase_functions_checkout_index_cartitempayload",
@@ -2383,13 +2240,78 @@
       "source_location": "L258"
     },
     {
+      "id": "apps_customer_pwa_src_app_screen",
+      "label": "Screen",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "screen",
+      "source_file": "apps/customer-pwa/src/App.tsx",
+      "source_location": "L21"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_auth_authmodal_authmodalprops",
+      "label": "AuthModalProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "authmodalprops",
+      "source_file": "apps/customer-pwa/src/components/auth/AuthModal.tsx",
+      "source_location": "L7"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_auth_contactnumbermodal_contactnumbermodalprops",
+      "label": "ContactNumberModalProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "contactnumbermodalprops",
+      "source_file": "apps/customer-pwa/src/components/auth/ContactNumberModal.tsx",
+      "source_location": "L8"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_bottomnavbar_bottomnavbarprops",
+      "label": "BottomNavBarProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "bottomnavbarprops",
+      "source_file": "apps/customer-pwa/src/components/BottomNavBar.tsx",
+      "source_location": "L6"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_bottomnavbar_navtab",
+      "label": "NavTab",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "navtab",
+      "source_file": "apps/customer-pwa/src/components/BottomNavBar.tsx",
+      "source_location": "L4"
+    },
+    {
       "id": "apps_customer_pwa_src_components_herocard_herocardprops",
       "label": "HeroCardProps",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "herocardprops",
       "source_file": "apps/customer-pwa/src/components/HeroCard.tsx",
@@ -2402,7 +2324,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "merchantcardprops",
       "source_file": "apps/customer-pwa/src/components/MerchantCard.tsx",
@@ -2415,7 +2337,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "merchantmerchant",
       "source_file": "apps/customer-pwa/src/components/MerchantCard.tsx",
@@ -2428,7 +2350,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "pulltorefreshprops",
       "source_file": "apps/customer-pwa/src/components/PullToRefresh.tsx",
@@ -2441,7 +2363,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "refreshstatus",
       "source_file": "apps/customer-pwa/src/components/PullToRefresh.tsx",
@@ -2454,11 +2376,76 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "searchfilterstripprops",
       "source_file": "apps/customer-pwa/src/components/SearchFilterStrip.tsx",
       "source_location": "L3"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_topnavbar_topnavbarprops",
+      "label": "TopNavBarProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "topnavbarprops",
+      "source_file": "apps/customer-pwa/src/components/TopNavBar.tsx",
+      "source_location": "L4"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_checkoutscreen_checkoutscreenprops",
+      "label": "CheckoutScreenProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "checkoutscreenprops",
+      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
+      "source_location": "L11"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_checkoutscreen_packagingfeetype",
+      "label": "PackagingFeeType",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "packagingfeetype",
+      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
+      "source_location": "L30"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_checkoutscreen_paymentmethodtype",
+      "label": "PaymentMethodType",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "paymentmethodtype",
+      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
+      "source_location": "L32"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_checkoutscreen_promoquote",
+      "label": "PromoQuote",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "promoquote",
+      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
+      "source_location": "L16"
     },
     {
       "id": "apps_customer_pwa_src_screens_homescreen_homescreenprops",
@@ -2467,7 +2454,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "homescreenprops",
       "source_file": "apps/customer-pwa/src/screens/HomeScreen.tsx",
@@ -2480,11 +2467,63 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "merchant",
       "source_file": "apps/customer-pwa/src/screens/HomeScreen.tsx",
       "source_location": "L8"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_ordersscreen_ordersscreenprops",
+      "label": "OrdersScreenProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "ordersscreenprops",
+      "source_file": "apps/customer-pwa/src/screens/OrdersScreen.tsx",
+      "source_location": "L14"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_orderstatusscreen_orderstatusscreenprops",
+      "label": "OrderStatusScreenProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "orderstatusscreenprops",
+      "source_file": "apps/customer-pwa/src/screens/OrderStatusScreen.tsx",
+      "source_location": "L12"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_profilescreen_ordersummary",
+      "label": "OrderSummary",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "ordersummary",
+      "source_file": "apps/customer-pwa/src/screens/ProfileScreen.tsx",
+      "source_location": "L8"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_rewardsscreen_rewardsscreenprops",
+      "label": "RewardsScreenProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "rewardsscreenprops",
+      "source_file": "apps/customer-pwa/src/screens/RewardsScreen.tsx",
+      "source_location": "L4"
     },
     {
       "id": "apps_customer_pwa_src_screens_tapauaheadscreen_tapauaheadscreenprops",
@@ -2493,11 +2532,102 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "tapauaheadscreenprops",
       "source_file": "apps/customer-pwa/src/screens/TapauAheadScreen.tsx",
       "source_location": "L7"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_useauthstore_authstate",
+      "label": "AuthState",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "authstate",
+      "source_file": "apps/customer-pwa/src/stores/useAuthStore.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_customerorder",
+      "label": "CustomerOrder",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "customerorder",
+      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
+      "source_location": "L57"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_customerorderstore",
+      "label": "CustomerOrderStore",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "customerorderstore",
+      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
+      "source_location": "L79"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_orderstatus",
+      "label": "OrderStatus",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "orderstatus",
+      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_paymentstatus",
+      "label": "PaymentStatus",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "paymentstatus",
+      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
+      "source_location": "L50"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecustomerstore_customerstore",
+      "label": "CustomerStore",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "customerstore",
+      "source_file": "apps/customer-pwa/src/stores/useCustomerStore.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_types_schema_customerreceipt",
+      "label": "CustomerReceipt",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "customerreceipt",
+      "source_file": "src/types/schema.ts",
+      "source_location": "L236"
     },
     {
       "id": "src_hooks_useaudioalarm_js_src_hooks_useaudioalarm_audioalarmcontroller",
@@ -2525,124 +2655,28 @@
       "source_location": "L20"
     },
     {
-      "id": "apps_customer_pwa_src_components_cartdrawer_arrowrighticon",
-      "label": "ArrowRightIcon()",
+      "id": "apps_merchant_web_src_screens_authscreen_authscreen",
+      "label": "AuthScreen()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "CartDrawer.tsx",
+      "community_name": "AuthScreen.tsx",
       "file_type": "code",
-      "norm_label": "arrowrighticon()",
-      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
-      "source_location": "L94"
+      "norm_label": "authscreen()",
+      "source_file": "apps/merchant-web/src/screens/AuthScreen.tsx",
+      "source_location": "L10"
     },
     {
-      "id": "apps_customer_pwa_src_components_cartdrawer_cartbagcheckouticon",
-      "label": "CartBagCheckoutIcon()",
+      "id": "apps_merchant_web_src_screens_loginscreen_loginscreen",
+      "label": "LoginScreen()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "CartDrawer.tsx",
+      "community_name": "AuthScreen.tsx",
       "file_type": "code",
-      "norm_label": "cartbagcheckouticon()",
-      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
-      "source_location": "L76"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_cartdrawer_closeicon",
-      "label": "CloseIcon()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "CartDrawer.tsx",
-      "file_type": "code",
-      "norm_label": "closeicon()",
-      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
-      "source_location": "L25"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_cartdrawer_editnoteicon",
-      "label": "EditNoteIcon()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "CartDrawer.tsx",
-      "file_type": "code",
-      "norm_label": "editnoteicon()",
-      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
-      "source_location": "L60"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_cartdrawer_mappinicon",
-      "label": "MapPinIcon()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "CartDrawer.tsx",
-      "file_type": "code",
-      "norm_label": "mappinicon()",
-      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
-      "source_location": "L110"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_cartdrawer_minusicon",
-      "label": "MinusIcon()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "CartDrawer.tsx",
-      "file_type": "code",
-      "norm_label": "minusicon()",
-      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
-      "source_location": "L143"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_cartdrawer_plusicon",
-      "label": "PlusIcon()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "CartDrawer.tsx",
-      "file_type": "code",
-      "norm_label": "plusicon()",
-      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
-      "source_location": "L158"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_cartdrawer_swipeablecartitem",
-      "label": "SwipeableCartItem()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "CartDrawer.tsx",
-      "file_type": "code",
-      "norm_label": "swipeablecartitem()",
-      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
-      "source_location": "L174"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_cartdrawer_takeawayboxicon",
-      "label": "TakeawayBoxIcon()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "CartDrawer.tsx",
-      "file_type": "code",
-      "norm_label": "takeawayboxicon()",
-      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
-      "source_location": "L126"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_cartdrawer_trashicon",
-      "label": "TrashIcon()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "CartDrawer.tsx",
-      "file_type": "code",
-      "norm_label": "trashicon()",
-      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
-      "source_location": "L41"
+      "norm_label": "loginscreen()",
+      "source_file": "apps/merchant-web/src/screens/LoginScreen.tsx",
+      "source_location": "L9"
     },
     {
       "id": "scratch_check_db_checkdisplayid",
@@ -2681,88 +2715,16 @@
       "source_location": "L15"
     },
     {
-      "id": "apps_customer_pwa_src_components_auth_authmodal_authmodal",
-      "label": "AuthModal()",
+      "id": "scratch_verify_order_balance_fee_calcorderbalancefee",
+      "label": "calcOrderBalanceFee()",
       "_callable": true,
       "_origin": "ast",
       "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
+      "community_name": "verify_order_balance_fee.cjs",
       "file_type": "code",
-      "norm_label": "authmodal()",
-      "source_file": "apps/customer-pwa/src/components/auth/AuthModal.tsx",
-      "source_location": "L13"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_auth_contactnumbermodal_contactnumbermodal",
-      "label": "ContactNumberModal()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "contactnumbermodal()",
-      "source_file": "apps/customer-pwa/src/components/auth/ContactNumberModal.tsx",
-      "source_location": "L56"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_auth_contactnumbermodal_normalizemalaysianphone",
-      "label": "normalizeMalaysianPhone()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "normalizemalaysianphone()",
-      "source_file": "apps/customer-pwa/src/components/auth/ContactNumberModal.tsx",
-      "source_location": "L19"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_checkoutscreen_checkoutscreen",
-      "label": "CheckoutScreen()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "checkoutscreen()",
-      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
-      "source_location": "L106"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_checkoutscreen_getrazorpayconfig",
-      "label": "getRazorpayConfig()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "getrazorpayconfig()",
-      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
-      "source_location": "L40"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_checkoutscreen_loadrazorpayscript",
-      "label": "loadRazorpayScript()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "loadrazorpayscript()",
-      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
-      "source_location": "L88"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_profilescreen_profilescreen",
-      "label": "ProfileScreen()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "profilescreen()",
-      "source_file": "apps/customer-pwa/src/screens/ProfileScreen.tsx",
-      "source_location": "L19"
+      "norm_label": "calcorderbalancefee()",
+      "source_file": "scratch/verify_order_balance_fee.cjs",
+      "source_location": "L1"
     },
     {
       "id": "test_query_run",
@@ -2777,136 +2739,16 @@
       "source_location": "L11"
     },
     {
-      "id": "apps_customer_pwa_src_components_bottomnavbar_bottomnavbar",
-      "label": "BottomNavBar()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "BottomNavBar.tsx",
-      "file_type": "code",
-      "norm_label": "bottomnavbar()",
-      "source_file": "apps/customer-pwa/src/components/BottomNavBar.tsx",
-      "source_location": "L14"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_cartdrawer_cartdrawer",
-      "label": "CartDrawer()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "cartdrawer()",
-      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
-      "source_location": "L339"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_itemmodifiermodal_checkicon",
-      "label": "CheckIcon()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "checkicon()",
-      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
-      "source_location": "L74"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_itemmodifiermodal_closeicon",
-      "label": "CloseIcon()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "closeicon()",
-      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
-      "source_location": "L41"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_itemmodifiermodal_isgroupsingleselect",
-      "label": "isGroupSingleSelect()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "isgroupsingleselect()",
-      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
-      "source_location": "L113"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_itemmodifiermodal_itemmodifiermodal",
-      "label": "ItemModifierModal()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "itemmodifiermodal()",
-      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
-      "source_location": "L159"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_itemmodifiermodal_noteicon",
-      "label": "NoteIcon()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "noteicon()",
-      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
-      "source_location": "L89"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_itemmodifiermodal_shoppingbagicon",
-      "label": "ShoppingBagIcon()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "shoppingbagicon()",
-      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
-      "source_location": "L57"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_cartscreen_cartscreen",
-      "label": "CartScreen()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "cartscreen()",
-      "source_file": "apps/customer-pwa/src/screens/CartScreen.tsx",
-      "source_location": "L9"
-    },
-    {
-      "id": "apps_merchant_web_src_screens_authscreen_authscreen",
-      "label": "AuthScreen()",
+      "id": "apps_merchant_web_src_hooks_useheartbeat_useheartbeat",
+      "label": "useHeartbeat()",
       "_callable": true,
       "_origin": "ast",
       "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
+      "community_name": "merchant-web/src/lib/supabase.ts",
       "file_type": "code",
-      "norm_label": "authscreen()",
-      "source_file": "apps/merchant-web/src/screens/AuthScreen.tsx",
-      "source_location": "L10"
-    },
-    {
-      "id": "apps_merchant_web_src_screens_loginscreen_loginscreen",
-      "label": "LoginScreen()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "loginscreen()",
-      "source_file": "apps/merchant-web/src/screens/LoginScreen.tsx",
-      "source_location": "L9"
+      "norm_label": "useheartbeat()",
+      "source_file": "apps/merchant-web/src/hooks/useHeartbeat.ts",
+      "source_location": "L43"
     },
     {
       "id": "apps_merchant_web_src_screens_onboardingscreen_onboardingscreen",
@@ -2914,23 +2756,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
+      "community_name": "merchant-web/src/lib/supabase.ts",
       "file_type": "code",
       "norm_label": "onboardingscreen()",
       "source_file": "apps/merchant-web/src/screens/OnboardingScreen.tsx",
       "source_location": "L35"
-    },
-    {
-      "id": "apps_merchant_web_src_screens_storesetupscreen_storesetupscreen",
-      "label": "StoreSetupScreen()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "storesetupscreen()",
-      "source_file": "apps/merchant-web/src/screens/StoreSetupScreen.tsx",
-      "source_location": "L13"
     },
     {
       "id": "apps_merchant_web_src_components_modifiermanagermodal_modifiermanagermodal",
@@ -3041,136 +2871,220 @@
       "source_location": "L37"
     },
     {
-      "id": "apps_customer_pwa_src_app_app",
-      "label": "App()",
+      "id": "apps_customer_pwa_src_components_bundleselectionmodal_bundleselectionmodal",
+      "label": "BundleSelectionModal()",
       "_callable": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "app()",
-      "source_file": "apps/customer-pwa/src/App.tsx",
-      "source_location": "L500"
-    },
-    {
-      "id": "apps_customer_pwa_src_app_customerapplayout",
-      "label": "CustomerAppLayout()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "customerapplayout()",
-      "source_file": "apps/customer-pwa/src/App.tsx",
+      "norm_label": "bundleselectionmodal()",
+      "source_file": "apps/customer-pwa/src/components/BundleSelectionModal.tsx",
       "source_location": "L23"
     },
     {
-      "id": "apps_customer_pwa_src_components_topnavbar_topnavbar",
-      "label": "TopNavBar()",
+      "id": "apps_customer_pwa_src_components_cartdrawer_arrowrighticon",
+      "label": "ArrowRightIcon()",
       "_callable": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "topnavbar()",
-      "source_file": "apps/customer-pwa/src/components/TopNavBar.tsx",
-      "source_location": "L10"
+      "norm_label": "arrowrighticon()",
+      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
+      "source_location": "L94"
     },
     {
-      "id": "apps_customer_pwa_src_screens_homescreen_homescreen",
-      "label": "HomeScreen()",
+      "id": "apps_customer_pwa_src_components_cartdrawer_cartbagcheckouticon",
+      "label": "CartBagCheckoutIcon()",
       "_callable": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "homescreen()",
-      "source_file": "apps/customer-pwa/src/screens/HomeScreen.tsx",
-      "source_location": "L28"
+      "norm_label": "cartbagcheckouticon()",
+      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
+      "source_location": "L76"
     },
     {
-      "id": "apps_customer_pwa_src_screens_ordersscreen_ordersscreen",
-      "label": "OrdersScreen()",
+      "id": "apps_customer_pwa_src_components_cartdrawer_cartdrawer",
+      "label": "CartDrawer()",
       "_callable": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "ordersscreen()",
-      "source_file": "apps/customer-pwa/src/screens/OrdersScreen.tsx",
-      "source_location": "L18"
+      "norm_label": "cartdrawer()",
+      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
+      "source_location": "L339"
     },
     {
-      "id": "apps_customer_pwa_src_screens_orderstatusscreen_orderstatusscreen",
-      "label": "OrderStatusScreen()",
+      "id": "apps_customer_pwa_src_components_cartdrawer_closeicon",
+      "label": "CloseIcon()",
       "_callable": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "orderstatusscreen()",
-      "source_file": "apps/customer-pwa/src/screens/OrderStatusScreen.tsx",
-      "source_location": "L19"
+      "norm_label": "closeicon()",
+      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
+      "source_location": "L25"
     },
     {
-      "id": "apps_customer_pwa_src_screens_rewardsscreen_rewardsscreen",
-      "label": "RewardsScreen()",
+      "id": "apps_customer_pwa_src_components_cartdrawer_editnoteicon",
+      "label": "EditNoteIcon()",
       "_callable": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "rewardsscreen()",
-      "source_file": "apps/customer-pwa/src/screens/RewardsScreen.tsx",
-      "source_location": "L12"
+      "norm_label": "editnoteicon()",
+      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
+      "source_location": "L60"
     },
     {
-      "id": "apps_customer_pwa_src_screens_tapauaheadscreen_tapauaheadscreen",
-      "label": "TapauAheadScreen()",
+      "id": "apps_customer_pwa_src_components_cartdrawer_mappinicon",
+      "label": "MapPinIcon()",
       "_callable": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "tapauaheadscreen()",
-      "source_file": "apps/customer-pwa/src/screens/TapauAheadScreen.tsx",
-      "source_location": "L12"
+      "norm_label": "mappinicon()",
+      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
+      "source_location": "L110"
     },
     {
-      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_isterminalstatus",
-      "label": "isTerminalStatus()",
+      "id": "apps_customer_pwa_src_components_cartdrawer_minusicon",
+      "label": "MinusIcon()",
       "_callable": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "isterminalstatus()",
-      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
-      "source_location": "L31"
+      "norm_label": "minusicon()",
+      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
+      "source_location": "L143"
     },
     {
-      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_normalizeorderstatus",
-      "label": "normalizeOrderStatus()",
+      "id": "apps_customer_pwa_src_components_cartdrawer_plusicon",
+      "label": "PlusIcon()",
       "_callable": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "normalizeorderstatus()",
-      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
-      "source_location": "L18"
+      "norm_label": "plusicon()",
+      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
+      "source_location": "L158"
     },
     {
-      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_resolveorderstatusfromrow",
-      "label": "resolveOrderStatusFromRow()",
+      "id": "apps_customer_pwa_src_components_cartdrawer_swipeablecartitem",
+      "label": "SwipeableCartItem()",
       "_callable": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "resolveorderstatusfromrow()",
-      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
-      "source_location": "L36"
+      "norm_label": "swipeablecartitem()",
+      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
+      "source_location": "L174"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_cartdrawer_takeawayboxicon",
+      "label": "TakeawayBoxIcon()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "takeawayboxicon()",
+      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
+      "source_location": "L126"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_cartdrawer_trashicon",
+      "label": "TrashIcon()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "trashicon()",
+      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
+      "source_location": "L41"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_itemmodifiermodal_checkicon",
+      "label": "CheckIcon()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "checkicon()",
+      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
+      "source_location": "L74"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_itemmodifiermodal_closeicon",
+      "label": "CloseIcon()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "closeicon()",
+      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
+      "source_location": "L41"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_itemmodifiermodal_isgroupsingleselect",
+      "label": "isGroupSingleSelect()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "isgroupsingleselect()",
+      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
+      "source_location": "L113"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_itemmodifiermodal_itemmodifiermodal",
+      "label": "ItemModifierModal()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "itemmodifiermodal()",
+      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
+      "source_location": "L159"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_itemmodifiermodal_noteicon",
+      "label": "NoteIcon()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "noteicon()",
+      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
+      "source_location": "L89"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_itemmodifiermodal_shoppingbagicon",
+      "label": "ShoppingBagIcon()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "shoppingbagicon()",
+      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
+      "source_location": "L57"
     },
     {
       "id": "apps_customer_pwa_src_components_menuitemcard_menuitemcard",
@@ -3209,6 +3123,18 @@
       "source_location": "L18"
     },
     {
+      "id": "apps_customer_pwa_src_screens_cartscreen_cartscreen",
+      "label": "CartScreen()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "cartscreen()",
+      "source_file": "apps/customer-pwa/src/screens/CartScreen.tsx",
+      "source_location": "L9"
+    },
+    {
       "id": "apps_customer_pwa_src_screens_menuscreen_formatkuchingclock",
       "label": "formatKuchingClock()",
       "_callable": true,
@@ -3218,7 +3144,7 @@
       "file_type": "code",
       "norm_label": "formatkuchingclock()",
       "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
-      "source_location": "L48"
+      "source_location": "L49"
     },
     {
       "id": "apps_customer_pwa_src_screens_menuscreen_menuscreen",
@@ -3230,7 +3156,7 @@
       "file_type": "code",
       "norm_label": "menuscreen()",
       "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
-      "source_location": "L114"
+      "source_location": "L115"
     },
     {
       "id": "apps_customer_pwa_src_screens_menuscreen_usebackgroundtone",
@@ -3242,7 +3168,7 @@
       "file_type": "code",
       "norm_label": "usebackgroundtone()",
       "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
-      "source_location": "L68"
+      "source_location": "L69"
     },
     {
       "id": "apps_admin_web_src_app_app",
@@ -3254,7 +3180,7 @@
       "file_type": "code",
       "norm_label": "app()",
       "source_file": "apps/admin-web/src/App.tsx",
-      "source_location": "L12"
+      "source_location": "L13"
     },
     {
       "id": "apps_admin_web_src_components_adminguard_adminguard",
@@ -3278,7 +3204,7 @@
       "file_type": "code",
       "norm_label": "adminlayout()",
       "source_file": "apps/admin-web/src/layouts/AdminLayout.tsx",
-      "source_location": "L19"
+      "source_location": "L20"
     },
     {
       "id": "apps_admin_web_src_screens_applicationsscreen_applicationsscreen",
@@ -3423,6 +3349,18 @@
       "norm_label": "stallsscreen()",
       "source_file": "apps/admin-web/src/screens/StallsScreen.tsx",
       "source_location": "L43"
+    },
+    {
+      "id": "apps_admin_web_src_screens_tapaulinkproscreen_tapaulinkproscreen",
+      "label": "TapauLinkPROScreen()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "admin-web/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "tapaulinkproscreen()",
+      "source_file": "apps/admin-web/src/screens/TapauLinkPROScreen.tsx",
+      "source_location": "L35"
     },
     {
       "id": "app_getsupabase",
@@ -4034,7 +3972,7 @@
       "file_type": "code",
       "norm_label": "applicabilitybadge()",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L102"
+      "source_location": "L127"
     },
     {
       "id": "apps_merchant_web_src_screens_promocodesscreen_formatdate",
@@ -4046,7 +3984,7 @@
       "file_type": "code",
       "norm_label": "formatdate()",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L38"
+      "source_location": "L63"
     },
     {
       "id": "apps_merchant_web_src_screens_promocodesscreen_formatdateonly",
@@ -4058,7 +3996,7 @@
       "file_type": "code",
       "norm_label": "formatdateonly()",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L59"
+      "source_location": "L84"
     },
     {
       "id": "apps_merchant_web_src_screens_promocodesscreen_formatdiscount",
@@ -4070,7 +4008,7 @@
       "file_type": "code",
       "norm_label": "formatdiscount()",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L52"
+      "source_location": "L77"
     },
     {
       "id": "apps_merchant_web_src_screens_promocodesscreen_formatduration",
@@ -4082,7 +4020,7 @@
       "file_type": "code",
       "norm_label": "formatduration()",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L66"
+      "source_location": "L91"
     },
     {
       "id": "apps_merchant_web_src_screens_promocodesscreen_normalizecode",
@@ -4094,7 +4032,7 @@
       "file_type": "code",
       "norm_label": "normalizecode()",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L48"
+      "source_location": "L73"
     },
     {
       "id": "apps_merchant_web_src_screens_promocodesscreen_promocodesscreen",
@@ -4106,7 +4044,7 @@
       "file_type": "code",
       "norm_label": "promocodesscreen()",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L120"
+      "source_location": "L145"
     },
     {
       "id": "apps_merchant_web_src_screens_promocodesscreen_statusbadge",
@@ -4118,7 +4056,7 @@
       "file_type": "code",
       "norm_label": "statusbadge()",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L86"
+      "source_location": "L111"
     },
     {
       "id": "apps_merchant_web_src_screens_promocodesscreen_statuslabel",
@@ -4130,7 +4068,7 @@
       "file_type": "code",
       "norm_label": "statuslabel()",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L80"
+      "source_location": "L105"
     },
     {
       "id": "supabase_functions_payment_webhook_index_verifycurlecsignature",
@@ -4217,6 +4155,18 @@
       "source_location": "L88"
     },
     {
+      "id": "apps_merchant_web_src_screens_storesetupscreen_storesetupscreen",
+      "label": "StoreSetupScreen()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "useMerchantKDSStore",
+      "file_type": "code",
+      "norm_label": "storesetupscreen()",
+      "source_file": "apps/merchant-web/src/screens/StoreSetupScreen.tsx",
+      "source_location": "L13"
+    },
+    {
       "id": "src_components_paymentmethodsetup_tsx_src_components_paymentmethodsetup_paymentmethodsetup",
       "label": "PaymentMethodSetup()",
       "_callable": true,
@@ -4282,7 +4232,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 51,
-      "community_name": "useMerchantRealtimeOrders.ts",
+      "community_name": "merchant-web/src/App.tsx",
       "file_type": "code",
       "norm_label": "app()",
       "source_file": "apps/merchant-web/src/App.tsx",
@@ -4294,7 +4244,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 51,
-      "community_name": "useMerchantRealtimeOrders.ts",
+      "community_name": "merchant-web/src/App.tsx",
       "file_type": "code",
       "norm_label": "getneworderaudio()",
       "source_file": "apps/merchant-web/src/hooks/useAudioAlarm.ts",
@@ -4306,7 +4256,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 51,
-      "community_name": "useMerchantRealtimeOrders.ts",
+      "community_name": "merchant-web/src/App.tsx",
       "file_type": "code",
       "norm_label": "playnewordersound()",
       "source_file": "apps/merchant-web/src/hooks/useAudioAlarm.ts",
@@ -4318,7 +4268,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 51,
-      "community_name": "useMerchantRealtimeOrders.ts",
+      "community_name": "merchant-web/src/App.tsx",
       "file_type": "code",
       "norm_label": "stopnewordersound()",
       "source_file": "apps/merchant-web/src/hooks/useAudioAlarm.ts",
@@ -4330,7 +4280,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 51,
-      "community_name": "useMerchantRealtimeOrders.ts",
+      "community_name": "merchant-web/src/App.tsx",
       "file_type": "code",
       "norm_label": "unlockneworderaudio()",
       "source_file": "apps/merchant-web/src/hooks/useAudioAlarm.ts",
@@ -4342,23 +4292,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 51,
-      "community_name": "useMerchantRealtimeOrders.ts",
+      "community_name": "merchant-web/src/App.tsx",
       "file_type": "code",
       "norm_label": "useaudioalarm()",
       "source_file": "apps/merchant-web/src/hooks/useAudioAlarm.ts",
       "source_location": "L127"
-    },
-    {
-      "id": "apps_merchant_web_src_hooks_useheartbeat_useheartbeat",
-      "label": "useHeartbeat()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "useMerchantRealtimeOrders.ts",
-      "file_type": "code",
-      "norm_label": "useheartbeat()",
-      "source_file": "apps/merchant-web/src/hooks/useHeartbeat.ts",
-      "source_location": "L43"
     },
     {
       "id": "apps_merchant_web_src_hooks_usemerchantrealtimeorders_usemerchantrealtimeorders",
@@ -4366,7 +4304,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 51,
-      "community_name": "useMerchantRealtimeOrders.ts",
+      "community_name": "merchant-web/src/App.tsx",
       "file_type": "code",
       "norm_label": "usemerchantrealtimeorders()",
       "source_file": "apps/merchant-web/src/hooks/useMerchantRealtimeOrders.ts",
@@ -4671,6 +4609,54 @@
       "norm_label": "inspect()",
       "source_file": "scratch/inspect_users.mjs",
       "source_location": "L20"
+    },
+    {
+      "id": "apps_customer_pwa_functions_middleware_onrequest",
+      "label": "onRequest()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "_middleware.ts",
+      "file_type": "code",
+      "norm_label": "onrequest()",
+      "source_file": "apps/customer-pwa/functions/_middleware.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "cloudflare_worker_tapaulinkpro_router_fetch",
+      "label": "fetch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 69,
+      "community_name": "tapaulinkpro-router.js",
+      "file_type": "code",
+      "norm_label": "fetch()",
+      "source_file": "cloudflare-worker/tapaulinkpro-router.js",
+      "source_location": "L6"
+    },
+    {
+      "id": "functions_middleware_onrequest",
+      "label": "onRequest()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 71,
+      "community_name": "functions/_middleware.ts",
+      "file_type": "code",
+      "norm_label": "onrequest()",
+      "source_file": "functions/_middleware.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "functions_functions_middleware_onrequest",
+      "label": "onRequest()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 72,
+      "community_name": "functions/functions/_middleware.ts",
+      "file_type": "code",
+      "norm_label": "onrequest()",
+      "source_file": "functions/functions/_middleware.ts",
+      "source_location": "L6"
     },
     {
       "id": "apps_merchant_web_src_lib_ordermapper_mapdbordertokdsorder",
@@ -5030,7 +5016,7 @@
       "file_type": "code",
       "norm_label": "formatkuchingclock()",
       "source_file": "supabase/functions/checkout/index.ts",
-      "source_location": "L60"
+      "source_location": "L61"
     },
     {
       "id": "src_hooks_useaudioalarm_ts_src_hooks_useaudioalarm_audioalarmcontroller_acknowledgealarm",
@@ -5861,12 +5847,84 @@
       "source_location": "L1490"
     },
     {
+      "id": "apps_customer_pwa_src_app_app",
+      "label": "App()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "app()",
+      "source_file": "apps/customer-pwa/src/App.tsx",
+      "source_location": "L564"
+    },
+    {
+      "id": "apps_customer_pwa_src_app_customerapplayout",
+      "label": "CustomerAppLayout()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "customerapplayout()",
+      "source_file": "apps/customer-pwa/src/App.tsx",
+      "source_location": "L23"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_auth_authmodal_authmodal",
+      "label": "AuthModal()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "authmodal()",
+      "source_file": "apps/customer-pwa/src/components/auth/AuthModal.tsx",
+      "source_location": "L13"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_auth_contactnumbermodal_contactnumbermodal",
+      "label": "ContactNumberModal()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "contactnumbermodal()",
+      "source_file": "apps/customer-pwa/src/components/auth/ContactNumberModal.tsx",
+      "source_location": "L56"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_auth_contactnumbermodal_normalizemalaysianphone",
+      "label": "normalizeMalaysianPhone()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "normalizemalaysianphone()",
+      "source_file": "apps/customer-pwa/src/components/auth/ContactNumberModal.tsx",
+      "source_location": "L19"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_bottomnavbar_bottomnavbar",
+      "label": "BottomNavBar()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "bottomnavbar()",
+      "source_file": "apps/customer-pwa/src/components/BottomNavBar.tsx",
+      "source_location": "L14"
+    },
+    {
       "id": "apps_customer_pwa_src_components_herocard_herocard",
       "label": "HeroCard()",
       "_callable": true,
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "herocard()",
       "source_file": "apps/customer-pwa/src/components/HeroCard.tsx",
@@ -5878,7 +5936,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "merchantcard()",
       "source_file": "apps/customer-pwa/src/components/MerchantCard.tsx",
@@ -5890,7 +5948,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "pulltorefresh()",
       "source_file": "apps/customer-pwa/src/components/PullToRefresh.tsx",
@@ -5902,11 +5960,167 @@
       "_callable": true,
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "searchfilterstrip()",
       "source_file": "apps/customer-pwa/src/components/SearchFilterStrip.tsx",
       "source_location": "L8"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_topnavbar_topnavbar",
+      "label": "TopNavBar()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "topnavbar()",
+      "source_file": "apps/customer-pwa/src/components/TopNavBar.tsx",
+      "source_location": "L10"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_checkoutscreen_checkoutscreen",
+      "label": "CheckoutScreen()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "checkoutscreen()",
+      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
+      "source_location": "L106"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_checkoutscreen_getrazorpayconfig",
+      "label": "getRazorpayConfig()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "getrazorpayconfig()",
+      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
+      "source_location": "L40"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_checkoutscreen_loadrazorpayscript",
+      "label": "loadRazorpayScript()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "loadrazorpayscript()",
+      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
+      "source_location": "L88"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_homescreen_homescreen",
+      "label": "HomeScreen()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "homescreen()",
+      "source_file": "apps/customer-pwa/src/screens/HomeScreen.tsx",
+      "source_location": "L28"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_ordersscreen_ordersscreen",
+      "label": "OrdersScreen()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "ordersscreen()",
+      "source_file": "apps/customer-pwa/src/screens/OrdersScreen.tsx",
+      "source_location": "L18"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_orderstatusscreen_orderstatusscreen",
+      "label": "OrderStatusScreen()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "orderstatusscreen()",
+      "source_file": "apps/customer-pwa/src/screens/OrderStatusScreen.tsx",
+      "source_location": "L19"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_profilescreen_profilescreen",
+      "label": "ProfileScreen()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "profilescreen()",
+      "source_file": "apps/customer-pwa/src/screens/ProfileScreen.tsx",
+      "source_location": "L19"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_rewardsscreen_rewardsscreen",
+      "label": "RewardsScreen()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "rewardsscreen()",
+      "source_file": "apps/customer-pwa/src/screens/RewardsScreen.tsx",
+      "source_location": "L12"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_tapauaheadscreen_tapauaheadscreen",
+      "label": "TapauAheadScreen()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "tapauaheadscreen()",
+      "source_file": "apps/customer-pwa/src/screens/TapauAheadScreen.tsx",
+      "source_location": "L12"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_isterminalstatus",
+      "label": "isTerminalStatus()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "isterminalstatus()",
+      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
+      "source_location": "L31"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_normalizeorderstatus",
+      "label": "normalizeOrderStatus()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "normalizeorderstatus()",
+      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
+      "source_location": "L18"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_resolveorderstatusfromrow",
+      "label": "resolveOrderStatusFromRow()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "resolveorderstatusfromrow()",
+      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
+      "source_location": "L36"
     },
     {
       "id": "src_hooks_useaudioalarm_js_src_hooks_useaudioalarm_audioalarmcontroller_acknowledgealarm",
@@ -6348,14 +6562,25 @@
       "source_location": "L5"
     },
     {
-      "id": "apps_customer_pwa_src_components_cartdrawer",
-      "label": "CartDrawer.tsx",
+      "id": "apps_merchant_web_src_screens_authscreen",
+      "label": "AuthScreen.tsx",
       "_origin": "ast",
       "community": 1,
-      "community_name": "CartDrawer.tsx",
+      "community_name": "AuthScreen.tsx",
       "file_type": "code",
-      "norm_label": "cartdrawer.tsx",
-      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
+      "norm_label": "authscreen.tsx",
+      "source_file": "apps/merchant-web/src/screens/AuthScreen.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_merchant_web_src_screens_loginscreen",
+      "label": "LoginScreen.tsx",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "AuthScreen.tsx",
+      "file_type": "code",
+      "norm_label": "loginscreen.tsx",
+      "source_file": "apps/merchant-web/src/screens/LoginScreen.tsx",
       "source_location": "L1"
     },
     {
@@ -7314,147 +7539,26 @@
       "source_location": "L1"
     },
     {
-      "id": "apps_customer_pwa_src_components_auth_authmodal",
-      "label": "AuthModal.tsx",
+      "id": "scratch_verify_order_balance_fee",
+      "label": "verify_order_balance_fee.cjs",
       "_origin": "ast",
       "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
+      "community_name": "verify_order_balance_fee.cjs",
       "file_type": "code",
-      "norm_label": "authmodal.tsx",
-      "source_file": "apps/customer-pwa/src/components/auth/AuthModal.tsx",
+      "norm_label": "verify_order_balance_fee.cjs",
+      "source_file": "scratch/verify_order_balance_fee.cjs",
       "source_location": "L1"
     },
     {
-      "id": "apps_customer_pwa_src_components_auth_contactnumbermodal",
-      "label": "ContactNumberModal.tsx",
+      "id": "scratch_verify_order_balance_fee_testcases",
+      "label": "testCases",
       "_origin": "ast",
       "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
+      "community_name": "verify_order_balance_fee.cjs",
       "file_type": "code",
-      "norm_label": "contactnumbermodal.tsx",
-      "source_file": "apps/customer-pwa/src/components/auth/ContactNumberModal.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_lib_supabase",
-      "label": "customer-pwa/src/lib/supabase.ts",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "customer-pwa/src/lib/supabase.ts",
-      "source_file": "apps/customer-pwa/src/lib/supabase.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_lib_supabase_checkout_edge_function_url",
-      "label": "CHECKOUT_EDGE_FUNCTION_URL",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "checkout_edge_function_url",
-      "source_file": "apps/customer-pwa/src/lib/supabase.ts",
-      "source_location": "L11"
-    },
-    {
-      "id": "apps_customer_pwa_src_lib_supabase_supabase",
-      "label": "supabase",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "supabase",
-      "source_file": "apps/customer-pwa/src/lib/supabase.ts",
-      "source_location": "L15"
-    },
-    {
-      "id": "apps_customer_pwa_src_lib_supabase_supabase_anon_key",
-      "label": "SUPABASE_ANON_KEY",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "supabase_anon_key",
-      "source_file": "apps/customer-pwa/src/lib/supabase.ts",
-      "source_location": "L7"
-    },
-    {
-      "id": "apps_customer_pwa_src_lib_supabase_supabase_url",
-      "label": "SUPABASE_URL",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "supabase_url",
-      "source_file": "apps/customer-pwa/src/lib/supabase.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_checkoutscreen",
-      "label": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "customer-pwa/src/screens/checkoutscreen.tsx",
-      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_profilescreen",
-      "label": "ProfileScreen.tsx",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "profilescreen.tsx",
-      "source_file": "apps/customer-pwa/src/screens/ProfileScreen.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_stores_useauthstore",
-      "label": "useAuthStore.ts",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "useauthstore.ts",
-      "source_file": "apps/customer-pwa/src/stores/useAuthStore.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_stores_useauthstore_useauthstore",
-      "label": "useAuthStore",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "useauthstore",
-      "source_file": "apps/customer-pwa/src/stores/useAuthStore.ts",
-      "source_location": "L16"
-    },
-    {
-      "id": "apps_customer_pwa_src_stores_usecustomerstore",
-      "label": "useCustomerStore.ts",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "usecustomerstore.ts",
-      "source_file": "apps/customer-pwa/src/stores/useCustomerStore.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_stores_usecustomerstore_usecustomerstore",
-      "label": "useCustomerStore",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "customer-pwa/src/screens/CheckoutScreen.tsx",
-      "file_type": "code",
-      "norm_label": "usecustomerstore",
-      "source_file": "apps/customer-pwa/src/stores/useCustomerStore.ts",
-      "source_location": "L11"
+      "norm_label": "testcases",
+      "source_file": "scratch/verify_order_balance_fee.cjs",
+      "source_location": "L5"
     },
     {
       "id": "apps_dining_web_tailwind_config",
@@ -7513,91 +7617,25 @@
       "source_location": "L6"
     },
     {
-      "id": "apps_customer_pwa_src_components_bottomnavbar",
-      "label": "BottomNavBar.tsx",
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "BottomNavBar.tsx",
-      "file_type": "code",
-      "norm_label": "bottomnavbar.tsx",
-      "source_file": "apps/customer-pwa/src/components/BottomNavBar.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_components_itemmodifiermodal",
-      "label": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "customer-pwa/src/components/itemmodifiermodal.tsx",
-      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_cartscreen",
-      "label": "CartScreen.tsx",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "cartscreen.tsx",
-      "source_file": "apps/customer-pwa/src/screens/CartScreen.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_stores_usecartstore",
-      "label": "customer-pwa/src/stores/useCartStore.ts",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "customer-pwa/src/stores/usecartstore.ts",
-      "source_file": "apps/customer-pwa/src/stores/useCartStore.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_stores_usecartstore_usecartstore",
-      "label": "useCartStore",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "customer-pwa/src/components/ItemModifierModal.tsx",
-      "file_type": "code",
-      "norm_label": "usecartstore",
-      "source_file": "apps/customer-pwa/src/stores/useCartStore.ts",
-      "source_location": "L48"
-    },
-    {
-      "id": "apps_merchant_web_src_app",
-      "label": "merchant-web/src/App.tsx",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "merchant-web/src/app.tsx",
-      "source_file": "apps/merchant-web/src/App.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_merchant_web_src_app_nav_items",
-      "label": "NAV_ITEMS",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "nav_items",
-      "source_file": "apps/merchant-web/src/App.tsx",
-      "source_location": "L40"
-    },
-    {
       "id": "apps_merchant_web_src_hooks_useheartbeat",
       "label": "merchant-web/src/hooks/useHeartbeat.ts",
       "_origin": "ast",
       "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
+      "community_name": "merchant-web/src/lib/supabase.ts",
       "file_type": "code",
       "norm_label": "merchant-web/src/hooks/useheartbeat.ts",
       "source_file": "apps/merchant-web/src/hooks/useHeartbeat.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_merchant_web_src_hooks_usemerchantrealtimeorders",
+      "label": "useMerchantRealtimeOrders.ts",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "merchant-web/src/lib/supabase.ts",
+      "file_type": "code",
+      "norm_label": "usemerchantrealtimeorders.ts",
+      "source_file": "apps/merchant-web/src/hooks/useMerchantRealtimeOrders.ts",
       "source_location": "L1"
     },
     {
@@ -7605,7 +7643,7 @@
       "label": "merchant-web/src/lib/supabase.ts",
       "_origin": "ast",
       "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
+      "community_name": "merchant-web/src/lib/supabase.ts",
       "file_type": "code",
       "norm_label": "merchant-web/src/lib/supabase.ts",
       "source_file": "apps/merchant-web/src/lib/supabase.ts",
@@ -7616,7 +7654,7 @@
       "label": "supabase",
       "_origin": "ast",
       "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
+      "community_name": "merchant-web/src/lib/supabase.ts",
       "file_type": "code",
       "norm_label": "supabase",
       "source_file": "apps/merchant-web/src/lib/supabase.ts",
@@ -7627,7 +7665,7 @@
       "label": "SUPABASE_ANON_KEY",
       "_origin": "ast",
       "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
+      "community_name": "merchant-web/src/lib/supabase.ts",
       "file_type": "code",
       "norm_label": "supabase_anon_key",
       "source_file": "apps/merchant-web/src/lib/supabase.ts",
@@ -7638,51 +7676,18 @@
       "label": "SUPABASE_URL",
       "_origin": "ast",
       "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
+      "community_name": "merchant-web/src/lib/supabase.ts",
       "file_type": "code",
       "norm_label": "supabase_url",
       "source_file": "apps/merchant-web/src/lib/supabase.ts",
       "source_location": "L3"
     },
     {
-      "id": "apps_merchant_web_src_main",
-      "label": "merchant-web/src/main.tsx",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "merchant-web/src/main.tsx",
-      "source_file": "apps/merchant-web/src/main.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_merchant_web_src_screens_authscreen",
-      "label": "AuthScreen.tsx",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "authscreen.tsx",
-      "source_file": "apps/merchant-web/src/screens/AuthScreen.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_merchant_web_src_screens_loginscreen",
-      "label": "LoginScreen.tsx",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "loginscreen.tsx",
-      "source_file": "apps/merchant-web/src/screens/LoginScreen.tsx",
-      "source_location": "L1"
-    },
-    {
       "id": "apps_merchant_web_src_screens_onboardingscreen",
       "label": "OnboardingScreen.tsx",
       "_origin": "ast",
       "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
+      "community_name": "merchant-web/src/lib/supabase.ts",
       "file_type": "code",
       "norm_label": "onboardingscreen.tsx",
       "source_file": "apps/merchant-web/src/screens/OnboardingScreen.tsx",
@@ -7693,22 +7698,11 @@
       "label": "MALAYSIAN_BANKS",
       "_origin": "ast",
       "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
+      "community_name": "merchant-web/src/lib/supabase.ts",
       "file_type": "code",
       "norm_label": "malaysian_banks",
       "source_file": "apps/merchant-web/src/screens/OnboardingScreen.tsx",
       "source_location": "L20"
-    },
-    {
-      "id": "apps_merchant_web_src_screens_storesetupscreen",
-      "label": "StoreSetupScreen.tsx",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "merchant-web/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "storesetupscreen.tsx",
-      "source_file": "apps/merchant-web/src/screens/StoreSetupScreen.tsx",
-      "source_location": "L1"
     },
     {
       "id": "apps_merchant_web_src_components_modifiermanagermodal",
@@ -7843,92 +7837,37 @@
       "source_location": "L13"
     },
     {
-      "id": "apps_customer_pwa_src_app",
-      "label": "customer-pwa/src/App.tsx",
+      "id": "apps_customer_pwa_src_components_bundleselectionmodal",
+      "label": "BundleSelectionModal.tsx",
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "customer-pwa/src/app.tsx",
-      "source_file": "apps/customer-pwa/src/App.tsx",
+      "norm_label": "bundleselectionmodal.tsx",
+      "source_file": "apps/customer-pwa/src/components/BundleSelectionModal.tsx",
       "source_location": "L1"
     },
     {
-      "id": "apps_customer_pwa_src_components_topnavbar",
-      "label": "TopNavBar.tsx",
+      "id": "apps_customer_pwa_src_components_cartdrawer",
+      "label": "CartDrawer.tsx",
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "topnavbar.tsx",
-      "source_file": "apps/customer-pwa/src/components/TopNavBar.tsx",
+      "norm_label": "cartdrawer.tsx",
+      "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
       "source_location": "L1"
     },
     {
-      "id": "apps_customer_pwa_src_main",
-      "label": "customer-pwa/src/main.tsx",
+      "id": "apps_customer_pwa_src_components_itemmodifiermodal",
+      "label": "customer-pwa/src/components/ItemModifierModal.tsx",
       "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
       "file_type": "code",
-      "norm_label": "customer-pwa/src/main.tsx",
-      "source_file": "apps/customer-pwa/src/main.tsx",
+      "norm_label": "customer-pwa/src/components/itemmodifiermodal.tsx",
+      "source_file": "apps/customer-pwa/src/components/ItemModifierModal.tsx",
       "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_ordersscreen",
-      "label": "customer-pwa/src/screens/OrdersScreen.tsx",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "customer-pwa/src/screens/ordersscreen.tsx",
-      "source_file": "apps/customer-pwa/src/screens/OrdersScreen.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_orderstatusscreen",
-      "label": "OrderStatusScreen.tsx",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "orderstatusscreen.tsx",
-      "source_file": "apps/customer-pwa/src/screens/OrderStatusScreen.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_screens_rewardsscreen",
-      "label": "RewardsScreen.tsx",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "rewardsscreen.tsx",
-      "source_file": "apps/customer-pwa/src/screens/RewardsScreen.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_stores_usecustomerorderstore",
-      "label": "useCustomerOrderStore.ts",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "usecustomerorderstore.ts",
-      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_usecustomerorderstore",
-      "label": "useCustomerOrderStore",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "customer-pwa/src/App.tsx",
-      "file_type": "code",
-      "norm_label": "usecustomerorderstore",
-      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
-      "source_location": "L90"
     },
     {
       "id": "apps_customer_pwa_src_components_menuitemcard",
@@ -7986,6 +7925,17 @@
       "source_location": "L10"
     },
     {
+      "id": "apps_customer_pwa_src_screens_cartscreen",
+      "label": "CartScreen.tsx",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "cartscreen.tsx",
+      "source_file": "apps/customer-pwa/src/screens/CartScreen.tsx",
+      "source_location": "L1"
+    },
+    {
       "id": "apps_customer_pwa_src_screens_menuscreen",
       "label": "customer-pwa/src/screens/MenuScreen.tsx",
       "_origin": "ast",
@@ -7995,6 +7945,28 @@
       "norm_label": "customer-pwa/src/screens/menuscreen.tsx",
       "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
       "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecartstore",
+      "label": "customer-pwa/src/stores/useCartStore.ts",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "customer-pwa/src/stores/usecartstore.ts",
+      "source_file": "apps/customer-pwa/src/stores/useCartStore.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecartstore_usecartstore",
+      "label": "useCartStore",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "customer-pwa/src/screens/MenuScreen.tsx",
+      "file_type": "code",
+      "norm_label": "usecartstore",
+      "source_file": "apps/customer-pwa/src/stores/useCartStore.ts",
+      "source_location": "L50"
     },
     {
       "id": "scratch_generate_audio",
@@ -8655,6 +8627,28 @@
       "norm_label": "stallsscreen.tsx",
       "source_file": "apps/admin-web/src/screens/StallsScreen.tsx",
       "source_location": "L1"
+    },
+    {
+      "id": "apps_admin_web_src_screens_tapaulinkproscreen",
+      "label": "TapauLinkPROScreen.tsx",
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "admin-web/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "tapaulinkproscreen.tsx",
+      "source_file": "apps/admin-web/src/screens/TapauLinkPROScreen.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_admin_web_src_screens_tapaulinkproscreen_reserved_subdomains",
+      "label": "RESERVED_SUBDOMAINS",
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "admin-web/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "reserved_subdomains",
+      "source_file": "apps/admin-web/src/screens/TapauLinkPROScreen.tsx",
+      "source_location": "L20"
     },
     {
       "id": "apps_admin_web_src_stores_useadminauthstore",
@@ -10190,6 +10184,17 @@
       "source_location": "L1"
     },
     {
+      "id": "apps_merchant_web_src_screens_storesetupscreen",
+      "label": "StoreSetupScreen.tsx",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "useMerchantKDSStore",
+      "file_type": "code",
+      "norm_label": "storesetupscreen.tsx",
+      "source_file": "apps/merchant-web/src/screens/StoreSetupScreen.tsx",
+      "source_location": "L1"
+    },
+    {
       "id": "apps_merchant_web_src_stores_usemerchantkdsstore_usemerchantkdsstore",
       "label": "useMerchantKDSStore",
       "_origin": "ast",
@@ -10614,11 +10619,33 @@
       "source_location": "L6"
     },
     {
+      "id": "apps_merchant_web_src_app",
+      "label": "merchant-web/src/App.tsx",
+      "_origin": "ast",
+      "community": 51,
+      "community_name": "merchant-web/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "merchant-web/src/app.tsx",
+      "source_file": "apps/merchant-web/src/App.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_merchant_web_src_app_nav_items",
+      "label": "NAV_ITEMS",
+      "_origin": "ast",
+      "community": 51,
+      "community_name": "merchant-web/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "nav_items",
+      "source_file": "apps/merchant-web/src/App.tsx",
+      "source_location": "L40"
+    },
+    {
       "id": "apps_merchant_web_src_hooks_useaudioalarm",
       "label": "merchant-web/src/hooks/useAudioAlarm.ts",
       "_origin": "ast",
       "community": 51,
-      "community_name": "useMerchantRealtimeOrders.ts",
+      "community_name": "merchant-web/src/App.tsx",
       "file_type": "code",
       "norm_label": "merchant-web/src/hooks/useaudioalarm.ts",
       "source_file": "apps/merchant-web/src/hooks/useAudioAlarm.ts",
@@ -10629,7 +10656,7 @@
       "label": "FALLBACK_SOUND_PATH",
       "_origin": "ast",
       "community": 51,
-      "community_name": "useMerchantRealtimeOrders.ts",
+      "community_name": "merchant-web/src/App.tsx",
       "file_type": "code",
       "norm_label": "fallback_sound_path",
       "source_file": "apps/merchant-web/src/hooks/useAudioAlarm.ts",
@@ -10640,7 +10667,7 @@
       "label": "NEW_ORDER_SOUND_PATH",
       "_origin": "ast",
       "community": 51,
-      "community_name": "useMerchantRealtimeOrders.ts",
+      "community_name": "merchant-web/src/App.tsx",
       "file_type": "code",
       "norm_label": "new_order_sound_path",
       "source_file": "apps/merchant-web/src/hooks/useAudioAlarm.ts",
@@ -10651,21 +10678,32 @@
       "label": "repeatTimeoutIds",
       "_origin": "ast",
       "community": 51,
-      "community_name": "useMerchantRealtimeOrders.ts",
+      "community_name": "merchant-web/src/App.tsx",
       "file_type": "code",
       "norm_label": "repeattimeoutids",
       "source_file": "apps/merchant-web/src/hooks/useAudioAlarm.ts",
       "source_location": "L12"
     },
     {
-      "id": "apps_merchant_web_src_hooks_usemerchantrealtimeorders",
-      "label": "useMerchantRealtimeOrders.ts",
+      "id": "apps_merchant_web_src_main",
+      "label": "merchant-web/src/main.tsx",
       "_origin": "ast",
       "community": 51,
-      "community_name": "useMerchantRealtimeOrders.ts",
+      "community_name": "merchant-web/src/App.tsx",
       "file_type": "code",
-      "norm_label": "usemerchantrealtimeorders.ts",
-      "source_file": "apps/merchant-web/src/hooks/useMerchantRealtimeOrders.ts",
+      "norm_label": "merchant-web/src/main.tsx",
+      "source_file": "apps/merchant-web/src/main.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "packages_shared_ui_src_index_ts_packages_shared_ui_src_index",
+      "label": "src/index.ts",
+      "_origin": "ast",
+      "community": 51,
+      "community_name": "merchant-web/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "src/index.ts",
+      "source_file": "packages/shared-ui/src/index.ts",
       "source_location": "L1"
     },
     {
@@ -11836,7 +11874,7 @@
       "file_type": "code",
       "norm_label": "usedineincartstore",
       "source_file": "apps/dining-web/src/stores/useDineInCartStore.ts",
-      "source_location": "L40"
+      "source_location": "L42"
     },
     {
       "id": "scratch_test_kds_all",
@@ -12257,6 +12295,83 @@
       "norm_label": "content",
       "source_file": "scratch/check_deploy_args.mjs",
       "source_location": "L3"
+    },
+    {
+      "id": "local_router_proxy",
+      "label": "local-router-proxy.js",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "local-router-proxy.js",
+      "file_type": "code",
+      "norm_label": "local-router-proxy.js",
+      "source_file": "local-router-proxy.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "local_router_proxy_createclient",
+      "label": "{ createClient }",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "local-router-proxy.js",
+      "file_type": "code",
+      "norm_label": "{ createclient }",
+      "source_file": "local-router-proxy.js",
+      "source_location": "L4"
+    },
+    {
+      "id": "local_router_proxy_http",
+      "label": "http",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "local-router-proxy.js",
+      "file_type": "code",
+      "norm_label": "http",
+      "source_file": "local-router-proxy.js",
+      "source_location": "L2"
+    },
+    {
+      "id": "local_router_proxy_httpproxy",
+      "label": "httpProxy",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "local-router-proxy.js",
+      "file_type": "code",
+      "norm_label": "httpproxy",
+      "source_file": "local-router-proxy.js",
+      "source_location": "L3"
+    },
+    {
+      "id": "local_router_proxy_proxy",
+      "label": "proxy",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "local-router-proxy.js",
+      "file_type": "code",
+      "norm_label": "proxy",
+      "source_file": "local-router-proxy.js",
+      "source_location": "L22"
+    },
+    {
+      "id": "local_router_proxy_server",
+      "label": "server",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "local-router-proxy.js",
+      "file_type": "code",
+      "norm_label": "server",
+      "source_file": "local-router-proxy.js",
+      "source_location": "L29"
+    },
+    {
+      "id": "local_router_proxy_supabase",
+      "label": "supabase",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "local-router-proxy.js",
+      "file_type": "code",
+      "norm_label": "supabase",
+      "source_file": "local-router-proxy.js",
+      "source_location": "L17"
     },
     {
       "id": "apps_customer_pwa_package",
@@ -13205,6 +13320,28 @@
       "source_location": "L5"
     },
     {
+      "id": "apps_customer_pwa_functions_middleware",
+      "label": "customer-pwa/functions/_middleware.ts",
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "_middleware.ts",
+      "file_type": "code",
+      "norm_label": "customer-pwa/functions/_middleware.ts",
+      "source_file": "apps/customer-pwa/functions/_middleware.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "cloudflare_worker_tapaulinkpro_router",
+      "label": "tapaulinkpro-router.js",
+      "_origin": "ast",
+      "community": 69,
+      "community_name": "tapaulinkpro-router.js",
+      "file_type": "code",
+      "norm_label": "tapaulinkpro-router.js",
+      "source_file": "cloudflare-worker/tapaulinkpro-router.js",
+      "source_location": "L1"
+    },
+    {
       "id": "memory_bank_projectbrief",
       "label": "projectbrief.md",
       "_origin": "ast",
@@ -13325,6 +13462,83 @@
       "source_location": "L18"
     },
     {
+      "id": "copy_functions",
+      "label": "copy_functions.cjs",
+      "_origin": "ast",
+      "community": 70,
+      "community_name": "copy_functions.cjs",
+      "file_type": "code",
+      "norm_label": "copy_functions.cjs",
+      "source_file": "copy_functions.cjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "copy_functions_dest",
+      "label": "dest",
+      "_origin": "ast",
+      "community": 70,
+      "community_name": "copy_functions.cjs",
+      "file_type": "code",
+      "norm_label": "dest",
+      "source_file": "copy_functions.cjs",
+      "source_location": "L5"
+    },
+    {
+      "id": "copy_functions_fs",
+      "label": "fs",
+      "_origin": "ast",
+      "community": 70,
+      "community_name": "copy_functions.cjs",
+      "file_type": "code",
+      "norm_label": "fs",
+      "source_file": "copy_functions.cjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "copy_functions_path",
+      "label": "path",
+      "_origin": "ast",
+      "community": 70,
+      "community_name": "copy_functions.cjs",
+      "file_type": "code",
+      "norm_label": "path",
+      "source_file": "copy_functions.cjs",
+      "source_location": "L2"
+    },
+    {
+      "id": "copy_functions_src",
+      "label": "src",
+      "_origin": "ast",
+      "community": 70,
+      "community_name": "copy_functions.cjs",
+      "file_type": "code",
+      "norm_label": "src",
+      "source_file": "copy_functions.cjs",
+      "source_location": "L4"
+    },
+    {
+      "id": "functions_middleware",
+      "label": "functions/_middleware.ts",
+      "_origin": "ast",
+      "community": 71,
+      "community_name": "functions/_middleware.ts",
+      "file_type": "code",
+      "norm_label": "functions/_middleware.ts",
+      "source_file": "functions/_middleware.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "functions_functions_middleware",
+      "label": "functions/functions/_middleware.ts",
+      "_origin": "ast",
+      "community": 72,
+      "community_name": "functions/functions/_middleware.ts",
+      "file_type": "code",
+      "norm_label": "functions/functions/_middleware.ts",
+      "source_file": "functions/functions/_middleware.ts",
+      "source_location": "L1"
+    },
+    {
       "id": "apps_merchant_web_src_lib_ordermapper",
       "label": "orderMapper.ts",
       "_origin": "ast",
@@ -13377,17 +13591,6 @@
       "file_type": "code",
       "norm_label": "usemerchantkdsstore.ts",
       "source_file": "apps/merchant-web/src/stores/useMerchantKDSStore.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "packages_shared_ui_src_index_ts_packages_shared_ui_src_index",
-      "label": "src/index.ts",
-      "_origin": "ast",
-      "community": 728,
-      "community_name": "useMerchantKDSStore.ts",
-      "file_type": "code",
-      "norm_label": "src/index.ts",
-      "source_file": "packages/shared-ui/src/index.ts",
       "source_location": "L1"
     },
     {
@@ -15081,11 +15284,55 @@
       "source_location": "L9"
     },
     {
+      "id": "apps_customer_pwa_src_app",
+      "label": "customer-pwa/src/App.tsx",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "customer-pwa/src/app.tsx",
+      "source_file": "apps/customer-pwa/src/App.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_auth_authmodal",
+      "label": "AuthModal.tsx",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "authmodal.tsx",
+      "source_file": "apps/customer-pwa/src/components/auth/AuthModal.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_auth_contactnumbermodal",
+      "label": "ContactNumberModal.tsx",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "contactnumbermodal.tsx",
+      "source_file": "apps/customer-pwa/src/components/auth/ContactNumberModal.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_bottomnavbar",
+      "label": "BottomNavBar.tsx",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "bottomnavbar.tsx",
+      "source_file": "apps/customer-pwa/src/components/BottomNavBar.tsx",
+      "source_location": "L1"
+    },
+    {
       "id": "apps_customer_pwa_src_components_herocard",
       "label": "HeroCard.tsx",
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "herocard.tsx",
       "source_file": "apps/customer-pwa/src/components/HeroCard.tsx",
@@ -15096,7 +15343,7 @@
       "label": "MerchantCard.tsx",
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "merchantcard.tsx",
       "source_file": "apps/customer-pwa/src/components/MerchantCard.tsx",
@@ -15107,7 +15354,7 @@
       "label": "PullToRefresh.tsx",
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "pulltorefresh.tsx",
       "source_file": "apps/customer-pwa/src/components/PullToRefresh.tsx",
@@ -15118,10 +15365,109 @@
       "label": "SearchFilterStrip.tsx",
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "searchfilterstrip.tsx",
       "source_file": "apps/customer-pwa/src/components/SearchFilterStrip.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_components_topnavbar",
+      "label": "TopNavBar.tsx",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "topnavbar.tsx",
+      "source_file": "apps/customer-pwa/src/components/TopNavBar.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_lib_supabase",
+      "label": "customer-pwa/src/lib/supabase.ts",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "customer-pwa/src/lib/supabase.ts",
+      "source_file": "apps/customer-pwa/src/lib/supabase.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_lib_supabase_checkout_edge_function_url",
+      "label": "CHECKOUT_EDGE_FUNCTION_URL",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "checkout_edge_function_url",
+      "source_file": "apps/customer-pwa/src/lib/supabase.ts",
+      "source_location": "L11"
+    },
+    {
+      "id": "apps_customer_pwa_src_lib_supabase_hybridauthstorage",
+      "label": "hybridAuthStorage",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "hybridauthstorage",
+      "source_file": "apps/customer-pwa/src/lib/supabase.ts",
+      "source_location": "L17"
+    },
+    {
+      "id": "apps_customer_pwa_src_lib_supabase_supabase",
+      "label": "supabase",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "supabase",
+      "source_file": "apps/customer-pwa/src/lib/supabase.ts",
+      "source_location": "L87"
+    },
+    {
+      "id": "apps_customer_pwa_src_lib_supabase_supabase_anon_key",
+      "label": "SUPABASE_ANON_KEY",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "supabase_anon_key",
+      "source_file": "apps/customer-pwa/src/lib/supabase.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "apps_customer_pwa_src_lib_supabase_supabase_url",
+      "label": "SUPABASE_URL",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "supabase_url",
+      "source_file": "apps/customer-pwa/src/lib/supabase.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "apps_customer_pwa_src_main",
+      "label": "customer-pwa/src/main.tsx",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "customer-pwa/src/main.tsx",
+      "source_file": "apps/customer-pwa/src/main.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_checkoutscreen",
+      "label": "customer-pwa/src/screens/CheckoutScreen.tsx",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "customer-pwa/src/screens/checkoutscreen.tsx",
+      "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
       "source_location": "L1"
     },
     {
@@ -15129,10 +15475,54 @@
       "label": "HomeScreen.tsx",
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "homescreen.tsx",
       "source_file": "apps/customer-pwa/src/screens/HomeScreen.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_ordersscreen",
+      "label": "customer-pwa/src/screens/OrdersScreen.tsx",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "customer-pwa/src/screens/ordersscreen.tsx",
+      "source_file": "apps/customer-pwa/src/screens/OrdersScreen.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_orderstatusscreen",
+      "label": "OrderStatusScreen.tsx",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "orderstatusscreen.tsx",
+      "source_file": "apps/customer-pwa/src/screens/OrderStatusScreen.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_profilescreen",
+      "label": "ProfileScreen.tsx",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "profilescreen.tsx",
+      "source_file": "apps/customer-pwa/src/screens/ProfileScreen.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_screens_rewardsscreen",
+      "label": "RewardsScreen.tsx",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "rewardsscreen.tsx",
+      "source_file": "apps/customer-pwa/src/screens/RewardsScreen.tsx",
       "source_location": "L1"
     },
     {
@@ -15140,18 +15530,84 @@
       "label": "TapauAheadScreen.tsx",
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "code",
       "norm_label": "tapauaheadscreen.tsx",
       "source_file": "apps/customer-pwa/src/screens/TapauAheadScreen.tsx",
       "source_location": "L1"
     },
     {
+      "id": "apps_customer_pwa_src_stores_useauthstore",
+      "label": "useAuthStore.ts",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "useauthstore.ts",
+      "source_file": "apps/customer-pwa/src/stores/useAuthStore.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_useauthstore_useauthstore",
+      "label": "useAuthStore",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "useauthstore",
+      "source_file": "apps/customer-pwa/src/stores/useAuthStore.ts",
+      "source_location": "L17"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecustomerorderstore",
+      "label": "useCustomerOrderStore.ts",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "usecustomerorderstore.ts",
+      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecustomerorderstore_usecustomerorderstore",
+      "label": "useCustomerOrderStore",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "usecustomerorderstore",
+      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
+      "source_location": "L92"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecustomerstore",
+      "label": "useCustomerStore.ts",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "usecustomerstore.ts",
+      "source_file": "apps/customer-pwa/src/stores/useCustomerStore.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "apps_customer_pwa_src_stores_usecustomerstore_usecustomerstore",
+      "label": "useCustomerStore",
+      "_origin": "ast",
+      "community": 840,
+      "community_name": "customer-pwa/src/App.tsx",
+      "file_type": "code",
+      "norm_label": "usecustomerstore",
+      "source_file": "apps/customer-pwa/src/stores/useCustomerStore.ts",
+      "source_location": "L11"
+    },
+    {
       "id": "apps_customer_pwa_src_screens_homescreen_rationale_34",
       "label": "IMPORTANT: is_open comes from merchant_availability view (derived: schedule +\u2026",
       "_origin": "ast",
       "community": 840,
-      "community_name": "HomeScreen.tsx",
+      "community_name": "customer-pwa/src/App.tsx",
       "file_type": "rationale",
       "norm_label": "important: is_open comes from merchant_availability view (derived: schedule +...",
       "source_file": "apps/customer-pwa/src/screens/HomeScreen.tsx",
@@ -16716,7 +17172,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/admin-web/src/layouts/AdminLayout.tsx",
-      "source_location": "L20",
+      "source_location": "L21",
       "weight": 1.0
     },
     {
@@ -16776,7 +17232,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/App.tsx",
-      "source_location": "L105",
+      "source_location": "L112",
       "weight": 1.0
     },
     {
@@ -16788,7 +17244,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/App.tsx",
-      "source_location": "L127",
+      "source_location": "L145",
       "weight": 1.0
     },
     {
@@ -16800,7 +17256,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/App.tsx",
-      "source_location": "L145",
+      "source_location": "L201",
       "weight": 1.0
     },
     {
@@ -16848,7 +17304,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/components/CartDrawer.tsx",
-      "source_location": "L354",
+      "source_location": "L355",
       "weight": 1.0
     },
     {
@@ -16896,7 +17352,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
-      "source_location": "L121",
+      "source_location": "L122",
       "weight": 1.0
     },
     {
@@ -16908,7 +17364,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
-      "source_location": "L122",
+      "source_location": "L123",
       "weight": 1.0
     },
     {
@@ -16920,7 +17376,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
-      "source_location": "L415",
+      "source_location": "L417",
       "weight": 1.0
     },
     {
@@ -16932,7 +17388,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
-      "source_location": "L654",
+      "source_location": "L657",
       "weight": 1.0
     },
     {
@@ -16944,7 +17400,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
-      "source_location": "L137",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -16956,7 +17412,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
-      "source_location": "L155",
+      "source_location": "L160",
       "weight": 1.0
     },
     {
@@ -16968,19 +17424,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
-      "source_location": "L620",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_customer_pwa_src_screens_ordersscreen_ordersscreen",
-      "target": "apps_customer_pwa_src_stores_usecustomerorderstore_resolveorderstatusfromrow",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "apps/customer-pwa/src/screens/OrdersScreen.tsx",
-      "source_location": "L100",
+      "source_location": "L754",
       "weight": 1.0
     },
     {
@@ -16992,7 +17436,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/screens/OrdersScreen.tsx",
-      "source_location": "L101",
+      "source_location": "L148",
       "weight": 1.0
     },
     {
@@ -17016,7 +17460,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/screens/OrderStatusScreen.tsx",
-      "source_location": "L170",
+      "source_location": "L169",
       "weight": 1.0
     },
     {
@@ -17052,7 +17496,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/screens/OrderStatusScreen.tsx",
-      "source_location": "L371",
+      "source_location": "L372",
       "weight": 1.0
     },
     {
@@ -17112,7 +17556,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
-      "source_location": "L103",
+      "source_location": "L106",
       "weight": 1.0
     },
     {
@@ -17124,7 +17568,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
-      "source_location": "L124",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_customer_pwa_src_stores_usecustomerorderstore_usecustomerorderstore",
+      "target": "apps_customer_pwa_src_stores_usecustomerorderstore_resolveorderstatusfromrow",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
+      "source_location": "L362",
       "weight": 1.0
     },
     {
@@ -17201,6 +17657,18 @@
     },
     {
       "source": "apps_dining_web_src_screens_checkoutscreen_checkoutscreen",
+      "target": "apps_dining_web_src_lib_payments_generateguestidempotencykey",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "apps/dining-web/src/screens/CheckoutScreen.tsx",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_dining_web_src_screens_checkoutscreen_checkoutscreen",
       "target": "apps_dining_web_src_lib_payments_getrazorpayconfig",
       "relation": "calls",
       "_origin": "ast",
@@ -17208,7 +17676,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/dining-web/src/screens/CheckoutScreen.tsx",
-      "source_location": "L163",
+      "source_location": "L165",
       "weight": 1.0
     },
     {
@@ -17220,19 +17688,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/dining-web/src/screens/CheckoutScreen.tsx",
-      "source_location": "L24",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_dining_web_src_screens_checkoutscreen_checkoutscreen",
-      "target": "apps_dining_web_src_lib_activeorder_getactivedineinorder",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "apps/dining-web/src/screens/CheckoutScreen.tsx",
-      "source_location": "L27",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -17244,7 +17700,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/dining-web/src/screens/CheckoutScreen.tsx",
-      "source_location": "L270",
+      "source_location": "L273",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_dining_web_src_screens_checkoutscreen_checkoutscreen",
+      "target": "apps_dining_web_src_lib_activeorder_getactivedineinorder",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "apps/dining-web/src/screens/CheckoutScreen.tsx",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -17256,19 +17724,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/dining-web/src/screens/CheckoutScreen.tsx",
-      "source_location": "L93",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_dining_web_src_screens_checkoutscreen_checkoutscreen",
-      "target": "apps_dining_web_src_lib_payments_generateguestidempotencykey",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "apps/dining-web/src/screens/CheckoutScreen.tsx",
-      "source_location": "L99",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -17748,7 +18204,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L68",
+      "source_location": "L93",
       "weight": 1.0
     },
     {
@@ -17760,7 +18216,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L121",
+      "source_location": "L146",
       "weight": 1.0
     },
     {
@@ -17772,7 +18228,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L194",
+      "source_location": "L671",
       "weight": 1.0
     },
     {
@@ -17784,7 +18240,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L488",
+      "source_location": "L832",
       "weight": 1.0
     },
     {
@@ -17796,7 +18252,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L489",
+      "source_location": "L833",
       "weight": 1.0
     },
     {
@@ -17808,7 +18264,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L490",
+      "source_location": "L834",
       "weight": 1.0
     },
     {
@@ -17820,7 +18276,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L97",
+      "source_location": "L122",
       "weight": 1.0
     },
     {
@@ -19974,6 +20430,18 @@
       "weight": 1.0
     },
     {
+      "source": "apps_customer_pwa_src_components_bundleselectionmodal_bundleselectionmodalprops",
+      "target": "apps_customer_pwa_src_components_menuitemcard_menuitem",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "field",
+      "source_file": "apps/customer-pwa/src/components/BundleSelectionModal.tsx",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
       "source": "apps_customer_pwa_src_components_cartdrawer_swipeablecartitemprops",
       "target": "apps_customer_pwa_src_stores_usecartstore_cartitem",
       "relation": "references",
@@ -20186,7 +20654,20 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
-      "source_location": "L87",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_customer_pwa_src_stores_useauthstore_useauthstore",
+      "target": "apps_customer_pwa_src_stores_usecustomerorderstore",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "deferred": true,
+      "source_file": "apps/customer-pwa/src/stores/useAuthStore.ts",
+      "source_location": "L132",
       "weight": 1.0
     },
     {
@@ -20755,6 +21236,18 @@
     },
     {
       "source": "apps_admin_web_src_app",
+      "target": "apps_admin_web_src_screens_tapaulinkproscreen_tapaulinkproscreen",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "apps/admin-web/src/App.tsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_admin_web_src_app",
       "target": "apps_admin_web_src_components_adminguard_adminguard",
       "relation": "imports",
       "_origin": "ast",
@@ -20966,6 +21459,18 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "apps/admin-web/src/screens/StallsScreen.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_admin_web_src_screens_tapaulinkproscreen",
+      "target": "apps_admin_web_src_lib_supabase_supabase",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "apps/admin-web/src/screens/TapauLinkPROScreen.tsx",
       "source_location": "L2",
       "weight": 1.0
     },
@@ -21438,6 +21943,18 @@
       "weight": 1.0
     },
     {
+      "source": "apps_customer_pwa_src_components_bundleselectionmodal",
+      "target": "apps_customer_pwa_src_components_menuitemcard_menuitem",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "apps/customer-pwa/src/components/BundleSelectionModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
       "source": "apps_customer_pwa_src_components_cartdrawer",
       "target": "apps_customer_pwa_src_stores_usecartstore_cartitem",
       "relation": "imports",
@@ -21735,6 +22252,30 @@
       "context": "import",
       "source_file": "apps/customer-pwa/src/screens/HomeScreen.tsx",
       "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_customer_pwa_src_screens_menuscreen",
+      "target": "apps_customer_pwa_src_components_bundleselectionmodal_bundleoffer",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_customer_pwa_src_screens_menuscreen",
+      "target": "apps_customer_pwa_src_components_bundleselectionmodal_bundleselectionmodal",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
+      "source_location": "L10",
       "weight": 1.0
     },
     {
@@ -22226,7 +22767,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "apps/customer-pwa/src/stores/useAuthStore.ts",
-      "source_location": "L3",
+      "source_location": "L4",
       "weight": 1.0
     },
     {
@@ -24331,6 +24872,18 @@
     },
     {
       "source": "apps_admin_web_src_app",
+      "target": "apps_admin_web_src_screens_tapaulinkproscreen",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "apps/admin-web/src/App.tsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_admin_web_src_app",
       "target": "apps_admin_web_src_components_adminguard",
       "relation": "imports_from",
       "_origin": "ast",
@@ -24542,6 +25095,18 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "apps/admin-web/src/screens/StallsScreen.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_admin_web_src_screens_tapaulinkproscreen",
+      "target": "apps_admin_web_src_lib_supabase",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "apps/admin-web/src/screens/TapauLinkPROScreen.tsx",
       "source_location": "L2",
       "weight": 1.0
     },
@@ -24810,6 +25375,18 @@
       "weight": 1.0
     },
     {
+      "source": "apps_customer_pwa_src_components_bundleselectionmodal",
+      "target": "apps_customer_pwa_src_components_menuitemcard",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "apps/customer-pwa/src/components/BundleSelectionModal.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
       "source": "apps_customer_pwa_src_components_cartdrawer",
       "target": "apps_customer_pwa_src_stores_usecartstore",
       "relation": "imports_from",
@@ -25035,6 +25612,18 @@
       "context": "import",
       "source_file": "apps/customer-pwa/src/screens/HomeScreen.tsx",
       "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_customer_pwa_src_screens_menuscreen",
+      "target": "apps_customer_pwa_src_components_bundleselectionmodal",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
+      "source_location": "L10",
       "weight": 1.0
     },
     {
@@ -25323,7 +25912,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "apps/customer-pwa/src/stores/useAuthStore.ts",
-      "source_location": "L3",
+      "source_location": "L4",
       "weight": 1.0
     },
     {
@@ -27395,7 +27984,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/admin-web/src/App.tsx",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -27428,7 +28017,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/admin-web/src/layouts/AdminLayout.tsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -27762,6 +28351,50 @@
       "weight": 1.0
     },
     {
+      "source": "apps_admin_web_src_screens_tapaulinkproscreen",
+      "target": "apps_admin_web_src_screens_tapaulinkproscreen_editmodalstate",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/admin-web/src/screens/TapauLinkPROScreen.tsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_admin_web_src_screens_tapaulinkproscreen",
+      "target": "apps_admin_web_src_screens_tapaulinkproscreen_reserved_subdomains",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/admin-web/src/screens/TapauLinkPROScreen.tsx",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_admin_web_src_screens_tapaulinkproscreen",
+      "target": "apps_admin_web_src_screens_tapaulinkproscreen_tapaulinkproscreen",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/admin-web/src/screens/TapauLinkPROScreen.tsx",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_admin_web_src_screens_tapaulinkproscreen",
+      "target": "apps_admin_web_src_screens_tapaulinkproscreen_merchant",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/admin-web/src/screens/TapauLinkPROScreen.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
       "source": "apps_admin_web_src_stores_useadminauthstore",
       "target": "apps_admin_web_src_stores_useadminauthstore_fallback_admin_emails",
       "relation": "contains",
@@ -27869,6 +28502,28 @@
       "confidence_score": 1.0,
       "source_file": "apps/admin-web/tsconfig.json",
       "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_customer_pwa_functions_middleware",
+      "target": "apps_customer_pwa_functions_middleware_env",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/customer-pwa/functions/_middleware.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_customer_pwa_functions_middleware",
+      "target": "apps_customer_pwa_functions_middleware_onrequest",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/customer-pwa/functions/_middleware.ts",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -28165,7 +28820,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/customer-pwa/src/App.tsx",
-      "source_location": "L500",
+      "source_location": "L564",
       "weight": 1.0
     },
     {
@@ -28254,6 +28909,39 @@
       "confidence_score": 1.0,
       "source_file": "apps/customer-pwa/src/components/BottomNavBar.tsx",
       "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_customer_pwa_src_components_bundleselectionmodal",
+      "target": "apps_customer_pwa_src_components_bundleselectionmodal_bundleselectionmodalprops",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/customer-pwa/src/components/BundleSelectionModal.tsx",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_customer_pwa_src_components_bundleselectionmodal",
+      "target": "apps_customer_pwa_src_components_bundleselectionmodal_bundleselectionmodal",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/customer-pwa/src/components/BundleSelectionModal.tsx",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_customer_pwa_src_components_bundleselectionmodal",
+      "target": "apps_customer_pwa_src_components_bundleselectionmodal_bundleoffer",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/customer-pwa/src/components/BundleSelectionModal.tsx",
+      "source_location": "L4",
       "weight": 1.0
     },
     {
@@ -28742,13 +29430,13 @@
     },
     {
       "source": "apps_customer_pwa_src_lib_supabase",
-      "target": "apps_customer_pwa_src_lib_supabase_supabase",
+      "target": "apps_customer_pwa_src_lib_supabase_hybridauthstorage",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/customer-pwa/src/lib/supabase.ts",
-      "source_location": "L15",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -28771,6 +29459,17 @@
       "confidence_score": 1.0,
       "source_file": "apps/customer-pwa/src/lib/supabase.ts",
       "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_customer_pwa_src_lib_supabase",
+      "target": "apps_customer_pwa_src_lib_supabase_supabase",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/customer-pwa/src/lib/supabase.ts",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -28907,24 +29606,24 @@
     },
     {
       "source": "apps_customer_pwa_src_screens_menuscreen",
-      "target": "apps_customer_pwa_src_screens_menuscreen_merchantdetails",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
-      "source_location": "L11",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_customer_pwa_src_screens_menuscreen",
       "target": "apps_customer_pwa_src_screens_menuscreen_menuscreen",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
-      "source_location": "L114",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_customer_pwa_src_screens_menuscreen",
+      "target": "apps_customer_pwa_src_screens_menuscreen_merchantdetails",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -28935,7 +29634,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
-      "source_location": "L37",
+      "source_location": "L38",
       "weight": 1.0
     },
     {
@@ -28946,7 +29645,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
-      "source_location": "L48",
+      "source_location": "L49",
       "weight": 1.0
     },
     {
@@ -28957,7 +29656,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/customer-pwa/src/screens/MenuScreen.tsx",
-      "source_location": "L68",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
@@ -29078,7 +29777,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/customer-pwa/src/stores/useAuthStore.ts",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -29089,7 +29788,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/customer-pwa/src/stores/useAuthStore.ts",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -29133,7 +29832,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/customer-pwa/src/stores/useCartStore.ts",
-      "source_location": "L48",
+      "source_location": "L50",
       "weight": 1.0
     },
     {
@@ -29221,7 +29920,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/customer-pwa/src/stores/useCustomerOrderStore.ts",
-      "source_location": "L90",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
@@ -30046,7 +30745,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/dining-web/src/stores/useDineInCartStore.ts",
-      "source_location": "L40",
+      "source_location": "L42",
       "weight": 1.0
     },
     {
@@ -31195,145 +31894,13 @@
     },
     {
       "source": "apps_merchant_web_src_screens_promocodesscreen",
-      "target": "apps_merchant_web_src_screens_promocodesscreen_applicabilitybadge",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L102",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_merchant_web_src_screens_promocodesscreen",
-      "target": "apps_merchant_web_src_screens_promocodesscreen_promocodesscreen",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L120",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_merchant_web_src_screens_promocodesscreen",
-      "target": "apps_merchant_web_src_screens_promocodesscreen_promocodestatus",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L16",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_merchant_web_src_screens_promocodesscreen",
-      "target": "apps_merchant_web_src_screens_promocodesscreen_promodiscounttype",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L17",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_merchant_web_src_screens_promocodesscreen",
-      "target": "apps_merchant_web_src_screens_promocodesscreen_promodurationtype",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L18",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_merchant_web_src_screens_promocodesscreen",
-      "target": "apps_merchant_web_src_screens_promocodesscreen_promoapplicability",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L19",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_merchant_web_src_screens_promocodesscreen",
-      "target": "apps_merchant_web_src_screens_promocodesscreen_promocoderequest",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L21",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_merchant_web_src_screens_promocodesscreen",
-      "target": "apps_merchant_web_src_screens_promocodesscreen_formatdate",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L38",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_merchant_web_src_screens_promocodesscreen",
-      "target": "apps_merchant_web_src_screens_promocodesscreen_normalizecode",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L48",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_merchant_web_src_screens_promocodesscreen",
-      "target": "apps_merchant_web_src_screens_promocodesscreen_formatdiscount",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L52",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_merchant_web_src_screens_promocodesscreen",
-      "target": "apps_merchant_web_src_screens_promocodesscreen_formatdateonly",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L59",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_merchant_web_src_screens_promocodesscreen",
-      "target": "apps_merchant_web_src_screens_promocodesscreen_formatduration",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L66",
-      "weight": 1.0
-    },
-    {
-      "source": "apps_merchant_web_src_screens_promocodesscreen",
       "target": "apps_merchant_web_src_screens_promocodesscreen_statuslabel",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L80",
+      "source_location": "L105",
       "weight": 1.0
     },
     {
@@ -31344,7 +31911,172 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
-      "source_location": "L86",
+      "source_location": "L111",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_applicabilitybadge",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_promocodesscreen",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_promocodestatus",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_promodiscounttype",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_promodurationtype",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_promoapplicability",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_bundletype",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_bundleoffer",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_menuitemoption",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_promocoderequest",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_formatdate",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_normalizecode",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_formatdiscount",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_formatdateonly",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "apps_merchant_web_src_screens_promocodesscreen",
+      "target": "apps_merchant_web_src_screens_promocodesscreen_formatduration",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/merchant-web/src/screens/PromoCodesScreen.tsx",
+      "source_location": "L91",
       "weight": 1.0
     },
     {
@@ -31920,6 +32652,17 @@
       "weight": 1.0
     },
     {
+      "source": "cloudflare_worker_tapaulinkpro_router",
+      "target": "cloudflare_worker_tapaulinkpro_router_fetch",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "cloudflare-worker/tapaulinkpro-router.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
       "source": "continuity",
       "target": "continuity_continuity_md_tapautime_engineering_continuity_gate_tracker",
       "relation": "contains",
@@ -32016,6 +32759,50 @@
       "confidence_score": 1.0,
       "source_file": "CONTINUITY.md",
       "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "copy_functions",
+      "target": "copy_functions_fs",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "copy_functions.cjs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "copy_functions",
+      "target": "copy_functions_path",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "copy_functions.cjs",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "copy_functions",
+      "target": "copy_functions_src",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "copy_functions.cjs",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "copy_functions",
+      "target": "copy_functions_dest",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "copy_functions.cjs",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -32126,6 +32913,116 @@
       "confidence_score": 1.0,
       "source_file": "e2e/verify_view_persistence.spec.js",
       "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "functions_functions_middleware",
+      "target": "functions_functions_middleware_env",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "functions/functions/_middleware.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "functions_functions_middleware",
+      "target": "functions_functions_middleware_onrequest",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "functions/functions/_middleware.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "functions_middleware",
+      "target": "functions_middleware_env",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "functions/_middleware.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "functions_middleware",
+      "target": "functions_middleware_onrequest",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "functions/_middleware.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "local_router_proxy",
+      "target": "local_router_proxy_supabase",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "local-router-proxy.js",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "local_router_proxy",
+      "target": "local_router_proxy_http",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "local-router-proxy.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "local_router_proxy",
+      "target": "local_router_proxy_proxy",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "local-router-proxy.js",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "local_router_proxy",
+      "target": "local_router_proxy_server",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "local-router-proxy.js",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "local_router_proxy",
+      "target": "local_router_proxy_httpproxy",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "local-router-proxy.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "local_router_proxy",
+      "target": "local_router_proxy_createclient",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "local-router-proxy.js",
+      "source_location": "L4",
       "weight": 1.0
     },
     {
@@ -34571,6 +35468,28 @@
       "weight": 1.0
     },
     {
+      "source": "scratch_verify_order_balance_fee",
+      "target": "scratch_verify_order_balance_fee_calcorderbalancefee",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scratch/verify_order_balance_fee.cjs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "scratch_verify_order_balance_fee",
+      "target": "scratch_verify_order_balance_fee_testcases",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scratch/verify_order_balance_fee.cjs",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
       "source": "scratch_verify_order_rendering",
       "target": "scratch_verify_order_rendering_mockcontainer",
       "relation": "contains",
@@ -35931,7 +36850,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "supabase/functions/checkout/index.ts",
-      "source_location": "L522",
+      "source_location": "L523",
       "weight": 1.0
     },
     {
@@ -35942,7 +36861,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "supabase/functions/checkout/index.ts",
-      "source_location": "L60",
+      "source_location": "L61",
       "weight": 1.0
     },
     {
@@ -36307,6 +37226,15 @@
       "source_file": "tsconfig.json",
       "source_location": "L19",
       "weight": 1.0
+    },
+    {
+      "source": "apps_customer_pwa_src_stores_useauthstore",
+      "target": "apps_customer_pwa_src_stores_usecustomerorderstore",
+      "relation": "dynamic_import",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/customer-pwa/src/stores/useAuthStore.ts"
     },
     {
       "source": "app_store",
@@ -37568,5 +38496,6 @@
       "weight": 1.0
     }
   ],
-  "hyperedges": []
+  "hyperedges": [],
+  "built_at_commit": "5f43f2ec336cf5c0ceb6ac695620918b898e1054"
 }

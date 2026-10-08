@@ -113,6 +113,7 @@ export const CheckoutScreen: React.FC<CheckoutScreenProps> = ({
     getSubtotal,
     getConvenienceFee,
     getServiceFee,
+    getOrderBalanceFee,
     getPlatformFee,
     getTotalAmount,
     clearCart,
@@ -234,6 +235,7 @@ export const CheckoutScreen: React.FC<CheckoutScreenProps> = ({
   const subtotal = getSubtotal();
   const convenienceFee = getConvenienceFee();
   const serviceFee = getServiceFee();
+  const orderBalanceFee = getOrderBalanceFee();
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
   const packagingFee =
     packagingFeeType === 'per_order'
@@ -242,7 +244,7 @@ export const CheckoutScreen: React.FC<CheckoutScreenProps> = ({
         ? packagingFeeAmount * itemCount
         : 0;
   const grossTotal = Number(
-    (subtotal + packagingFee + convenienceFee + serviceFee).toFixed(2)
+    (subtotal + packagingFee + convenienceFee + serviceFee + orderBalanceFee).toFixed(2)
   );
   const discount = promoQuote?.discountAmount ?? 0;
   const merchantDiscount = promoQuote?.isLegacy
@@ -335,7 +337,7 @@ export const CheckoutScreen: React.FC<CheckoutScreenProps> = ({
       setPromoQuote(null);
       setPromoError('Your cart changed. Please apply the promo code again.');
     }
-  }, [subtotal, packagingFee, convenienceFee, serviceFee]);
+  }, [subtotal, packagingFee, convenienceFee, serviceFee, orderBalanceFee]);
 
   // Resume order execution immediately when user completes authentication
   const handleAuthSuccess = (authenticatedUser: User) => {
@@ -492,6 +494,7 @@ export const CheckoutScreen: React.FC<CheckoutScreenProps> = ({
             promo_code: promoQuote?.code ?? '',
             packaging_fee_type: packagingFeeType,
             packaging_fee_amount: packagingFeeAmount,
+            order_balance_fee: orderBalanceFee,
             is_preorder: isPreorder,
             scheduled_pickup_date: isPreorder ? localScheduledPickupDate : null,
             scheduled_pickup_time: isPreorder ? scheduledPickupTime : null,
@@ -605,7 +608,7 @@ export const CheckoutScreen: React.FC<CheckoutScreenProps> = ({
             total_amount: finalTotal,
             convenience_fee: convenienceFee,
             service_fee: serviceFee,
-            platform_fee: Number((convenienceFee + serviceFee).toFixed(2)),
+            platform_fee: Number((convenienceFee + serviceFee + orderBalanceFee).toFixed(2)),
             merchant_cut: Number(Math.max(0, subtotal - merchantDiscount).toFixed(2)),
             promo_code: null,
             promo_code_id: null,
@@ -675,7 +678,8 @@ export const CheckoutScreen: React.FC<CheckoutScreenProps> = ({
           subtotal: `RM ${subtotal.toFixed(2)}`,
           convenience_fee: `RM ${convenienceFee.toFixed(2)}`,
           service_fee: `RM ${serviceFee.toFixed(2)}`,
-          tapautime_fee: `RM ${(convenienceFee + serviceFee).toFixed(2)}`,
+          order_balance_fee: orderBalanceFee > 0 ? `RM ${orderBalanceFee.toFixed(2)}` : 'RM 0.00',
+          tapautime_fee: `RM ${(convenienceFee + serviceFee + orderBalanceFee).toFixed(2)}`,
           merchant_cut: `RM ${Math.max(0, subtotal - merchantDiscount).toFixed(2)}`,
           table_number: null,
           pickup_pin: generatedPin,
@@ -1309,18 +1313,27 @@ export const CheckoutScreen: React.FC<CheckoutScreenProps> = ({
         )}
 
         <div className="flex justify-between text-stone-600 font-medium">
-          <span>Convenience Fee</span>
+          <span>Processing Fee</span>
           <span className="font-bold text-stone-900 tabular-nums">
             RM {convenienceFee.toFixed(2)}
           </span>
         </div>
 
         <div className="flex justify-between text-stone-600 font-medium">
-          <span>Service Fee (1.8%)</span>
+          <span>Service Fee (3.8%)</span>
           <span className="font-bold text-stone-900 tabular-nums">
             RM {serviceFee.toFixed(2)}
           </span>
         </div>
+
+        {orderBalanceFee > 0 && (
+          <div className="flex justify-between text-stone-600 font-medium">
+            <span>Order Balance Fee</span>
+            <span className="font-bold text-stone-900 tabular-nums">
+              RM {orderBalanceFee.toFixed(2)}
+            </span>
+          </div>
+        )}
 
         {discount > 0 && (
           <div className="flex justify-between text-red-600 font-medium">

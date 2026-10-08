@@ -40,6 +40,13 @@ const CustomerAppLayout: React.FC = () => {
     useAuthStore.getState().initialize();
   }, []);
 
+  // Re-sync orders whenever authenticated user state resolves
+  useEffect(() => {
+    if (user?.id) {
+      useCustomerOrderStore.getState().syncCustomerOrders();
+    }
+  }, [user?.id]);
+
   // Automatic prompt: Prompt customer for contact number on first sign-up or sign-in if missing
   useEffect(() => {
     if (!isInitialized || !user) {
@@ -104,42 +111,91 @@ const CustomerAppLayout: React.FC = () => {
     Boolean(activeOrder) &&
     !isTerminalStatus(activeOrder?.order_status);
 
-  // Global realtime sync for active orders across all screens
+  // Global realtime sync for active orders across all screens with zero-dependency trap
   useEffect(() => {
+    // Initial sync on mount
+    useCustomerOrderStore.getState().syncCustomerOrders();
+
     const channel = supabase
       .channel('app-global-orders-sync')
       .on(
         'postgres_changes',
         {
-          event: 'UPDATE',
+          event: '*',
           schema: 'public',
           table: 'orders',
         },
         (payload) => {
-          const updated = payload.new as any;
-          if (!updated) return;
-          if (
-            activeOrder &&
-            (updated.id === activeOrder.id ||
-              updated.display_id === activeOrder.display_id ||
-              updated.pickup_pin === activeOrder.pickup_pin)
-          ) {
-            const nextStatus = resolveOrderStatusFromRow(updated);
-            updateOrderStatus(activeOrder.id, nextStatus);
-            if (updated.estimated_prep_minutes) {
-              updateActiveOrderDetails(activeOrder.id, {
-                estimated_prep_minutes: updated.estimated_prep_minutes
-              });
+          const row = (payload.new || payload.old) as any;
+          if (!row) return;
+
+          const currentStore = useCustomerOrderStore.getState();
+          const currentActive = currentStore.activeOrder;
+          const currentUserId = useAuthStore.getState().user?.id;
+
+          const isMatchingUser = currentUserId && row.customer_id === currentUserId;
+          const isMatchingOrder =
+            currentActive &&
+            (row.id === currentActive.id ||
+              row.display_id === currentActive.display_id ||
+              row.pickup_pin === currentActive.pickup_pin);
+
+          if (isMatchingUser || isMatchingOrder) {
+            if (payload.eventType === 'UPDATE') {
+              const nextStatus = resolveOrderStatusFromRow(row);
+              if (currentActive && (row.id === currentActive.id || row.display_id === currentActive.display_id)) {
+                currentStore.updateOrderStatus(currentActive.id, nextStatus);
+                if (row.estimated_prep_minutes) {
+                  currentStore.updateActiveOrderDetails(currentActive.id, {
+                    estimated_prep_minutes: row.estimated_prep_minutes,
+                  });
+                }
+              }
             }
+            // Trigger comprehensive store sync to update history and details
+            currentStore.syncCustomerOrders();
           }
         }
       )
       .subscribe();
 
+    // Re-sync whenever app gains focus or returns to foreground (survives mobile OS sleeping)
+    const handleVisibilityChange = () => {
+      if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
+        useCustomerOrderStore.getState().syncCustomerOrders();
+      }
+    };
+
+    const handleWindowFocus = () => {
+      useCustomerOrderStore.getState().syncCustomerOrders();
+    };
+
+    if (typeof document !== 'undefined') {
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+    }
+    if (typeof window !== 'undefined') {
+      window.addEventListener('focus', handleWindowFocus);
+    }
+
+    // Gentle 10-second polling fallback while user has an active, non-terminal order
+    const pollInterval = setInterval(() => {
+      const active = useCustomerOrderStore.getState().activeOrder;
+      if (active && !isTerminalStatus(active.order_status)) {
+        useCustomerOrderStore.getState().syncCustomerOrders();
+      }
+    }, 10000);
+
     return () => {
       supabase.removeChannel(channel);
+      if (typeof document !== 'undefined') {
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+      }
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('focus', handleWindowFocus);
+      }
+      clearInterval(pollInterval);
     };
-  }, [activeOrder, updateOrderStatus, updateActiveOrderDetails]);
+  }, []);
 
   // Reactive cart item count for header and navigation badges
   const cartCount = useCartStore((s) => s.getTotalCount());

@@ -30,141 +30,66 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = ({ onNavigateHome }) =>
   const [isReceiptModalOpen, setIsReceiptModalOpen] = useState(false);
   const [isFetchingReceipt, setIsFetchingReceipt] = useState(false);
 
-  // Fetch active/pending orders and history from Supabase.
-  // SECURITY: Bail early if no authenticated session — never fall back to a
-  // hardcoded UUID, which would return another user's orders to anonymous visitors.
+  // Fetch active/pending orders and history from Supabase safely without wiping state
   const fetchOrders = useCallback(async () => {
     try {
+      setIsLoading(true);
       const {
         data: { session },
       } = await supabase.auth.getSession();
 
-      if (!session?.user?.id) {
-        // No authenticated session — clear any stale persisted order from localStorage
-        // so a foreign order from a previous session cannot ghost-persist.
-        if (activeOrder) {
-          setActiveOrder(null);
-        }
-        setOrderHistory([]);
-        return;
-      }
+      // Trigger authoritative store sync
+      await useCustomerOrderStore.getState().syncCustomerOrders();
 
-      const customerId = session.user.id;
+      // Active reconciliation for recent pending gateway orders (e.g. FPX mobile return)
+      if (session?.user?.id) {
+        const { data: recentData } = await supabase
+          .from('orders')
+          .select('*')
+          .eq('customer_id', session.user.id)
+          .order('created_at', { ascending: false })
+          .limit(10);
 
-      const { data, error } = await supabase
-        .from('orders')
-        .select('*')
-        .eq('customer_id', customerId)
-        .order('created_at', { ascending: false });
-
-      if (!error && data) {
-        // Active reconciliation for recent pending gateway orders (e.g. FPX mobile return)
-        const recentPending = data.find((o: any) => {
+        const recentPending = (recentData || []).find((o: any) => {
           const isPending = o.payment_status === 'pending' || o.order_status === 'pending_payment';
           const isGateway = o.payment_method === 'gateway' || o.payment_method === 'online';
-          const isRecent = (Date.now() - new Date(o.created_at).getTime()) < 15 * 60 * 1000;
+          const isRecent = Date.now() - new Date(o.created_at).getTime() < 15 * 60 * 1000;
           return isPending && isGateway && isRecent;
         });
 
-        if (recentPending) {
-          (async () => {
-            try {
-              const res = await fetch(CHECKOUT_EDGE_FUNCTION_URL, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  apikey: SUPABASE_ANON_KEY,
-                  Authorization: `Bearer ${session.access_token}`,
-                },
-                body: JSON.stringify({
-                  action: 'verify_payment',
-                  master_transaction_id: recentPending.transaction_id || recentPending.id,
-                  pickup_pin: recentPending.pickup_pin,
-                }),
-              });
-              if (res.ok) {
-                const ver = await res.json();
-                if (ver.success && ver.payment_status === 'captured') {
-                  console.log('[OrdersScreen] Active reconciliation captured order:', ver);
-                  fetchOrders();
-                }
+        if (recentPending && session.access_token) {
+          try {
+            const res = await fetch(CHECKOUT_EDGE_FUNCTION_URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                apikey: SUPABASE_ANON_KEY,
+                Authorization: `Bearer ${session.access_token}`,
+              },
+              body: JSON.stringify({
+                action: 'verify_payment',
+                master_transaction_id: recentPending.transaction_id || recentPending.id,
+                pickup_pin: recentPending.pickup_pin,
+              }),
+            });
+            if (res.ok) {
+              const ver = await res.json();
+              if (ver.success && ver.payment_status === 'captured') {
+                console.log('[OrdersScreen] Active reconciliation captured order:', ver);
+                await useCustomerOrderStore.getState().syncCustomerOrders();
               }
-            } catch (verErr) {
-              console.warn('[OrdersScreen] Verification error:', verErr);
             }
-          })();
-        }
-
-        // Exclude unpaid/abandoned gateway checkout attempts from active kitchen orders
-        const activeItem = data.find((o: any) => {
-          const resolvedStatus = resolveOrderStatusFromRow(o);
-          if (isTerminalStatus(resolvedStatus)) return false;
-          if (
-            resolvedStatus === 'pending_payment' ||
-            (o.payment_method === 'gateway' && o.payment_status === 'pending')
-          ) {
-            return false;
-          }
-          return true;
-        });
-
-        if (activeItem) {
-          const resolvedStatus = resolveOrderStatusFromRow(activeItem);
-          setActiveOrder({
-            id: activeItem.id,
-            display_id: activeItem.display_id || activeItem.id.slice(0, 8).toUpperCase(),
-            merchant_id: activeItem.merchant_id,
-            order_status: resolvedStatus,
-            payment_status: activeItem.payment_status || 'captured',
-            pickup_pin: activeItem.pickup_pin || '',
-            total_amount: Number(activeItem.total_amount) || 0,
-            promo_code: activeItem.promo_code || null,
-            promo_code_id: activeItem.promo_code_id || null,
-            discount_amount: Number(activeItem.discount_amount || 0),
-            estimated_prep_minutes: activeItem.estimated_prep_minutes || 15,
-            created_at: activeItem.created_at,
-          });
-        } else {
-          // No active orders in database — clear any stale local activeOrder
-          if (activeOrder) {
-            setActiveOrder(null);
+          } catch (verErr) {
+            console.warn('[OrdersScreen] Verification error:', verErr);
           }
         }
-
-        const historyItems: CustomerOrder[] = data
-          .filter((o: any) => {
-            const resolved = resolveOrderStatusFromRow(o);
-            // Never show unpaid/abandoned checkout attempts in customer history
-            if (
-              resolved === 'pending_payment' ||
-              (o.payment_method === 'gateway' && o.payment_status === 'pending')
-            ) {
-              return false;
-            }
-            return isTerminalStatus(resolved);
-          })
-          .map((o: any) => ({
-            id: o.id,
-            display_id: o.display_id || o.id.slice(0, 8).toUpperCase(),
-            merchant_id: o.merchant_id,
-            order_status: resolveOrderStatusFromRow(o),
-            payment_status: o.payment_status || 'captured',
-            pickup_pin: o.pickup_pin,
-            total_amount: Number(o.total_amount) || 0,
-            promo_code: o.promo_code || null,
-            promo_code_id: o.promo_code_id || null,
-            discount_amount: Number(o.discount_amount || 0),
-            created_at: o.created_at,
-          }));
-
-        setOrderHistory(historyItems);
       }
     } catch (err) {
       console.error('[OrdersScreen] Error fetching customer orders:', err);
     } finally {
       setIsLoading(false);
     }
-  }, [activeOrder, setActiveOrder, setOrderHistory]);
+  }, []);
 
   useEffect(() => {
     if (isReceiptModalOpen) {
@@ -191,7 +116,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = ({ onNavigateHome }) =>
           table: 'orders',
         },
         () => {
-          fetchOrders();
+          useCustomerOrderStore.getState().syncCustomerOrders();
         }
       )
       .subscribe();

@@ -79,19 +79,22 @@ export interface CustomerOrder {
 interface CustomerOrderStore {
   activeOrder: CustomerOrder | null;
   orderHistory: CustomerOrder[];
+  isSyncing: boolean;
   setActiveOrder: (order: CustomerOrder | null) => void;
   updateOrderStatus: (orderId: string, status: OrderStatus | string) => void;
   updateActiveOrderDetails: (orderId: string, details: Partial<CustomerOrder>) => void;
   setOrderHistory: (orders: CustomerOrder[]) => void;
   clearActiveOrder: () => void;
   fetchOrderReceipt: (orderId: string) => Promise<CustomerReceipt | null>;
+  syncCustomerOrders: () => Promise<void>;
 }
 
 export const useCustomerOrderStore = create<CustomerOrderStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       activeOrder: null,
       orderHistory: [],
+      isSyncing: false,
 
       setActiveOrder: (order) => {
         if (!order) {
@@ -291,6 +294,155 @@ export const useCustomerOrderStore = create<CustomerOrderStore>()(
         } catch (err) {
           console.error('[useCustomerOrderStore] fetchOrderReceipt exception:', err);
           return null;
+        }
+      },
+
+      syncCustomerOrders: async () => {
+        try {
+          set({ isSyncing: true });
+          const { data: { session } } = await supabase.auth.getSession();
+          const customerId = session?.user?.id;
+          const currentActive = get().activeOrder;
+
+          // If neither an authenticated user nor a local active order exists, skip network query
+          if (!customerId && !currentActive) {
+            set({ isSyncing: false });
+            return;
+          }
+
+          let dbOrders: any[] = [];
+
+          if (customerId) {
+            const { data, error } = await supabase
+              .from('orders')
+              .select('*')
+              .eq('customer_id', customerId)
+              .order('created_at', { ascending: false })
+              .limit(50);
+
+            if (!error && data) {
+              dbOrders = data;
+            }
+          }
+
+          // If a local active order exists (e.g. from guest checkout or before session token sync), query it directly
+          if (
+            currentActive &&
+            !dbOrders.some((o) => o.id === currentActive.id || o.display_id === currentActive.display_id)
+          ) {
+            const targetId = currentActive.id;
+            const queryFilter = [
+              targetId ? `id.eq.${targetId}` : null,
+              currentActive.display_id ? `display_id.eq.${currentActive.display_id}` : null,
+              currentActive.pickup_pin ? `pickup_pin.eq.${currentActive.pickup_pin}` : null,
+            ]
+              .filter(Boolean)
+              .join(',');
+
+            if (queryFilter) {
+              const { data: singleOrder } = await supabase
+                .from('orders')
+                .select('*')
+                .or(queryFilter)
+                .maybeSingle();
+
+              if (singleOrder) {
+                dbOrders.unshift(singleOrder);
+              }
+            }
+          }
+
+          if (dbOrders.length === 0) {
+            set({ isSyncing: false });
+            return;
+          }
+
+          // 1. Identify active non-terminal order
+          const activeItem = dbOrders.find((o) => {
+            const resolvedStatus = resolveOrderStatusFromRow(o);
+            if (isTerminalStatus(resolvedStatus)) return false;
+            if (
+              resolvedStatus === 'pending_payment' ||
+              (o.payment_method === 'gateway' && o.payment_status === 'pending')
+            ) {
+              return false;
+            }
+            return true;
+          });
+
+          if (activeItem) {
+            const resolvedStatus = resolveOrderStatusFromRow(activeItem);
+            const updatedActive: CustomerOrder = {
+              id: activeItem.id,
+              display_id: activeItem.display_id || activeItem.id.slice(0, 8).toUpperCase(),
+              merchant_id: activeItem.merchant_id,
+              order_status: resolvedStatus,
+              payment_status: activeItem.payment_status || 'captured',
+              payment_method: activeItem.payment_method || 'online',
+              order_type: 'takeaway',
+              pickup_pin: activeItem.pickup_pin || '',
+              total_amount: Number(activeItem.total_amount) || 0,
+              promo_code: activeItem.promo_code || null,
+              promo_code_id: activeItem.promo_code_id || null,
+              discount_amount: Number(activeItem.discount_amount || 0),
+              estimated_prep_minutes: activeItem.estimated_prep_minutes || 15,
+              created_at: activeItem.created_at,
+              receipt: currentActive && currentActive.id === activeItem.id ? currentActive.receipt : undefined,
+            };
+            set({ activeOrder: updatedActive });
+          } else if (currentActive) {
+            // Check if currentActive transitioned to terminal status in database
+            const matchingRow = dbOrders.find(
+              (o) => o.id === currentActive.id || o.display_id === currentActive.display_id
+            );
+            if (matchingRow) {
+              const terminalStatus = resolveOrderStatusFromRow(matchingRow);
+              if (isTerminalStatus(terminalStatus)) {
+                const completedActive: CustomerOrder = {
+                  ...currentActive,
+                  order_status: terminalStatus,
+                };
+                set({ activeOrder: completedActive });
+                // If completed and no receipt yet, proactively fetch receipt
+                if (terminalStatus === 'completed' && !currentActive.receipt) {
+                  get().fetchOrderReceipt(currentActive.id);
+                }
+              }
+            }
+          }
+
+          // 2. Map history items (terminal orders)
+          const historyItems: CustomerOrder[] = dbOrders
+            .filter((o) => {
+              const resolved = resolveOrderStatusFromRow(o);
+              if (
+                resolved === 'pending_payment' ||
+                (o.payment_method === 'gateway' && o.payment_status === 'pending')
+              ) {
+                return false;
+              }
+              return isTerminalStatus(resolved);
+            })
+            .map((o) => ({
+              id: o.id,
+              display_id: o.display_id || o.id.slice(0, 8).toUpperCase(),
+              merchant_id: o.merchant_id,
+              order_status: resolveOrderStatusFromRow(o),
+              payment_status: o.payment_status || 'captured',
+              payment_method: o.payment_method || 'online',
+              pickup_pin: o.pickup_pin,
+              total_amount: Number(o.total_amount) || 0,
+              promo_code: o.promo_code || null,
+              promo_code_id: o.promo_code_id || null,
+              discount_amount: Number(o.discount_amount || 0),
+              created_at: o.created_at,
+            }));
+
+          set({ orderHistory: historyItems });
+        } catch (err) {
+          console.warn('[useCustomerOrderStore] syncCustomerOrders exception:', err);
+        } finally {
+          set({ isSyncing: false });
         }
       },
     }),

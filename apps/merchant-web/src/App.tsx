@@ -41,7 +41,7 @@ const NAV_ITEMS: NavItemConfig[] = [
   { key: 'kds', label: 'KDS', icon: ChefHat },
   { key: 'preorders', label: 'Tapau Ahead', icon: ShoppingBag },
   { key: 'menu', label: 'Menu', icon: UtensilsCrossed },
-  { key: 'promo_codes', label: 'Promo Codes', icon: TicketPercent },
+  { key: 'promo_codes', label: 'Offers', icon: TicketPercent },
   { key: 'wallet', label: 'Finances', icon: Wallet },
   { key: 'settings', label: 'Settings', icon: Sliders },
 ];

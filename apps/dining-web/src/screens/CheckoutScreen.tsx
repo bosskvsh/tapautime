@@ -20,6 +20,7 @@ export function CheckoutScreen() {
     getSubtotal,
     getConvenienceFee,
     getServiceFee,
+    getOrderBalanceFee,
     clearCart,
   } = useDineInCartStore();
 
@@ -38,7 +39,8 @@ export function CheckoutScreen() {
   const subtotal = getSubtotal();
   const convenienceFee = getConvenienceFee();
   const serviceFee = getServiceFee();
-  const grossTotal = Number((subtotal + convenienceFee + serviceFee).toFixed(2));
+  const orderBalanceFee = getOrderBalanceFee();
+  const grossTotal = Number((subtotal + convenienceFee + serviceFee + orderBalanceFee).toFixed(2));
   const discount =
     appliedPromo === 'tapau1ringgit' && grossTotal > 1.0
       ? Number((grossTotal - 1.0).toFixed(2))
@@ -185,7 +187,8 @@ export function CheckoutScreen() {
           subtotal: `RM ${subtotal.toFixed(2)}`,
           convenience_fee: `RM ${convenienceFee.toFixed(2)}`,
           service_fee: `RM ${serviceFee.toFixed(2)}`,
-          tapautime_fee: `RM ${(convenienceFee + serviceFee).toFixed(2)}`,
+          order_balance_fee: orderBalanceFee > 0 ? `RM ${orderBalanceFee.toFixed(2)}` : 'RM 0.00',
+          tapautime_fee: `RM ${(convenienceFee + serviceFee + orderBalanceFee).toFixed(2)}`,
           discount: discount > 0 ? `RM ${discount.toFixed(2)}` : 'RM 0.00',
           promo_code: appliedPromo || 'none',
           pickup_pin: pickupPin,
@@ -690,18 +693,27 @@ export function CheckoutScreen() {
           </div>
 
           <div className="flex justify-between text-stone-600 font-medium">
-            <span>Convenience Fee</span>
+            <span>Processing Fee</span>
             <span className="font-extrabold text-stone-900 tabular-nums">
               RM {convenienceFee.toFixed(2)}
             </span>
           </div>
 
           <div className="flex justify-between text-stone-600 font-medium">
-            <span>Service Fee (1.8%)</span>
+            <span>Service Fee (3.8%)</span>
             <span className="font-extrabold text-stone-900 tabular-nums">
               RM {serviceFee.toFixed(2)}
             </span>
           </div>
+
+          {orderBalanceFee > 0 && (
+            <div className="flex justify-between text-stone-600 font-medium">
+              <span>Order Balance Fee</span>
+              <span className="font-extrabold text-stone-900 tabular-nums">
+                RM {orderBalanceFee.toFixed(2)}
+              </span>
+            </div>
+          )}
 
           {discount > 0 && (
             <div className="flex justify-between text-emerald-600 font-extrabold">

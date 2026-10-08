@@ -350,6 +350,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     getSubtotal,
     getConvenienceFee,
     getServiceFee,
+    getOrderBalanceFee,
     getTotalAmount,
   } = useCartStore();
 
@@ -907,18 +908,27 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
 
               <div className="flex justify-between text-stone-600 font-medium">
-                <span>Convenience Fee</span>
+                <span>Processing Fee</span>
                 <span className="font-extrabold text-stone-900 tabular-nums">
                   {getConvenienceFee() === 0 ? 'RM 0.00 (Waived)' : `RM ${getConvenienceFee().toFixed(2)}`}
                 </span>
               </div>
 
               <div className="flex justify-between text-stone-600 font-medium">
-                <span>Service Fee (1.8%)</span>
+                <span>Service Fee (3.8%)</span>
                 <span className="font-extrabold text-stone-900 tabular-nums">
                   {getServiceFee() === 0 ? 'RM 0.00 (Waived)' : `RM ${getServiceFee().toFixed(2)}`}
                 </span>
               </div>
+
+              {getOrderBalanceFee() > 0 && (
+                <div className="flex justify-between text-stone-600 font-medium">
+                  <span>Order Balance Fee</span>
+                  <span className="font-extrabold text-stone-900 tabular-nums">
+                    RM {getOrderBalanceFee().toFixed(2)}
+                  </span>
+                </div>
+              )}
 
               <div className="pt-2 border-t border-stone-100 flex justify-between items-baseline">
                 <span className="font-black text-sm text-stone-900">Total Payable</span>
