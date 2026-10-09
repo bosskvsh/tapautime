@@ -922,11 +922,16 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               </div>
 
               {getOrderBalanceFee() > 0 && (
-                <div className="flex justify-between text-stone-600 font-medium">
-                  <span>Order Balance Fee</span>
-                  <span className="font-extrabold text-stone-900 tabular-nums">
-                    RM {getOrderBalanceFee().toFixed(2)}
-                  </span>
+                <div className="space-y-0.5">
+                  <div className="flex justify-between text-stone-600 font-medium">
+                    <span>Order Balance Fee</span>
+                    <span className="font-extrabold text-stone-900 tabular-nums">
+                      RM {getOrderBalanceFee().toFixed(2)}
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-stone-400 italic">
+                    a small fee applied to orders below RM12.
+                  </p>
                 </div>
               )}
 

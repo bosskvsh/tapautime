@@ -17340,7 +17340,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
-      "source_location": "L418",
+      "source_location": "L417",
       "weight": 1.0
     },
     {
@@ -17352,7 +17352,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "apps/customer-pwa/src/screens/CheckoutScreen.tsx",
-      "source_location": "L658",
+      "source_location": "L657",
       "weight": 1.0
     },
     {

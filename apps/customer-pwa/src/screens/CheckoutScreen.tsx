@@ -236,6 +236,7 @@ export const CheckoutScreen: React.FC<CheckoutScreenProps> = ({
   const convenienceFee = getConvenienceFee();
   const serviceFee = getServiceFee();
   const orderBalanceFee = getOrderBalanceFee();
+  const otherFees = Number((convenienceFee + serviceFee + orderBalanceFee).toFixed(2));
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
   const packagingFee =
     packagingFeeType === 'per_order'
@@ -1312,25 +1313,11 @@ export const CheckoutScreen: React.FC<CheckoutScreenProps> = ({
           </div>
         )}
 
-        <div className="flex justify-between text-stone-600 font-medium">
-          <span>Processing Fee</span>
-          <span className="font-bold text-stone-900 tabular-nums">
-            RM {convenienceFee.toFixed(2)}
-          </span>
-        </div>
-
-        <div className="flex justify-between text-stone-600 font-medium">
-          <span>Service Fee (3.8%)</span>
-          <span className="font-bold text-stone-900 tabular-nums">
-            RM {serviceFee.toFixed(2)}
-          </span>
-        </div>
-
-        {orderBalanceFee > 0 && (
+        {otherFees > 0 && (
           <div className="flex justify-between text-stone-600 font-medium">
-            <span>Order Balance Fee</span>
+            <span>Other fees</span>
             <span className="font-bold text-stone-900 tabular-nums">
-              RM {orderBalanceFee.toFixed(2)}
+              RM {otherFees.toFixed(2)}
             </span>
           </div>
         )}

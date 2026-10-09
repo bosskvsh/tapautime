@@ -77,30 +77,36 @@ export const TapauAheadScreen: React.FC<TapauAheadScreenProps> = ({
       }
 
       if (merchantsData) {
-        setMerchants(
-          merchantsData.map((row: any) => {
-            const availability = availabilityMap[row.id];
-            // Since Tapau Ahead is for future orders, the stall being closed right now shouldn't necessarily block pre-orders.
-            // But we use is_currently_open for the UI badge so the user knows if they are taking live orders too.
-            const is_open = availability
-              ? availability.is_currently_open === true
-              : (row.is_open ?? true);
+        const mappedMerchants: Merchant[] = merchantsData.map((row: any) => {
+          const availability = availabilityMap[row.id];
+          // Since Tapau Ahead is for future orders, the stall being closed right now shouldn't necessarily block pre-orders.
+          // But we use is_currently_open for the UI badge so the user knows if they are taking live orders too.
+          const is_open = availability
+            ? availability.is_currently_open === true
+            : (row.is_open ?? true);
 
-            return {
-              id: row.id,
-              business_name: row.business_name || 'Merchant Stall',
-              cuisine_type: row.cuisine_type || 'Specialty Pre-Orders',
-              pickup_address: typeof row.location?.address === 'string' && row.location.address ? row.location.address : undefined,
-              is_open,
-              distance_km: row.distance_km ?? 0.5,
-              current_prep_delay: row.current_prep_delay ?? row.order_buffer_time ?? 10,
-              image_url: row.image_url || undefined,
-              profile_url: row.profile_url || undefined,
-              banner_url: row.banner_url || undefined,
-              has_active_promo: activePromoMerchantIds.has(row.id),
-            };
-          })
-        );
+          return {
+            id: row.id,
+            business_name: row.business_name || 'Merchant Stall',
+            cuisine_type: row.cuisine_type || 'Specialty Pre-Orders',
+            pickup_address: typeof row.location?.address === 'string' && row.location.address ? row.location.address : undefined,
+            is_open,
+            distance_km: row.distance_km ?? 0.5,
+            current_prep_delay: row.current_prep_delay ?? row.order_buffer_time ?? 10,
+            image_url: row.image_url || undefined,
+            profile_url: row.profile_url || undefined,
+            banner_url: row.banner_url || undefined,
+            has_active_promo: activePromoMerchantIds.has(row.id),
+          };
+        });
+
+        // Place open merchants at the top, closed merchants at the bottom (preserving relative recency)
+        mappedMerchants.sort((a, b) => {
+          if (a.is_open === b.is_open) return 0;
+          return a.is_open ? -1 : 1;
+        });
+
+        setMerchants(mappedMerchants);
       }
     } catch (err) {
       console.warn('[TapauAheadScreen] Error loading pre-order merchants:', err);

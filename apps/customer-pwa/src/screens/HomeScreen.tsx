@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { supabase } from '../lib/supabase';
 import { HeroCard } from '../components/HeroCard';
 import { MerchantCard } from '../components/MerchantCard';
@@ -76,30 +76,36 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectMerchant }) => {
       }
 
       if (!merchantsError && merchantsData) {
-        setMerchants(
-          merchantsData.map((row: any) => {
-            const availability = availabilityMap[row.id];
-            // Use derived is_currently_open from merchant_availability view,
-            // fallback to merchants.is_open if availability data is missing
-            const is_open = availability
-              ? availability.is_currently_open === true
-              : (row.is_open ?? true);
+        const mappedMerchants: Merchant[] = merchantsData.map((row: any) => {
+          const availability = availabilityMap[row.id];
+          // Use derived is_currently_open from merchant_availability view,
+          // fallback to merchants.is_open if availability data is missing
+          const is_open = availability
+            ? availability.is_currently_open === true
+            : (row.is_open ?? true);
 
-            return {
-              id: row.id,
-              business_name: row.business_name || 'Merchant Stall',
-              cuisine_type: row.cuisine_type || 'Local Delights',
-              pickup_address: typeof row.location?.address === 'string' && row.location.address ? row.location.address : undefined,
-              is_open,
-              distance_km: row.distance_km ?? 0.5,
-              current_prep_delay: row.current_prep_delay ?? row.order_buffer_time ?? 10,
-              image_url: row.image_url || undefined,
-              profile_url: row.profile_url || undefined,
-              banner_url: row.banner_url || undefined,
-              has_active_promo: activePromoMerchantIds.has(row.id),
-            };
-          })
-        );
+          return {
+            id: row.id,
+            business_name: row.business_name || 'Merchant Stall',
+            cuisine_type: row.cuisine_type || 'Local Delights',
+            pickup_address: typeof row.location?.address === 'string' && row.location.address ? row.location.address : undefined,
+            is_open,
+            distance_km: row.distance_km ?? 0.5,
+            current_prep_delay: row.current_prep_delay ?? row.order_buffer_time ?? 10,
+            image_url: row.image_url || undefined,
+            profile_url: row.profile_url || undefined,
+            banner_url: row.banner_url || undefined,
+            has_active_promo: activePromoMerchantIds.has(row.id),
+          };
+        });
+
+        // Place open merchants at the top, closed merchants at the bottom (preserving relative recency)
+        mappedMerchants.sort((a, b) => {
+          if (a.is_open === b.is_open) return 0;
+          return a.is_open ? -1 : 1;
+        });
+
+        setMerchants(mappedMerchants);
       } else {
         setMerchants([]);
       }
@@ -157,15 +163,22 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectMerchant }) => {
     await fetchMerchants();
   }, [fetchMerchants]);
 
-  const filteredMerchants = merchants.filter((m) => {
-    if (!searchQuery.trim()) return true;
-    const query = searchQuery.toLowerCase().trim();
-    return (
-      m.business_name.toLowerCase().includes(query) ||
-      (m.cuisine_type && m.cuisine_type.toLowerCase().includes(query)) ||
-      (m.pickup_address && m.pickup_address.toLowerCase().includes(query))
-    );
-  });
+  const filteredMerchants = useMemo(() => {
+    return merchants
+      .filter((m) => {
+        if (!searchQuery.trim()) return true;
+        const query = searchQuery.toLowerCase().trim();
+        return (
+          m.business_name.toLowerCase().includes(query) ||
+          (m.cuisine_type && m.cuisine_type.toLowerCase().includes(query)) ||
+          (m.pickup_address && m.pickup_address.toLowerCase().includes(query))
+        );
+      })
+      .sort((a, b) => {
+        if (a.is_open === b.is_open) return 0;
+        return a.is_open ? -1 : 1;
+      });
+  }, [merchants, searchQuery]);
 
   return (
     <PullToRefresh

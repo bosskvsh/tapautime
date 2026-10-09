@@ -576,9 +576,9 @@
     "semantic_hash": ""
   },
   "apps/customer-pwa/src/screens/CheckoutScreen.tsx": {
-    "mtime": 1791444764.419893,
-    "seen": 1791444872.1614113,
-    "ast_hash": "f144c4330e122e45fb33854261958f9f",
+    "mtime": 1791449237.6799605,
+    "seen": 1791449488.0653493,
+    "ast_hash": "a0ab5d8f6a04838477d34918154a49bd",
     "semantic_hash": ""
   },
   "apps/customer-pwa/src/screens/MenuScreen.tsx": {
@@ -594,9 +594,9 @@
     "semantic_hash": ""
   },
   "apps/customer-pwa/src/stores/useCartStore.ts": {
-    "mtime": 1791444735.4389153,
-    "seen": 1791444872.162412,
-    "ast_hash": "04381cbfe35d85d37b1cfcb261cacffb",
+    "mtime": 1791449185.9403148,
+    "seen": 1791449488.0673509,
+    "ast_hash": "57c1c4a1d9b0112e7f03139bdede028f",
     "semantic_hash": ""
   },
   "apps/customer-pwa/src/stores/useCustomerOrderStore.ts": {
@@ -732,9 +732,9 @@
     "semantic_hash": ""
   },
   "supabase/functions/checkout/index.ts": {
-    "mtime": 1791444716.8022437,
-    "seen": 1791444872.1884844,
-    "ast_hash": "5adb5ca8eefd5422245e5e6611ff805c",
+    "mtime": 1791449364.5295036,
+    "seen": 1791449488.1257136,
+    "ast_hash": "71834a818facdbab8e5f5ebcf91730f2",
     "semantic_hash": ""
   },
   "apps/merchant-web/src/hooks/useAudioAlarm.ts": {
@@ -1146,9 +1146,9 @@
     "semantic_hash": ""
   },
   "apps/customer-pwa/src/components/CartDrawer.tsx": {
-    "mtime": 1791444750.4321148,
-    "seen": 1791444872.1594121,
-    "ast_hash": "6309abe7884653e0943b52e522d170f2",
+    "mtime": 1791449262.125923,
+    "seen": 1791449488.0593488,
+    "ast_hash": "199fe4b93e3c9b7efdca603576f94dc7",
     "semantic_hash": ""
   },
   "apps/customer-pwa/src/components/ItemModifierModal.tsx": {
@@ -1674,9 +1674,9 @@
     "semantic_hash": ""
   },
   "apps/dining-web/src/screens/CheckoutScreen.tsx": {
-    "mtime": 1791444795.8448741,
-    "seen": 1791444872.165872,
-    "ast_hash": "e17dce4e78f7e5f002ee13fc45fc8cb0",
+    "mtime": 1791449320.5950794,
+    "seen": 1791449488.073998,
+    "ast_hash": "707a220b5fb2946471108692e1964948",
     "semantic_hash": ""
   },
   "apps/dining-web/src/screens/MenuScreen.tsx": {
@@ -1692,9 +1692,9 @@
     "semantic_hash": ""
   },
   "apps/dining-web/src/stores/useDineInCartStore.ts": {
-    "mtime": 1791444782.303703,
-    "seen": 1791444872.165872,
-    "ast_hash": "ee54e29b9243a1edff35daddbf26a237",
+    "mtime": 1791449282.2029529,
+    "seen": 1791449488.073998,
+    "ast_hash": "322f5a63a7988f7c3ec3649f7bf0f966",
     "semantic_hash": ""
   },
   "apps/dining-web/src/vite-env.d.ts": {
@@ -3369,6 +3369,12 @@
     "mtime": 1791447187.7333136,
     "seen": 1791447234.252599,
     "ast_hash": "1d20263da903b304477332c24d6d98e2",
+    "semantic_hash": ""
+  },
+  "scratch/verify_order_balance_fee.cjs": {
+    "mtime": 1791449445.542516,
+    "seen": 1791449488.1090019,
+    "ast_hash": "ac2b7085d50028fb221f745095031446",
     "semantic_hash": ""
   }
 }
