@@ -1314,9 +1314,14 @@ export const CheckoutScreen: React.FC<CheckoutScreenProps> = ({
         )}
 
         {otherFees > 0 && (
-          <div className="flex justify-between text-stone-600 font-medium">
-            <span>Other fees</span>
-            <span className="font-bold text-stone-900 tabular-nums">
+          <div className="flex justify-between items-start text-stone-600 font-medium">
+            <div className="pr-2">
+              <span>Total Service Fee</span>
+              <p className="text-[10px] text-stone-500 italic font-normal leading-tight mt-0.5">
+                (Covers processing, service and order balance fee)
+              </p>
+            </div>
+            <span className="font-bold text-stone-900 tabular-nums shrink-0">
               RM {otherFees.toFixed(2)}
             </span>
           </div>

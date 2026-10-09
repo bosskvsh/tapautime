@@ -930,7 +930,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     </span>
                   </div>
                   <p className="text-[10px] text-stone-400 italic">
-                    a small fee applied to orders below RM12.
+                    (A small fee applied to orders below Rm12)
                   </p>
                 </div>
               )}
