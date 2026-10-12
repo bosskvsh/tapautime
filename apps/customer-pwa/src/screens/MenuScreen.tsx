@@ -309,7 +309,7 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
         supabase
           .from('merchant_promo_codes')
           .select('id, code, discount_type, discount_value, status, duration_type, expiration_date, max_uses, used_count')
-          .eq('merchant_id', targetMerchantId)
+          .or(`merchant_id.eq.${targetMerchantId},merchant_id.is.null`)
           .eq('status', 'active'),
       ]);
 
@@ -678,6 +678,13 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
           </div>
           </div>
         </div>
+      </div>
+
+      {/* In-store Price Transparency Notice */}
+      <div className="max-w-lg mx-auto w-full px-4 pt-1.5 pb-1">
+        <p className={`text-xs italic font-medium tracking-tight drop-shadow-sm ${textOnPhoto ? 'text-stone-200' : 'text-stone-600'}`}>
+          (All prices displayed are same as in-store.)
+        </p>
       </div>
 
       {/* Sticky Picture Category Tabs - circular images instead of text pills */}
